@@ -28,7 +28,7 @@ type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2025-01-08'
-modified: '2025-01-13'
+modified: '2026-03-16'
 position: Consuming
 description: >-
   Better Stack is a comprehensive infrastructure monitoring platform that helps
@@ -39,5 +39,5 @@ description: >-
   screenshots; allowing them to minimize downtime and improve user experience.
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
 specificationVersion: '0.19'
