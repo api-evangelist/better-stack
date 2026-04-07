@@ -18,12 +18,12 @@ apis:
       ...
 name: Better Stack
 tags:
-  - Monitoring
-  - Logs
   - Incidents
+  - Logs
+  - Monitoring
+  - Platform
   - Status
   - Uptime
-  - Platform
 type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
