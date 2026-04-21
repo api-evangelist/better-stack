@@ -1,0 +1,354 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: Better Stack
+  description: >-
+    Unified taxonomy mapping operational (OpenAPI) and capability (Naftiko)
+    dimensions of the Better Stack monitoring and incident management platform.
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: better-stack-uptime-v2
+      version: v2
+      baseUrl: https://uptime.betterstack.com/api/v2
+      status: active
+      description: Better Stack Uptime API covering monitors, heartbeats, status pages, and team members
+    - namespace: better-stack-uptime-v3
+      version: v3
+      baseUrl: https://uptime.betterstack.com/api/v3
+      status: active
+      description: Better Stack Uptime API v3 covering incidents and escalation policies
+
+  resources:
+    - name: monitors
+      api: better-stack-uptime-v2
+      actions:
+        - list
+        - create
+        - get
+        - update
+        - delete
+      description: Uptime monitors that check URLs, APIs, and services for availability
+    - name: heartbeats
+      api: better-stack-uptime-v2
+      actions:
+        - list
+        - create
+        - get
+        - update
+        - delete
+      description: Heartbeat monitors for scheduled jobs and cron task health checks
+    - name: incidents
+      api: better-stack-uptime-v3
+      actions:
+        - list
+        - create
+        - get
+        - acknowledge
+        - resolve
+        - delete
+      description: Infrastructure incidents triggered by monitor or heartbeat failures
+    - name: status-pages
+      api: better-stack-uptime-v2
+      actions:
+        - list
+        - create
+        - get
+        - update
+        - delete
+      description: Public and private status pages for communicating service health
+    - name: escalation-policies
+      api: better-stack-uptime-v3
+      actions:
+        - list
+        - create
+        - get
+        - update
+        - delete
+      description: Escalation policies defining notification sequences for on-call
+    - name: team-members
+      api: better-stack-uptime-v2
+      actions:
+        - list
+        - invite
+        - get
+        - delete
+      description: Team members and pending invitations
+
+  actions:
+    - name: list
+      httpMethod: GET
+      pattern: read
+      description: Retrieve a paginated collection of resources
+    - name: create
+      httpMethod: POST
+      pattern: write
+      description: Create a new resource
+    - name: get
+      httpMethod: GET
+      pattern: read
+      description: Retrieve a single resource by ID
+    - name: update
+      httpMethod: PATCH
+      pattern: write
+      description: Update fields on an existing resource
+    - name: delete
+      httpMethod: DELETE
+      pattern: destructive
+      description: Permanently remove a resource
+    - name: acknowledge
+      httpMethod: POST
+      pattern: write
+      description: Mark an incident as being investigated
+    - name: resolve
+      httpMethod: POST
+      pattern: write
+      description: Mark an incident as resolved
+    - name: invite
+      httpMethod: POST
+      pattern: write
+      description: Send an invitation to a new team member
+
+  schemas:
+    core:
+      - name: MonitorAttributes
+        description: Uptime monitor configuration and current status
+        keyProperties:
+          - url
+          - pronounceable_name
+          - monitor_type
+          - status
+          - check_frequency
+          - regions
+      - name: HeartbeatAttributes
+        description: Heartbeat monitor configuration and status
+        keyProperties:
+          - name
+          - url
+          - period
+          - grace
+          - status
+      - name: IncidentAttributes
+        description: Incident details including cause and timeline
+        keyProperties:
+          - name
+          - cause
+          - status
+          - started_at
+          - acknowledged_at
+          - resolved_at
+      - name: StatusPageAttributes
+        description: Status page branding and configuration
+        keyProperties:
+          - company_name
+          - subdomain
+          - aggregate_state
+          - theme
+      - name: PolicyAttributes
+        description: Escalation policy steps and repeat configuration
+        keyProperties:
+          - name
+          - repeat_count
+          - repeat_delay
+          - steps
+
+  parameters:
+    pagination:
+      - name: page
+        type: integer
+        description: Page number for paginated results
+    filters:
+      - name: team_name
+        type: string
+        description: Filter by team name using global API token
+      - name: from
+        type: string
+        format: date
+        description: Start date filter for incidents
+      - name: to
+        type: string
+        format: date
+        description: End date filter for incidents
+      - name: resolved
+        type: boolean
+        description: Filter by resolved status
+      - name: acknowledged
+        type: boolean
+        description: Filter by acknowledged status
+      - name: monitor_id
+        type: integer
+        description: Filter by monitor ID
+    identifiers:
+      - name: id
+        type: string
+        description: Unique resource identifier (path parameter)
+
+  enums:
+    monitor_status:
+      - paused
+      - pending
+      - maintenance
+      - up
+      - validating
+      - down
+    monitor_type:
+      - status
+      - expected_status_code
+      - keyword
+      - keyword_absence
+      - ping
+      - tcp
+      - udp
+      - smtp
+      - pop
+      - imap
+    heartbeat_status:
+      - paused
+      - pending
+      - up
+      - down
+    incident_status:
+      - Started
+      - Resolved
+    status_page_state:
+      - operational
+      - degraded_performance
+      - partial_outage
+      - major_outage
+      - maintenance
+      - downtime
+    team_member_role:
+      - owner
+      - admin
+      - member
+      - viewer
+    page_theme:
+      - light
+      - dark
+
+  authentication:
+    schemes:
+      - type: bearer
+        description: Bearer token authentication for all API endpoints
+        tokenTypes:
+          - name: Global API Token
+            scope: All teams
+            management: Better Stack Settings → API tokens
+          - name: Uptime API Token
+            scope: Team-scoped
+            management: Better Stack Settings → API tokens → Team-based tokens
+
+capability:
+  workflows:
+    - name: Incident Response
+      file: capabilities/incident-response.yaml
+      description: Monitor detection, incident acknowledgement, and resolution workflow for SRE teams
+      apisConsumed:
+        - better-stack
+      toolCount: 11
+      personas:
+        - sre-engineer
+        - on-call-engineer
+
+  personas:
+    - id: sre-engineer
+      name: SRE Engineer
+      description: Site Reliability Engineer managing infrastructure uptime and incident response
+      workflows:
+        - Incident Response
+    - id: on-call-engineer
+      name: On-Call Engineer
+      description: Engineer on-call rotation responsible for responding to incidents
+      workflows:
+        - Incident Response
+
+  domains:
+    - name: Monitoring
+      description: Uptime and availability monitoring for services and scheduled jobs
+      resources:
+        - monitors
+        - heartbeats
+    - name: Incident Management
+      description: Detection, acknowledgement, and resolution of service incidents
+      resources:
+        - incidents
+        - escalation-policies
+    - name: Status Communication
+      description: Communicating service health to customers and stakeholders
+      resources:
+        - status-pages
+    - name: Team Administration
+      description: Managing team access and membership
+      resources:
+        - team-members
+
+  namespaces:
+    - type: consumed
+      name: better-stack
+      baseUri: https://uptime.betterstack.com/api/v2
+    - type: rest
+      name: better-stack-incident-response-api
+      port: 8080
+    - type: mcp
+      name: better-stack-incident-response-mcp
+      port: 9080
+
+  binds:
+    - name: BETTER_STACK_API_TOKEN
+      description: Better Stack API token (global or team-scoped)
+      workflows:
+        - Incident Response
+
+crossReference:
+  - resource: monitors
+    operations:
+      - listMonitors
+      - createMonitor
+      - getMonitor
+      - updateMonitor
+      - deleteMonitor
+      - getMonitorResponseTimes
+      - getMonitorAvailability
+    workflows:
+      - Incident Response
+    personas:
+      - sre-engineer
+      - on-call-engineer
+  - resource: heartbeats
+    operations:
+      - listHeartbeats
+      - createHeartbeat
+      - getHeartbeat
+      - updateHeartbeat
+      - deleteHeartbeat
+      - getHeartbeatAvailability
+    workflows:
+      - Incident Response
+    personas:
+      - sre-engineer
+  - resource: incidents
+    operations:
+      - listIncidents
+      - createIncident
+      - getIncident
+      - acknowledgeIncident
+      - resolveIncident
+      - deleteIncident
+    workflows:
+      - Incident Response
+    personas:
+      - sre-engineer
+      - on-call-engineer
+  - resource: status-pages
+    operations:
+      - listStatusPages
+      - createStatusPage
+      - getStatusPage
+      - updateStatusPage
+      - deleteStatusPage
+    workflows:
+      - Incident Response
+    personas:
+      - sre-engineer

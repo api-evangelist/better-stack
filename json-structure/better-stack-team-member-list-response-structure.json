@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-team-member-list-response-structure.json",
+  "name": "TeamMemberListResponse",
+  "description": "List of team members.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TeamMemberObject"
+      }
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  }
+}

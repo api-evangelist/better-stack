@@ -1,0 +1,10 @@
+{
+  "url": "https://example.com",
+  "pronounceable_name": "Updated API Monitor",
+  "check_frequency": 300,
+  "verify_ssl": true,
+  "email": true,
+  "sms": false,
+  "call": false,
+  "push": true
+}

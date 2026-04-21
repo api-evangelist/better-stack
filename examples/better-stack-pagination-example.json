@@ -1,0 +1,6 @@
+{
+  "first": "https://uptime.betterstack.com/api/v2/monitors?page=1",
+  "last": "https://uptime.betterstack.com/api/v2/monitors?page=5",
+  "prev": "https://portal.example.com/path/abc123",
+  "next": "https://uptime.betterstack.com/api/v2/monitors?page=2"
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-monitor-update-request-structure.json",
+  "name": "MonitorUpdateRequest",
+  "description": "Request body for updating an existing monitor (all fields optional).",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "uri",
+      "description": "New URL to monitor.",
+      "example": "https://example.com"
+    },
+    "pronounceable_name": {
+      "type": "string",
+      "description": "New human-readable name.",
+      "example": "Updated API Monitor"
+    },
+    "check_frequency": {
+      "type": "int32",
+      "description": "New check interval in seconds.",
+      "example": 300
+    },
+    "verify_ssl": {
+      "type": "boolean",
+      "description": "SSL verification setting.",
+      "example": true
+    },
+    "email": {
+      "type": "boolean",
+      "description": "Alert via email.",
+      "example": true
+    },
+    "sms": {
+      "type": "boolean",
+      "description": "Alert via SMS.",
+      "example": false
+    },
+    "call": {
+      "type": "boolean",
+      "description": "Alert via phone call.",
+      "example": false
+    },
+    "push": {
+      "type": "boolean",
+      "description": "Alert via push notification.",
+      "example": true
+    }
+  }
+}

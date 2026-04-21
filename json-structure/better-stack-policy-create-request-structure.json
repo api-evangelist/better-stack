@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-policy-create-request-structure.json",
+  "name": "PolicyCreateRequest",
+  "description": "Request body for creating an escalation policy.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Policy name.",
+      "example": "Default On-Call"
+    },
+    "repeat_count": {
+      "type": "int32",
+      "description": "Number of repeat cycles.",
+      "example": 3
+    },
+    "repeat_delay": {
+      "type": "int32",
+      "description": "Delay between cycles in seconds.",
+      "example": 300
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

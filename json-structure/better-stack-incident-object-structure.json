@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-incident-object-structure.json",
+  "name": "IncidentObject",
+  "description": "A single incident resource.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier.",
+      "example": "900100"
+    },
+    "type": {
+      "type": "string",
+      "description": "Resource type.",
+      "example": "incident"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/IncidentAttributes"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-policy-step-structure.json",
+  "name": "PolicyStep",
+  "description": "A step in an escalation policy.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Step resource type.",
+      "example": "step"
+    },
+    "attributes": {
+      "type": "object",
+      "properties": {
+        "step_type": {
+          "type": "string",
+          "description": "Type of notification step.",
+          "enum": [
+            "notification",
+            "wait"
+          ],
+          "example": "notification"
+        },
+        "wait_before": {
+          "type": "int32",
+          "description": "Seconds to wait before this step.",
+          "example": 0
+        }
+      }
+    }
+  }
+}

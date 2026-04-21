@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-status-page-attributes-structure.json",
+  "name": "StatusPageAttributes",
+  "description": "Attributes of a status page.",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Name of the company displayed on the status page.",
+      "example": "Acme Corp"
+    },
+    "company_website": {
+      "type": "uri",
+      "description": "URL of the company website.",
+      "example": "https://acme.com"
+    },
+    "subdomain": {
+      "type": "string",
+      "description": "Subdomain for the status page (yourname.betteruptime.com).",
+      "example": "acme"
+    },
+    "custom_domain": {
+      "type": "string",
+      "nullable": true,
+      "description": "Custom domain for the status page.",
+      "example": "status.acme.com"
+    },
+    "timezone": {
+      "type": "string",
+      "description": "Timezone for the status page.",
+      "example": "UTC"
+    },
+    "theme": {
+      "type": "string",
+      "description": "UI theme for the status page.",
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "example": "light"
+    },
+    "aggregate_state": {
+      "type": "string",
+      "description": "Overall operational state across all monitored resources.",
+      "enum": [
+        "operational",
+        "degraded_performance",
+        "partial_outage",
+        "major_outage",
+        "maintenance",
+        "downtime"
+      ],
+      "example": "operational"
+    },
+    "created_at": {
+      "type": "datetime",
+      "description": "When the status page was created.",
+      "example": "2025-03-01T00:00:00Z"
+    },
+    "updated_at": {
+      "type": "datetime",
+      "description": "When the status page was last updated.",
+      "example": "2026-04-01T00:00:00Z"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-incident-create-request-schema.json",
+  "title": "IncidentCreateRequest",
+  "description": "Request body for creating a manual incident.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name or description of the incident.",
+      "example": "Database degraded"
+    },
+    "email": {
+      "type": "boolean",
+      "description": "Alert via email.",
+      "example": true
+    },
+    "sms": {
+      "type": "boolean",
+      "description": "Alert via SMS.",
+      "example": false
+    },
+    "call": {
+      "type": "boolean",
+      "description": "Alert via phone call.",
+      "example": false
+    },
+    "push": {
+      "type": "boolean",
+      "description": "Alert via push notification.",
+      "example": true
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

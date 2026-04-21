@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-team-member-attributes-schema.json",
+  "title": "TeamMemberAttributes",
+  "description": "Attributes of a team member.",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Team member's email address.",
+      "example": "jsmith@example.com"
+    },
+    "name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Team member's display name.",
+      "example": "Jane Smith"
+    },
+    "role": {
+      "type": "string",
+      "description": "Team member role.",
+      "enum": [
+        "owner",
+        "admin",
+        "member",
+        "viewer"
+      ],
+      "example": "admin"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the member joined or was invited.",
+      "example": "2025-01-10T08:00:00Z"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the record was last updated.",
+      "example": "2026-03-01T12:00:00Z"
+    }
+  }
+}

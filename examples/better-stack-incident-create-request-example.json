@@ -1,0 +1,7 @@
+{
+  "name": "Database degraded",
+  "email": true,
+  "sms": false,
+  "call": false,
+  "push": true
+}

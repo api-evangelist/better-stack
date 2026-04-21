@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-response-times-response-structure.json",
+  "name": "ResponseTimesResponse",
+  "description": "Response time metrics for a monitor.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "array",
+      "description": "Array of response time data points.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "at": {
+            "type": "datetime",
+            "description": "Timestamp of the measurement.",
+            "example": "2026-04-19T10:00:00Z"
+          },
+          "response_time": {
+            "type": "int32",
+            "description": "Response time in milliseconds.",
+            "example": 142
+          },
+          "region": {
+            "type": "string",
+            "description": "Region where the check was performed.",
+            "example": "us"
+          }
+        }
+      }
+    }
+  }
+}

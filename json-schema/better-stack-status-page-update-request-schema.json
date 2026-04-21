@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-status-page-update-request-schema.json",
+  "title": "StatusPageUpdateRequest",
+  "description": "Request body for updating a status page (all fields optional).",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "New company name.",
+      "example": "Acme Corp Updated"
+    },
+    "custom_domain": {
+      "type": "string",
+      "description": "New custom domain.",
+      "example": "status.acme.com"
+    },
+    "theme": {
+      "type": "string",
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "description": "New theme.",
+      "example": "dark"
+    }
+  }
+}

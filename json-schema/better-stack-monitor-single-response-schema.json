@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-monitor-single-response-schema.json",
+  "title": "MonitorSingleResponse",
+  "description": "Single monitor response.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/components/schemas/MonitorObject"
+    }
+  }
+}

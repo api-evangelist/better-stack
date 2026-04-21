@@ -1,0 +1,311 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Better Stack Incident Response
+  description: >-
+    Unified incident response workflow combining Better Stack uptime monitoring,
+    heartbeat monitoring, and incident management. Used by SRE teams and on-call
+    engineers to detect, acknowledge, and resolve infrastructure incidents.
+  tags:
+    - Better Stack
+    - Incident Response
+    - Monitoring
+    - On-Call
+    - Sre
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      BETTER_STACK_API_TOKEN: BETTER_STACK_API_TOKEN
+
+capability:
+  consumes:
+    - import: better-stack
+      location: ./shared/better-stack.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: better-stack-incident-response-api
+      description: Unified REST API for Better Stack incident response workflows.
+      resources:
+        - path: /v1/monitors
+          name: monitors
+          description: Monitor management for uptime checks
+          operations:
+            - method: GET
+              name: list-monitors
+              description: List all uptime monitors
+              call: "better-stack.list-monitors"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-monitor
+              description: Create a new uptime monitor
+              call: "better-stack.create-monitor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/monitors/{id}
+          name: monitor
+          description: Single monitor operations
+          operations:
+            - method: GET
+              name: get-monitor
+              description: Get monitor details
+              call: "better-stack.get-monitor"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PATCH
+              name: update-monitor
+              description: Update a monitor
+              call: "better-stack.update-monitor"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-monitor
+              description: Delete a monitor
+              call: "better-stack.delete-monitor"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/monitors/{id}/availability
+          name: monitor-availability
+          description: Monitor availability metrics
+          operations:
+            - method: GET
+              name: get-monitor-availability
+              description: Get monitor availability summary
+              call: "better-stack.get-monitor-availability"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/heartbeats
+          name: heartbeats
+          description: Heartbeat monitor management
+          operations:
+            - method: GET
+              name: list-heartbeats
+              description: List all heartbeats
+              call: "better-stack.list-heartbeats"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-heartbeat
+              description: Create a heartbeat monitor
+              call: "better-stack.create-heartbeat"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/incidents
+          name: incidents
+          description: Incident management
+          operations:
+            - method: GET
+              name: list-incidents
+              description: List all incidents
+              call: "better-stack.list-incidents"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-incident
+              description: Create a manual incident
+              call: "better-stack.create-incident"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/incidents/{id}
+          name: incident
+          description: Single incident operations
+          operations:
+            - method: GET
+              name: get-incident
+              description: Get incident details
+              call: "better-stack.get-incident"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-incident
+              description: Delete an incident
+              call: "better-stack.delete-incident"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/incidents/{id}/acknowledge
+          name: incident-acknowledge
+          description: Acknowledge an incident
+          operations:
+            - method: POST
+              name: acknowledge-incident
+              description: Acknowledge an active incident
+              call: "better-stack.acknowledge-incident"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/incidents/{id}/resolve
+          name: incident-resolve
+          description: Resolve an incident
+          operations:
+            - method: POST
+              name: resolve-incident
+              description: Resolve an active incident
+              call: "better-stack.resolve-incident"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9080
+      namespace: better-stack-incident-response-mcp
+      transport: http
+      description: MCP server for AI-assisted Better Stack incident response.
+      tools:
+        - name: list-monitors
+          description: List all uptime monitors to check what is being monitored
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-monitors"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-monitor
+          description: Create a new uptime monitor for a URL or API
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "better-stack.create-monitor"
+          with:
+            url: "tools.url"
+            pronounceable_name: "tools.pronounceable_name"
+            check_frequency: "tools.check_frequency"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-monitor
+          description: Get details for a specific uptime monitor
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "better-stack.get-monitor"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-monitor-availability
+          description: Get availability metrics for a monitor
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "better-stack.get-monitor-availability"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-heartbeats
+          description: List all heartbeat monitors for scheduled jobs
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-heartbeats"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-heartbeat-availability
+          description: Get availability for a heartbeat monitor
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "better-stack.get-heartbeat-availability"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-incidents
+          description: List incidents with optional date and filter parameters
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-incidents"
+          with:
+            from: "tools.from"
+            to: "tools.to"
+            resolved: "tools.resolved"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-incident
+          description: Get details for a specific incident
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "better-stack.get-incident"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-incident
+          description: Create a manual incident
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "better-stack.create-incident"
+          with:
+            name: "tools.name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: acknowledge-incident
+          description: Acknowledge an active incident to indicate someone is working on it
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "better-stack.acknowledge-incident"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: resolve-incident
+          description: Resolve an active incident once the issue is fixed
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "better-stack.resolve-incident"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."

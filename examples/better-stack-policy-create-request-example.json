@@ -1,0 +1,5 @@
+{
+  "name": "Default On-Call",
+  "repeat_count": 3,
+  "repeat_delay": 300
+}

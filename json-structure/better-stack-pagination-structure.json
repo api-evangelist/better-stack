@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-pagination-structure.json",
+  "name": "Pagination",
+  "description": "Pagination links for list responses following JSON:API specification.",
+  "type": "object",
+  "properties": {
+    "first": {
+      "type": "uri",
+      "description": "URL of the first page.",
+      "example": "https://uptime.betterstack.com/api/v2/monitors?page=1"
+    },
+    "last": {
+      "type": "uri",
+      "description": "URL of the last page.",
+      "example": "https://uptime.betterstack.com/api/v2/monitors?page=5"
+    },
+    "prev": {
+      "type": "uri",
+      "nullable": true,
+      "description": "URL of the previous page, or null.",
+      "example": null
+    },
+    "next": {
+      "type": "uri",
+      "nullable": true,
+      "description": "URL of the next page, or null.",
+      "example": "https://uptime.betterstack.com/api/v2/monitors?page=2"
+    }
+  }
+}

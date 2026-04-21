@@ -1,1 +1,2533 @@
-{}
+openapi: 3.0.3
+info:
+  title: Better Stack API
+  description: >-
+    Better Stack is a comprehensive infrastructure monitoring and observability platform
+    combining uptime monitoring, log management, incident management, and status pages.
+    The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and
+    Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
+  version: v2
+  contact:
+    name: Better Stack Support
+    url: https://betterstack.com/docs/
+  x-generated-from: documentation
+servers:
+  - url: https://uptime.betterstack.com/api/v2
+    description: Better Stack Uptime API v2
+  - url: https://uptime.betterstack.com/api/v3
+    description: Better Stack Uptime API v3 (incidents, policies)
+  - url: https://betterstack.com/api/v2
+    description: Better Stack Telemetry API v2
+security:
+  - bearerAuth: []
+tags:
+  - name: Monitors
+    description: Manage uptime monitors for URLs, APIs, and services
+  - name: Heartbeats
+    description: Manage heartbeat monitors for scheduled jobs and cron tasks
+  - name: Incidents
+    description: Manage incidents and on-call alerting
+  - name: Status Pages
+    description: Manage public and private status pages
+  - name: Escalation Policies
+    description: Manage escalation policies and on-call schedules
+  - name: Team Members
+    description: Manage team members and invitations
+  - name: Sources
+    description: Manage telemetry sources and collectors
+  - name: Dashboards
+    description: Manage telemetry dashboards
+  - name: Alerts
+    description: Manage telemetry alert rules
+paths:
+  /monitors:
+    get:
+      operationId: listMonitors
+      summary: Better Stack List Monitors
+      description: Returns a paginated list of all monitors for the authenticated team.
+      tags:
+        - Monitors
+      parameters:
+        - name: team_name
+          in: query
+          description: Filter monitors belonging to a specified team when using a global API token.
+          required: false
+          schema:
+            type: string
+          example: my-team
+        - name: url
+          in: query
+          description: Filter monitors by target URL.
+          required: false
+          schema:
+            type: string
+          example: https://example.com
+        - name: pronounceable_name
+          in: query
+          description: Filter monitors by pronounceable name.
+          required: false
+          schema:
+            type: string
+          example: Production API
+      responses:
+        '200':
+          description: Paginated list of monitors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorListResponse'
+              examples:
+                ListMonitors200Example:
+                  summary: Default listMonitors 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      - id: "123456"
+                        type: monitor
+                        attributes:
+                          url: https://example.com
+                          pronounceable_name: Production API
+                          monitor_type: status
+                          status: up
+                          check_frequency: 180
+                          verify_ssl: true
+                          call: false
+                          sms: true
+                          email: true
+                          push: true
+                          regions:
+                            - us
+                            - eu
+                          created_at: "2025-01-15T10:00:00Z"
+                          updated_at: "2026-04-01T08:30:00Z"
+                    pagination:
+                      first: https://uptime.betterstack.com/api/v2/monitors?page=1
+                      last: https://uptime.betterstack.com/api/v2/monitors?page=5
+                      prev: null
+                      next: https://uptime.betterstack.com/api/v2/monitors?page=2
+        '401':
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createMonitor
+      summary: Better Stack Create Monitor
+      description: Creates a new uptime monitor.
+      tags:
+        - Monitors
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonitorCreateRequest'
+            examples:
+              CreateMonitorRequestExample:
+                summary: Default createMonitor request
+                x-microcks-default: true
+                value:
+                  url: https://example.com
+                  pronounceable_name: Production API
+                  monitor_type: status
+                  check_frequency: 180
+                  verify_ssl: true
+                  email: true
+                  sms: false
+                  call: false
+                  push: true
+                  regions:
+                    - us
+                    - eu
+      responses:
+        '201':
+          description: Monitor created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorSingleResponse'
+              examples:
+                CreateMonitor201Example:
+                  summary: Default createMonitor 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "500123"
+                      type: monitor
+                      attributes:
+                        url: https://example.com
+                        pronounceable_name: Production API
+                        monitor_type: status
+                        status: pending
+                        check_frequency: 180
+                        verify_ssl: true
+                        call: false
+                        sms: false
+                        email: true
+                        push: true
+                        regions:
+                          - us
+                          - eu
+                        created_at: "2026-04-19T10:00:00Z"
+                        updated_at: "2026-04-19T10:00:00Z"
+        '422':
+          description: Validation error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /monitors/{id}:
+    get:
+      operationId: getMonitor
+      summary: Better Stack Get Monitor
+      description: Returns a single monitor by ID.
+      tags:
+        - Monitors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the monitor.
+          schema:
+            type: string
+          example: "500123"
+      responses:
+        '200':
+          description: Monitor details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorSingleResponse'
+              examples:
+                GetMonitor200Example:
+                  summary: Default getMonitor 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "500123"
+                      type: monitor
+                      attributes:
+                        url: https://example.com
+                        pronounceable_name: Production API
+                        monitor_type: status
+                        status: up
+                        check_frequency: 180
+                        verify_ssl: true
+                        call: false
+                        sms: true
+                        email: true
+                        push: true
+                        regions:
+                          - us
+                          - eu
+                        created_at: "2025-01-15T10:00:00Z"
+                        updated_at: "2026-04-01T08:30:00Z"
+        '404':
+          description: Monitor not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateMonitor
+      summary: Better Stack Update Monitor
+      description: Updates an existing monitor.
+      tags:
+        - Monitors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the monitor.
+          schema:
+            type: string
+          example: "500123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MonitorUpdateRequest'
+            examples:
+              UpdateMonitorRequestExample:
+                summary: Default updateMonitor request
+                x-microcks-default: true
+                value:
+                  pronounceable_name: Updated API Monitor
+                  check_frequency: 300
+      responses:
+        '200':
+          description: Monitor updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorSingleResponse'
+              examples:
+                UpdateMonitor200Example:
+                  summary: Default updateMonitor 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "500123"
+                      type: monitor
+                      attributes:
+                        url: https://example.com
+                        pronounceable_name: Updated API Monitor
+                        monitor_type: status
+                        status: up
+                        check_frequency: 300
+                        verify_ssl: true
+                        call: false
+                        sms: true
+                        email: true
+                        push: true
+                        regions:
+                          - us
+                          - eu
+                        created_at: "2025-01-15T10:00:00Z"
+                        updated_at: "2026-04-19T10:00:00Z"
+        '404':
+          description: Monitor not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteMonitor
+      summary: Better Stack Delete Monitor
+      description: Deletes an existing monitor.
+      tags:
+        - Monitors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the monitor.
+          schema:
+            type: string
+          example: "500123"
+      responses:
+        '204':
+          description: Monitor deleted successfully.
+        '404':
+          description: Monitor not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /monitors/{id}/response-times:
+    get:
+      operationId: getMonitorResponseTimes
+      summary: Better Stack Get Monitor Response Times
+      description: Returns response time metrics for a specific monitor.
+      tags:
+        - Monitors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the monitor.
+          schema:
+            type: string
+          example: "500123"
+      responses:
+        '200':
+          description: Response time data for the monitor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseTimesResponse'
+              examples:
+                GetMonitorResponseTimes200Example:
+                  summary: Default getMonitorResponseTimes 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      - at: "2026-04-19T10:00:00Z"
+                        response_time: 142
+                        region: us
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /monitors/{id}/availability:
+    get:
+      operationId: getMonitorAvailability
+      summary: Better Stack Get Monitor Availability
+      description: Returns availability summary for a specific monitor.
+      tags:
+        - Monitors
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the monitor.
+          schema:
+            type: string
+          example: "500123"
+      responses:
+        '200':
+          description: Availability summary for the monitor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+              examples:
+                GetMonitorAvailability200Example:
+                  summary: Default getMonitorAvailability 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      availability: 99.98
+                      downtime_duration: 86
+                      number_of_incidents: 2
+                      longest_incident_duration: 61
+                      average_incident_duration: 43
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /heartbeats:
+    get:
+      operationId: listHeartbeats
+      summary: Better Stack List Heartbeats
+      description: Returns a paginated list of all heartbeat monitors.
+      tags:
+        - Heartbeats
+      parameters:
+        - name: team_name
+          in: query
+          description: Filter heartbeats belonging to a specified team when using a global API token.
+          required: false
+          schema:
+            type: string
+          example: my-team
+      responses:
+        '200':
+          description: Paginated list of heartbeats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatListResponse'
+              examples:
+                ListHeartbeats200Example:
+                  summary: Default listHeartbeats 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      - id: "100200"
+                        type: heartbeat
+                        attributes:
+                          name: Daily Backup Job
+                          url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                          period: 86400
+                          grace: 3600
+                          status: up
+                          email: true
+                          sms: false
+                          call: false
+                          push: true
+                          created_at: "2025-06-01T00:00:00Z"
+                          updated_at: "2026-04-01T00:00:00Z"
+                    pagination:
+                      first: https://uptime.betterstack.com/api/v2/heartbeats?page=1
+                      last: https://uptime.betterstack.com/api/v2/heartbeats?page=1
+                      prev: null
+                      next: null
+        '401':
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createHeartbeat
+      summary: Better Stack Create Heartbeat
+      description: Creates a new heartbeat monitor.
+      tags:
+        - Heartbeats
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeartbeatCreateRequest'
+            examples:
+              CreateHeartbeatRequestExample:
+                summary: Default createHeartbeat request
+                x-microcks-default: true
+                value:
+                  name: Daily Backup Job
+                  period: 86400
+                  grace: 3600
+                  email: true
+                  sms: false
+                  call: false
+                  push: true
+      responses:
+        '201':
+          description: Heartbeat created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatSingleResponse'
+              examples:
+                CreateHeartbeat201Example:
+                  summary: Default createHeartbeat 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "100200"
+                      type: heartbeat
+                      attributes:
+                        name: Daily Backup Job
+                        url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                        period: 86400
+                        grace: 3600
+                        status: pending
+                        email: true
+                        sms: false
+                        call: false
+                        push: true
+                        created_at: "2026-04-19T10:00:00Z"
+                        updated_at: "2026-04-19T10:00:00Z"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /heartbeats/{id}:
+    get:
+      operationId: getHeartbeat
+      summary: Better Stack Get Heartbeat
+      description: Returns a single heartbeat monitor by ID.
+      tags:
+        - Heartbeats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the heartbeat.
+          schema:
+            type: string
+          example: "100200"
+      responses:
+        '200':
+          description: Heartbeat details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatSingleResponse'
+              examples:
+                GetHeartbeat200Example:
+                  summary: Default getHeartbeat 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "100200"
+                      type: heartbeat
+                      attributes:
+                        name: Daily Backup Job
+                        url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                        period: 86400
+                        grace: 3600
+                        status: up
+                        email: true
+                        sms: false
+                        call: false
+                        push: true
+                        created_at: "2025-06-01T00:00:00Z"
+                        updated_at: "2026-04-01T00:00:00Z"
+        '404':
+          description: Heartbeat not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateHeartbeat
+      summary: Better Stack Update Heartbeat
+      description: Updates an existing heartbeat monitor.
+      tags:
+        - Heartbeats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the heartbeat.
+          schema:
+            type: string
+          example: "100200"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeartbeatUpdateRequest'
+            examples:
+              UpdateHeartbeatRequestExample:
+                summary: Default updateHeartbeat request
+                x-microcks-default: true
+                value:
+                  name: Updated Backup Job
+                  grace: 7200
+      responses:
+        '200':
+          description: Heartbeat updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatSingleResponse'
+              examples:
+                UpdateHeartbeat200Example:
+                  summary: Default updateHeartbeat 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "100200"
+                      type: heartbeat
+                      attributes:
+                        name: Updated Backup Job
+                        url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                        period: 86400
+                        grace: 7200
+                        status: up
+                        email: true
+                        sms: false
+                        call: false
+                        push: true
+                        created_at: "2025-06-01T00:00:00Z"
+                        updated_at: "2026-04-19T10:00:00Z"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteHeartbeat
+      summary: Better Stack Delete Heartbeat
+      description: Deletes an existing heartbeat monitor.
+      tags:
+        - Heartbeats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the heartbeat.
+          schema:
+            type: string
+          example: "100200"
+      responses:
+        '204':
+          description: Heartbeat deleted successfully.
+        '404':
+          description: Heartbeat not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /heartbeats/{id}/availability:
+    get:
+      operationId: getHeartbeatAvailability
+      summary: Better Stack Get Heartbeat Availability
+      description: Returns availability summary for a specific heartbeat monitor.
+      tags:
+        - Heartbeats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the heartbeat.
+          schema:
+            type: string
+          example: "100200"
+      responses:
+        '200':
+          description: Availability summary for the heartbeat.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+              examples:
+                GetHeartbeatAvailability200Example:
+                  summary: Default getHeartbeatAvailability 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      availability: 99.9
+                      downtime_duration: 43
+                      number_of_incidents: 1
+                      longest_incident_duration: 43
+                      average_incident_duration: 43
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /incidents:
+    get:
+      operationId: listIncidents
+      summary: Better Stack List Incidents
+      description: Returns a paginated list of all incidents. Uses API v3.
+      tags:
+        - Incidents
+      parameters:
+        - name: team_name
+          in: query
+          description: Filter incidents by team name when using a global API token.
+          required: false
+          schema:
+            type: string
+          example: my-team
+        - name: from
+          in: query
+          description: Filter incidents starting from this date (YYYY-MM-DD).
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "2026-01-01"
+        - name: to
+          in: query
+          description: Filter incidents up to this date (YYYY-MM-DD).
+          required: false
+          schema:
+            type: string
+            format: date
+          example: "2026-04-19"
+        - name: monitor_id
+          in: query
+          description: Filter incidents by monitor ID.
+          required: false
+          schema:
+            type: integer
+          example: 500123
+        - name: heartbeat_id
+          in: query
+          description: Filter incidents by heartbeat ID.
+          required: false
+          schema:
+            type: integer
+          example: 100200
+        - name: resolved
+          in: query
+          description: Filter by resolved status.
+          required: false
+          schema:
+            type: boolean
+          example: false
+        - name: acknowledged
+          in: query
+          description: Filter by acknowledged status.
+          required: false
+          schema:
+            type: boolean
+          example: false
+      responses:
+        '200':
+          description: Paginated list of incidents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentListResponse'
+              examples:
+                ListIncidents200Example:
+                  summary: Default listIncidents 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      - id: "900100"
+                        type: incident
+                        attributes:
+                          name: Production API
+                          url: https://example.com
+                          http_method: GET
+                          cause: Connection timeout
+                          started_at: "2026-04-18T14:00:00Z"
+                          acknowledged_at: "2026-04-18T14:05:00Z"
+                          resolved_at: "2026-04-18T14:15:00Z"
+                          status: Resolved
+                          team_name: my-team
+                          regions:
+                            - us
+                    pagination:
+                      first: https://uptime.betterstack.com/api/v3/incidents?page=1
+                      last: https://uptime.betterstack.com/api/v3/incidents?page=1
+                      prev: null
+                      next: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createIncident
+      summary: Better Stack Create Incident
+      description: Creates a new manual incident.
+      tags:
+        - Incidents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentCreateRequest'
+            examples:
+              CreateIncidentRequestExample:
+                summary: Default createIncident request
+                x-microcks-default: true
+                value:
+                  name: Database degraded
+                  email: true
+                  sms: false
+                  call: false
+                  push: true
+      responses:
+        '201':
+          description: Incident created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                CreateIncident201Example:
+                  summary: Default createIncident 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "900101"
+                      type: incident
+                      attributes:
+                        name: Database degraded
+                        status: Started
+                        started_at: "2026-04-19T10:00:00Z"
+                        acknowledged_at: null
+                        resolved_at: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /incidents/{id}:
+    get:
+      operationId: getIncident
+      summary: Better Stack Get Incident
+      description: Returns a single incident by ID.
+      tags:
+        - Incidents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the incident.
+          schema:
+            type: string
+          example: "900100"
+      responses:
+        '200':
+          description: Incident details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                GetIncident200Example:
+                  summary: Default getIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "900100"
+                      type: incident
+                      attributes:
+                        name: Production API
+                        url: https://example.com
+                        http_method: GET
+                        cause: Connection timeout
+                        started_at: "2026-04-18T14:00:00Z"
+                        acknowledged_at: "2026-04-18T14:05:00Z"
+                        resolved_at: "2026-04-18T14:15:00Z"
+                        status: Resolved
+        '404':
+          description: Incident not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteIncident
+      summary: Better Stack Delete Incident
+      description: Deletes an existing incident.
+      tags:
+        - Incidents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the incident.
+          schema:
+            type: string
+          example: "900100"
+      responses:
+        '204':
+          description: Incident deleted successfully.
+        '404':
+          description: Incident not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /incidents/{id}/acknowledge:
+    post:
+      operationId: acknowledgeIncident
+      summary: Better Stack Acknowledge Incident
+      description: Acknowledges an active incident.
+      tags:
+        - Incidents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the incident.
+          schema:
+            type: string
+          example: "900100"
+      responses:
+        '200':
+          description: Incident acknowledged.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                AcknowledgeIncident200Example:
+                  summary: Default acknowledgeIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "900100"
+                      type: incident
+                      attributes:
+                        status: Started
+                        acknowledged_at: "2026-04-19T10:01:00Z"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /incidents/{id}/resolve:
+    post:
+      operationId: resolveIncident
+      summary: Better Stack Resolve Incident
+      description: Resolves an active incident.
+      tags:
+        - Incidents
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the incident.
+          schema:
+            type: string
+          example: "900100"
+      responses:
+        '200':
+          description: Incident resolved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                ResolveIncident200Example:
+                  summary: Default resolveIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "900100"
+                      type: incident
+                      attributes:
+                        status: Resolved
+                        resolved_at: "2026-04-19T10:05:00Z"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /status-pages:
+    get:
+      operationId: listStatusPages
+      summary: Better Stack List Status Pages
+      description: Returns a paginated list of all status pages.
+      tags:
+        - Status Pages
+      parameters:
+        - name: team_name
+          in: query
+          description: Filter by team name when using a global API token.
+          required: false
+          schema:
+            type: string
+          example: my-team
+      responses:
+        '200':
+          description: Paginated list of status pages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageListResponse'
+              examples:
+                ListStatusPages200Example:
+                  summary: Default listStatusPages 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      - id: "700010"
+                        type: status_page
+                        attributes:
+                          company_name: Acme Corp
+                          company_website: https://acme.com
+                          subdomain: acme
+                          custom_domain: status.acme.com
+                          timezone: UTC
+                          aggregate_state: operational
+                          theme: light
+                          created_at: "2025-03-01T00:00:00Z"
+                          updated_at: "2026-04-01T00:00:00Z"
+                    pagination:
+                      first: https://uptime.betterstack.com/api/v2/status-pages?page=1
+                      last: https://uptime.betterstack.com/api/v2/status-pages?page=1
+                      prev: null
+                      next: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createStatusPage
+      summary: Better Stack Create Status Page
+      description: Creates a new status page.
+      tags:
+        - Status Pages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusPageCreateRequest'
+            examples:
+              CreateStatusPageRequestExample:
+                summary: Default createStatusPage request
+                x-microcks-default: true
+                value:
+                  company_name: Acme Corp
+                  company_website: https://acme.com
+                  subdomain: acme
+                  timezone: UTC
+      responses:
+        '201':
+          description: Status page created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageSingleResponse'
+              examples:
+                CreateStatusPage201Example:
+                  summary: Default createStatusPage 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "700010"
+                      type: status_page
+                      attributes:
+                        company_name: Acme Corp
+                        company_website: https://acme.com
+                        subdomain: acme
+                        timezone: UTC
+                        aggregate_state: operational
+                        created_at: "2026-04-19T10:00:00Z"
+                        updated_at: "2026-04-19T10:00:00Z"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /status-pages/{id}:
+    get:
+      operationId: getStatusPage
+      summary: Better Stack Get Status Page
+      description: Returns a single status page by ID.
+      tags:
+        - Status Pages
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the status page.
+          schema:
+            type: string
+          example: "700010"
+      responses:
+        '200':
+          description: Status page details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageSingleResponse'
+              examples:
+                GetStatusPage200Example:
+                  summary: Default getStatusPage 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "700010"
+                      type: status_page
+                      attributes:
+                        company_name: Acme Corp
+                        company_website: https://acme.com
+                        subdomain: acme
+                        custom_domain: status.acme.com
+                        timezone: UTC
+                        aggregate_state: operational
+                        theme: light
+                        created_at: "2025-03-01T00:00:00Z"
+                        updated_at: "2026-04-01T00:00:00Z"
+        '404':
+          description: Status page not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateStatusPage
+      summary: Better Stack Update Status Page
+      description: Updates an existing status page.
+      tags:
+        - Status Pages
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the status page.
+          schema:
+            type: string
+          example: "700010"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusPageUpdateRequest'
+            examples:
+              UpdateStatusPageRequestExample:
+                summary: Default updateStatusPage request
+                x-microcks-default: true
+                value:
+                  company_name: Acme Corp Updated
+                  theme: dark
+      responses:
+        '200':
+          description: Status page updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageSingleResponse'
+              examples:
+                UpdateStatusPage200Example:
+                  summary: Default updateStatusPage 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "700010"
+                      type: status_page
+                      attributes:
+                        company_name: Acme Corp Updated
+                        theme: dark
+                        updated_at: "2026-04-19T10:00:00Z"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteStatusPage
+      summary: Better Stack Delete Status Page
+      description: Deletes an existing status page.
+      tags:
+        - Status Pages
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the status page.
+          schema:
+            type: string
+          example: "700010"
+      responses:
+        '204':
+          description: Status page deleted successfully.
+        '404':
+          description: Status page not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /policies:
+    get:
+      operationId: listEscalationPolicies
+      summary: Better Stack List Escalation Policies
+      description: Returns a paginated list of all escalation policies. Uses API v3.
+      tags:
+        - Escalation Policies
+      parameters:
+        - name: team_name
+          in: query
+          description: Filter policies by team name when using a global API token.
+          required: false
+          schema:
+            type: string
+          example: my-team
+      responses:
+        '200':
+          description: Paginated list of escalation policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyListResponse'
+              examples:
+                ListEscalationPolicies200Example:
+                  summary: Default listEscalationPolicies 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      - id: "300010"
+                        type: policy
+                        attributes:
+                          name: Default On-Call
+                          repeat_count: 3
+                          repeat_delay: 300
+                          incident_token: abc123
+                          policy_group_id: null
+                          team_name: my-team
+                          steps:
+                            - type: step
+                              attributes:
+                                step_type: notification
+                                wait_before: 0
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createEscalationPolicy
+      summary: Better Stack Create Escalation Policy
+      description: Creates a new escalation policy.
+      tags:
+        - Escalation Policies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyCreateRequest'
+            examples:
+              CreateEscalationPolicyRequestExample:
+                summary: Default createEscalationPolicy request
+                x-microcks-default: true
+                value:
+                  name: Default On-Call
+                  repeat_count: 3
+                  repeat_delay: 300
+      responses:
+        '201':
+          description: Escalation policy created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicySingleResponse'
+              examples:
+                CreateEscalationPolicy201Example:
+                  summary: Default createEscalationPolicy 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "300010"
+                      type: policy
+                      attributes:
+                        name: Default On-Call
+                        repeat_count: 3
+                        repeat_delay: 300
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /policies/{id}:
+    get:
+      operationId: getEscalationPolicy
+      summary: Better Stack Get Escalation Policy
+      description: Returns a single escalation policy by ID.
+      tags:
+        - Escalation Policies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the escalation policy.
+          schema:
+            type: string
+          example: "300010"
+      responses:
+        '200':
+          description: Escalation policy details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicySingleResponse'
+              examples:
+                GetEscalationPolicy200Example:
+                  summary: Default getEscalationPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "300010"
+                      type: policy
+                      attributes:
+                        name: Default On-Call
+                        repeat_count: 3
+                        repeat_delay: 300
+                        incident_token: abc123
+                        team_name: my-team
+        '404':
+          description: Escalation policy not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateEscalationPolicy
+      summary: Better Stack Update Escalation Policy
+      description: Updates an existing escalation policy.
+      tags:
+        - Escalation Policies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the escalation policy.
+          schema:
+            type: string
+          example: "300010"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyUpdateRequest'
+            examples:
+              UpdateEscalationPolicyRequestExample:
+                summary: Default updateEscalationPolicy request
+                x-microcks-default: true
+                value:
+                  name: Updated On-Call Policy
+                  repeat_count: 5
+      responses:
+        '200':
+          description: Escalation policy updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicySingleResponse'
+              examples:
+                UpdateEscalationPolicy200Example:
+                  summary: Default updateEscalationPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "300010"
+                      type: policy
+                      attributes:
+                        name: Updated On-Call Policy
+                        repeat_count: 5
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteEscalationPolicy
+      summary: Better Stack Delete Escalation Policy
+      description: Deletes an existing escalation policy.
+      tags:
+        - Escalation Policies
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the escalation policy.
+          schema:
+            type: string
+          example: "300010"
+      responses:
+        '204':
+          description: Escalation policy deleted successfully.
+        '404':
+          description: Escalation policy not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /team-members:
+    get:
+      operationId: listTeamMembers
+      summary: Better Stack List Team Members
+      description: Returns a list of team members and pending invitations.
+      tags:
+        - Team Members
+      parameters:
+        - name: team_name
+          in: query
+          description: Filter by team name when using a global API token.
+          required: false
+          schema:
+            type: string
+          example: my-team
+        - name: email
+          in: query
+          description: Filter by member email address.
+          required: false
+          schema:
+            type: string
+            format: email
+          example: jsmith@example.com
+      responses:
+        '200':
+          description: List of team members.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberListResponse'
+              examples:
+                ListTeamMembers200Example:
+                  summary: Default listTeamMembers 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      - id: "200001"
+                        type: team_member
+                        attributes:
+                          email: jsmith@example.com
+                          name: Jane Smith
+                          role: admin
+                          created_at: "2025-01-10T08:00:00Z"
+                          updated_at: "2026-03-01T12:00:00Z"
+        '401':
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Global token used without specifying team_name.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: inviteTeamMember
+      summary: Better Stack Invite Team Member
+      description: Invites a new member to the team.
+      tags:
+        - Team Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamMemberInviteRequest'
+            examples:
+              InviteTeamMemberRequestExample:
+                summary: Default inviteTeamMember request
+                x-microcks-default: true
+                value:
+                  email: newmember@example.com
+                  role: member
+      responses:
+        '201':
+          description: Team member invited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberSingleResponse'
+              examples:
+                InviteTeamMember201Example:
+                  summary: Default inviteTeamMember 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "200002"
+                      type: team_member
+                      attributes:
+                        email: newmember@example.com
+                        role: member
+                        created_at: "2026-04-19T10:00:00Z"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /team-members/{id}:
+    get:
+      operationId: getTeamMember
+      summary: Better Stack Get Team Member
+      description: Returns a single team member by ID.
+      tags:
+        - Team Members
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the team member.
+          schema:
+            type: string
+          example: "200001"
+      responses:
+        '200':
+          description: Team member details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberSingleResponse'
+              examples:
+                GetTeamMember200Example:
+                  summary: Default getTeamMember 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "200001"
+                      type: team_member
+                      attributes:
+                        email: jsmith@example.com
+                        name: Jane Smith
+                        role: admin
+                        created_at: "2025-01-10T08:00:00Z"
+                        updated_at: "2026-03-01T12:00:00Z"
+        '404':
+          description: Team member not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteTeamMember
+      summary: Better Stack Delete Team Member
+      description: Removes a team member by ID.
+      tags:
+        - Team Members
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The unique identifier of the team member.
+          schema:
+            type: string
+          example: "200001"
+      responses:
+        '204':
+          description: Team member removed successfully.
+        '404':
+          description: Team member not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer token authentication. Use a global API token or a team-scoped
+        Uptime API token obtained from Better Stack Settings → API tokens.
+  schemas:
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    MonitorAttributes:
+      title: Monitor Attributes
+      description: Attributes of an uptime monitor.
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL being monitored.
+          example: https://example.com
+        pronounceable_name:
+          type: string
+          description: Human-readable name for the monitor.
+          example: Production API
+        monitor_type:
+          type: string
+          description: Type of monitoring check.
+          enum:
+            - status
+            - expected_status_code
+            - keyword
+            - keyword_absence
+            - ping
+            - tcp
+            - udp
+            - smtp
+            - pop
+            - imap
+          example: status
+        status:
+          type: string
+          description: Current operational status of the monitor.
+          enum:
+            - paused
+            - pending
+            - maintenance
+            - up
+            - validating
+            - down
+          example: up
+        monitor_group_id:
+          type: string
+          nullable: true
+          description: ID of the monitor group this monitor belongs to.
+          example: null
+        policy_id:
+          type: string
+          nullable: true
+          description: ID of the escalation policy for this monitor.
+          example: "300010"
+        check_frequency:
+          type: integer
+          description: How often to check the URL in seconds.
+          example: 180
+        verify_ssl:
+          type: boolean
+          description: Whether to verify SSL certificate validity.
+          example: true
+        ssl_expiration:
+          type: integer
+          nullable: true
+          description: Days before SSL expiration to start alerting.
+          example: 30
+        call:
+          type: boolean
+          description: Whether to alert via phone call.
+          example: false
+        sms:
+          type: boolean
+          description: Whether to alert via SMS.
+          example: true
+        email:
+          type: boolean
+          description: Whether to alert via email.
+          example: true
+        push:
+          type: boolean
+          description: Whether to alert via push notification.
+          example: true
+        regions:
+          type: array
+          description: Geographic regions from which to check the monitor.
+          items:
+            type: string
+          example:
+            - us
+            - eu
+        created_at:
+          type: string
+          format: date-time
+          description: When the monitor was created.
+          example: "2025-01-15T10:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: When the monitor was last updated.
+          example: "2026-04-01T08:30:00Z"
+        paused_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the monitor was paused, if applicable.
+          example: null
+    MonitorObject:
+      title: Monitor Object
+      description: A single monitor resource following JSON:API format.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the monitor.
+          example: "500123"
+        type:
+          type: string
+          description: Resource type identifier.
+          example: monitor
+        attributes:
+          $ref: '#/components/schemas/MonitorAttributes'
+    MonitorListResponse:
+      title: Monitor List Response
+      description: Paginated list of monitors.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    MonitorSingleResponse:
+      title: Monitor Single Response
+      description: Single monitor response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/MonitorObject'
+    MonitorCreateRequest:
+      title: Monitor Create Request
+      description: Request body for creating a new monitor.
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL to monitor.
+          example: https://example.com
+        pronounceable_name:
+          type: string
+          description: Human-readable name for the monitor.
+          example: Production API
+        monitor_type:
+          type: string
+          description: Type of monitoring check.
+          enum:
+            - status
+            - expected_status_code
+            - keyword
+            - keyword_absence
+            - ping
+            - tcp
+          example: status
+        check_frequency:
+          type: integer
+          description: Check interval in seconds.
+          example: 180
+        verify_ssl:
+          type: boolean
+          description: Whether to verify SSL certificate.
+          example: true
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+        regions:
+          type: array
+          items:
+            type: string
+          description: Regions to monitor from.
+          example:
+            - us
+            - eu
+        policy_id:
+          type: string
+          nullable: true
+          description: Escalation policy ID.
+          example: "300010"
+    MonitorUpdateRequest:
+      title: Monitor Update Request
+      description: Request body for updating an existing monitor (all fields optional).
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: New URL to monitor.
+          example: https://example.com
+        pronounceable_name:
+          type: string
+          description: New human-readable name.
+          example: Updated API Monitor
+        check_frequency:
+          type: integer
+          description: New check interval in seconds.
+          example: 300
+        verify_ssl:
+          type: boolean
+          description: SSL verification setting.
+          example: true
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+    ResponseTimesResponse:
+      title: Response Times Response
+      description: Response time metrics for a monitor.
+      type: object
+      properties:
+        data:
+          type: array
+          description: Array of response time data points.
+          items:
+            type: object
+            properties:
+              at:
+                type: string
+                format: date-time
+                description: Timestamp of the measurement.
+                example: "2026-04-19T10:00:00Z"
+              response_time:
+                type: integer
+                description: Response time in milliseconds.
+                example: 142
+              region:
+                type: string
+                description: Region where the check was performed.
+                example: us
+    AvailabilityResponse:
+      title: Availability Response
+      description: Availability summary metrics.
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            availability:
+              type: number
+              description: Availability percentage.
+              example: 99.98
+            downtime_duration:
+              type: integer
+              description: Total downtime duration in seconds.
+              example: 86
+            number_of_incidents:
+              type: integer
+              description: Number of incidents in the period.
+              example: 2
+            longest_incident_duration:
+              type: integer
+              description: Duration of the longest incident in seconds.
+              example: 61
+            average_incident_duration:
+              type: integer
+              description: Average incident duration in seconds.
+              example: 43
+    HeartbeatAttributes:
+      title: Heartbeat Attributes
+      description: Attributes of a heartbeat monitor.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the heartbeat.
+          example: Daily Backup Job
+        url:
+          type: string
+          format: uri
+          description: The URL to ping to signal the heartbeat.
+          example: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+        period:
+          type: integer
+          description: Expected period between heartbeat pings in seconds.
+          example: 86400
+        grace:
+          type: integer
+          description: Grace period in seconds before alerting.
+          example: 3600
+        status:
+          type: string
+          description: Current status of the heartbeat.
+          enum:
+            - paused
+            - pending
+            - up
+            - down
+          example: up
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          description: When the heartbeat was created.
+          example: "2025-06-01T00:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: When the heartbeat was last updated.
+          example: "2026-04-01T00:00:00Z"
+        paused_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the heartbeat was paused.
+          example: null
+    HeartbeatObject:
+      title: Heartbeat Object
+      description: A single heartbeat resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: "100200"
+        type:
+          type: string
+          description: Resource type.
+          example: heartbeat
+        attributes:
+          $ref: '#/components/schemas/HeartbeatAttributes'
+    HeartbeatListResponse:
+      title: Heartbeat List Response
+      description: Paginated list of heartbeats.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeartbeatObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    HeartbeatSingleResponse:
+      title: Heartbeat Single Response
+      description: Single heartbeat response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HeartbeatObject'
+    HeartbeatCreateRequest:
+      title: Heartbeat Create Request
+      description: Request body for creating a heartbeat.
+      type: object
+      required:
+        - name
+        - period
+      properties:
+        name:
+          type: string
+          description: Name for the heartbeat.
+          example: Daily Backup Job
+        period:
+          type: integer
+          description: Expected period in seconds.
+          example: 86400
+        grace:
+          type: integer
+          description: Grace period in seconds.
+          example: 3600
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+    HeartbeatUpdateRequest:
+      title: Heartbeat Update Request
+      description: Request body for updating a heartbeat (all fields optional).
+      type: object
+      properties:
+        name:
+          type: string
+          description: New name for the heartbeat.
+          example: Updated Backup Job
+        period:
+          type: integer
+          description: New period in seconds.
+          example: 86400
+        grace:
+          type: integer
+          description: New grace period in seconds.
+          example: 7200
+    IncidentAttributes:
+      title: Incident Attributes
+      description: Attributes of an incident.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name or subject of the incident.
+          example: Production API
+        url:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the affected monitor.
+          example: https://example.com
+        http_method:
+          type: string
+          nullable: true
+          description: HTTP method of the affected check.
+          example: GET
+        cause:
+          type: string
+          nullable: true
+          description: Root cause description of the incident.
+          example: Connection timeout
+        started_at:
+          type: string
+          format: date-time
+          description: When the incident started.
+          example: "2026-04-18T14:00:00Z"
+        acknowledged_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the incident was acknowledged.
+          example: "2026-04-18T14:05:00Z"
+        resolved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the incident was resolved.
+          example: "2026-04-18T14:15:00Z"
+        status:
+          type: string
+          description: Current incident status.
+          enum:
+            - Started
+            - Resolved
+          example: Resolved
+        team_name:
+          type: string
+          description: Team that owns the incident.
+          example: my-team
+        regions:
+          type: array
+          items:
+            type: string
+          description: Regions where the incident was detected.
+          example:
+            - us
+    IncidentObject:
+      title: Incident Object
+      description: A single incident resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: "900100"
+        type:
+          type: string
+          description: Resource type.
+          example: incident
+        attributes:
+          $ref: '#/components/schemas/IncidentAttributes'
+    IncidentListResponse:
+      title: Incident List Response
+      description: Paginated list of incidents.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IncidentObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    IncidentSingleResponse:
+      title: Incident Single Response
+      description: Single incident response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/IncidentObject'
+    IncidentCreateRequest:
+      title: Incident Create Request
+      description: Request body for creating a manual incident.
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Name or description of the incident.
+          example: Database degraded
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+    StatusPageAttributes:
+      title: Status Page Attributes
+      description: Attributes of a status page.
+      type: object
+      properties:
+        company_name:
+          type: string
+          description: Name of the company displayed on the status page.
+          example: Acme Corp
+        company_website:
+          type: string
+          format: uri
+          description: URL of the company website.
+          example: https://acme.com
+        subdomain:
+          type: string
+          description: Subdomain for the status page (yourname.betteruptime.com).
+          example: acme
+        custom_domain:
+          type: string
+          nullable: true
+          description: Custom domain for the status page.
+          example: status.acme.com
+        timezone:
+          type: string
+          description: Timezone for the status page.
+          example: UTC
+        theme:
+          type: string
+          description: UI theme for the status page.
+          enum:
+            - light
+            - dark
+          example: light
+        aggregate_state:
+          type: string
+          description: Overall operational state across all monitored resources.
+          enum:
+            - operational
+            - degraded_performance
+            - partial_outage
+            - major_outage
+            - maintenance
+            - downtime
+          example: operational
+        created_at:
+          type: string
+          format: date-time
+          description: When the status page was created.
+          example: "2025-03-01T00:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: When the status page was last updated.
+          example: "2026-04-01T00:00:00Z"
+    StatusPageObject:
+      title: Status Page Object
+      description: A single status page resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: "700010"
+        type:
+          type: string
+          description: Resource type.
+          example: status_page
+        attributes:
+          $ref: '#/components/schemas/StatusPageAttributes'
+    StatusPageListResponse:
+      title: Status Page List Response
+      description: Paginated list of status pages.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusPageObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    StatusPageSingleResponse:
+      title: Status Page Single Response
+      description: Single status page response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/StatusPageObject'
+    StatusPageCreateRequest:
+      title: Status Page Create Request
+      description: Request body for creating a status page.
+      type: object
+      required:
+        - company_name
+        - subdomain
+      properties:
+        company_name:
+          type: string
+          description: Company name displayed on the page.
+          example: Acme Corp
+        company_website:
+          type: string
+          format: uri
+          description: Company website URL.
+          example: https://acme.com
+        subdomain:
+          type: string
+          description: Subdomain slug.
+          example: acme
+        timezone:
+          type: string
+          description: Timezone for the page.
+          example: UTC
+        theme:
+          type: string
+          enum:
+            - light
+            - dark
+          description: Page theme.
+          example: light
+    StatusPageUpdateRequest:
+      title: Status Page Update Request
+      description: Request body for updating a status page (all fields optional).
+      type: object
+      properties:
+        company_name:
+          type: string
+          description: New company name.
+          example: Acme Corp Updated
+        custom_domain:
+          type: string
+          description: New custom domain.
+          example: status.acme.com
+        theme:
+          type: string
+          enum:
+            - light
+            - dark
+          description: New theme.
+          example: dark
+    PolicyStep:
+      title: Policy Step
+      description: A step in an escalation policy.
+      type: object
+      properties:
+        type:
+          type: string
+          description: Step resource type.
+          example: step
+        attributes:
+          type: object
+          properties:
+            step_type:
+              type: string
+              description: Type of notification step.
+              enum:
+                - notification
+                - wait
+              example: notification
+            wait_before:
+              type: integer
+              description: Seconds to wait before this step.
+              example: 0
+    PolicyAttributes:
+      title: Policy Attributes
+      description: Attributes of an escalation policy.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the escalation policy.
+          example: Default On-Call
+        repeat_count:
+          type: integer
+          description: Number of times to repeat the escalation cycle.
+          example: 3
+        repeat_delay:
+          type: integer
+          description: Delay in seconds between repeat cycles.
+          example: 300
+        incident_token:
+          type: string
+          description: Unique token for the policy.
+          example: abc123
+        policy_group_id:
+          type: string
+          nullable: true
+          description: ID of the policy group.
+          example: null
+        team_name:
+          type: string
+          description: Team owning this policy.
+          example: my-team
+        steps:
+          type: array
+          description: Escalation steps in sequence.
+          items:
+            $ref: '#/components/schemas/PolicyStep'
+    PolicyObject:
+      title: Policy Object
+      description: A single escalation policy resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: "300010"
+        type:
+          type: string
+          description: Resource type.
+          example: policy
+        attributes:
+          $ref: '#/components/schemas/PolicyAttributes'
+    PolicyListResponse:
+      title: Policy List Response
+      description: Paginated list of escalation policies.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    PolicySingleResponse:
+      title: Policy Single Response
+      description: Single escalation policy response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/PolicyObject'
+    PolicyCreateRequest:
+      title: Policy Create Request
+      description: Request body for creating an escalation policy.
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Policy name.
+          example: Default On-Call
+        repeat_count:
+          type: integer
+          description: Number of repeat cycles.
+          example: 3
+        repeat_delay:
+          type: integer
+          description: Delay between cycles in seconds.
+          example: 300
+    PolicyUpdateRequest:
+      title: Policy Update Request
+      description: Request body for updating an escalation policy (all fields optional).
+      type: object
+      properties:
+        name:
+          type: string
+          description: New policy name.
+          example: Updated On-Call Policy
+        repeat_count:
+          type: integer
+          description: New repeat count.
+          example: 5
+        repeat_delay:
+          type: integer
+          description: New repeat delay in seconds.
+          example: 600
+    TeamMemberAttributes:
+      title: Team Member Attributes
+      description: Attributes of a team member.
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Team member's email address.
+          example: jsmith@example.com
+        name:
+          type: string
+          nullable: true
+          description: Team member's display name.
+          example: Jane Smith
+        role:
+          type: string
+          description: Team member role.
+          enum:
+            - owner
+            - admin
+            - member
+            - viewer
+          example: admin
+        created_at:
+          type: string
+          format: date-time
+          description: When the member joined or was invited.
+          example: "2025-01-10T08:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          description: When the record was last updated.
+          example: "2026-03-01T12:00:00Z"
+    TeamMemberObject:
+      title: Team Member Object
+      description: A single team member resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: "200001"
+        type:
+          type: string
+          description: Resource type.
+          example: team_member
+        attributes:
+          $ref: '#/components/schemas/TeamMemberAttributes'
+    TeamMemberListResponse:
+      title: Team Member List Response
+      description: List of team members.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    TeamMemberSingleResponse:
+      title: Team Member Single Response
+      description: Single team member response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TeamMemberObject'
+    TeamMemberInviteRequest:
+      title: Team Member Invite Request
+      description: Request body for inviting a team member.
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the person to invite.
+          example: newmember@example.com
+        role:
+          type: string
+          description: Role to assign.
+          enum:
+            - admin
+            - member
+            - viewer
+          example: member

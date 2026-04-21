@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-heartbeat-update-request-schema.json",
+  "title": "HeartbeatUpdateRequest",
+  "description": "Request body for updating a heartbeat (all fields optional).",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "New name for the heartbeat.",
+      "example": "Updated Backup Job"
+    },
+    "period": {
+      "type": "integer",
+      "description": "New period in seconds.",
+      "example": 86400
+    },
+    "grace": {
+      "type": "integer",
+      "description": "New grace period in seconds.",
+      "example": 7200
+    }
+  }
+}

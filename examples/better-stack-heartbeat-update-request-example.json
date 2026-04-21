@@ -1,0 +1,5 @@
+{
+  "name": "Updated Backup Job",
+  "period": 86400,
+  "grace": 7200
+}

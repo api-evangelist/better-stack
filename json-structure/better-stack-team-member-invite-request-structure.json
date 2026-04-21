@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-team-member-invite-request-structure.json",
+  "name": "TeamMemberInviteRequest",
+  "description": "Request body for inviting a team member.",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email address of the person to invite.",
+      "example": "newmember@example.com"
+    },
+    "role": {
+      "type": "string",
+      "description": "Role to assign.",
+      "enum": [
+        "admin",
+        "member",
+        "viewer"
+      ],
+      "example": "member"
+    }
+  },
+  "required": [
+    "email"
+  ]
+}

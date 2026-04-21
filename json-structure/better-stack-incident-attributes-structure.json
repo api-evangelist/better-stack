@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-incident-attributes-structure.json",
+  "name": "IncidentAttributes",
+  "description": "Attributes of an incident.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name or subject of the incident.",
+      "example": "Production API"
+    },
+    "url": {
+      "type": "uri",
+      "nullable": true,
+      "description": "URL of the affected monitor.",
+      "example": "https://example.com"
+    },
+    "http_method": {
+      "type": "string",
+      "nullable": true,
+      "description": "HTTP method of the affected check.",
+      "example": "GET"
+    },
+    "cause": {
+      "type": "string",
+      "nullable": true,
+      "description": "Root cause description of the incident.",
+      "example": "Connection timeout"
+    },
+    "started_at": {
+      "type": "datetime",
+      "description": "When the incident started.",
+      "example": "2026-04-18T14:00:00Z"
+    },
+    "acknowledged_at": {
+      "type": "datetime",
+      "nullable": true,
+      "description": "When the incident was acknowledged.",
+      "example": "2026-04-18T14:05:00Z"
+    },
+    "resolved_at": {
+      "type": "datetime",
+      "nullable": true,
+      "description": "When the incident was resolved.",
+      "example": "2026-04-18T14:15:00Z"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current incident status.",
+      "enum": [
+        "Started",
+        "Resolved"
+      ],
+      "example": "Resolved"
+    },
+    "team_name": {
+      "type": "string",
+      "description": "Team that owns the incident.",
+      "example": "my-team"
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Regions where the incident was detected.",
+      "example": [
+        "us"
+      ]
+    }
+  }
+}

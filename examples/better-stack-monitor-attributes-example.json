@@ -1,0 +1,22 @@
+{
+  "url": "https://example.com",
+  "pronounceable_name": "Production API",
+  "monitor_type": "status",
+  "status": "up",
+  "monitor_group_id": "500123",
+  "policy_id": "300010",
+  "check_frequency": 180,
+  "verify_ssl": true,
+  "ssl_expiration": 30,
+  "call": false,
+  "sms": true,
+  "email": true,
+  "push": true,
+  "regions": [
+    "us",
+    "eu"
+  ],
+  "created_at": "2025-01-15T10:00:00Z",
+  "updated_at": "2026-04-01T08:30:00Z",
+  "paused_at": "2026-04-19T10:00:00Z"
+}

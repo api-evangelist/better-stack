@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-monitor-object-schema.json",
+  "title": "MonitorObject",
+  "description": "A single monitor resource following JSON:API format.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier of the monitor.",
+      "example": "500123"
+    },
+    "type": {
+      "type": "string",
+      "description": "Resource type identifier.",
+      "example": "monitor"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/MonitorAttributes"
+    }
+  }
+}

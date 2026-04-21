@@ -1,0 +1,351 @@
+rules:
+
+  # INFO / METADATA
+  info-title-prefix:
+    description: API title should start with "Better Stack"
+    message: "Info title should start with 'Better Stack' — got '{{value}}'"
+    severity: warn
+    given: $.info.title
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Better Stack"
+
+  info-description-required:
+    description: API info must have a description
+    severity: error
+    given: $.info
+    then:
+      field: description
+      function: truthy
+
+  info-description-min-length:
+    description: API description should be at least 30 characters
+    message: "Description is too short: {{value}}"
+    severity: warn
+    given: $.info.description
+    then:
+      function: length
+      functionOptions:
+        min: 30
+
+  info-version-required:
+    description: API info must specify a version
+    severity: error
+    given: $.info
+    then:
+      field: version
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version:
+    description: OpenAPI version should be 3.0.x
+    message: "OpenAPI version should be 3.0.x — got '{{value}}'"
+    severity: warn
+    given: $.openapi
+    then:
+      function: pattern
+      functionOptions:
+        match: "^3\\.0\\."
+
+  # SERVERS
+  servers-defined:
+    description: At least one server must be defined
+    severity: error
+    given: $
+    then:
+      field: servers
+      function: truthy
+
+  servers-https-only:
+    description: All server URLs must use HTTPS
+    message: "Server URL must use HTTPS — got '{{value}}'"
+    severity: error
+    given: $.servers[*].url
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  servers-description-required:
+    description: Each server should have a description
+    severity: warn
+    given: $.servers[*]
+    then:
+      field: description
+      function: truthy
+
+  # PATHS — NAMING CONVENTIONS
+  paths-kebab-case:
+    description: Path segments should use kebab-case
+    message: "Path '{{path}}' should use kebab-case segments"
+    severity: warn
+    given: $.paths
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9-{}]+)+$"
+
+  paths-no-trailing-slash:
+    description: Paths must not have trailing slashes
+    message: "Path '{{path}}' must not end with a slash"
+    severity: error
+    given: $.paths
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+
+  paths-no-query-string:
+    description: Query strings must not appear in paths
+    message: "Path '{{path}}' must not contain a query string"
+    severity: error
+    given: $.paths
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "\\?"
+
+  # OPERATIONS
+  operation-summary-required:
+    description: All operations must have a summary
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete,head,options]
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-title-case:
+    description: Operation summaries should start with "Better Stack"
+    message: "Operation summary should start with 'Better Stack' — got '{{value}}'"
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].summary
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Better Stack"
+
+  operation-description-required:
+    description: All operations must have a description
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete,head,options]
+    then:
+      field: description
+      function: truthy
+
+  operation-id-required:
+    description: All operations must have an operationId
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete,head,options]
+    then:
+      field: operationId
+      function: truthy
+
+  operation-id-camel-case:
+    description: operationId should use camelCase
+    message: "operationId '{{value}}' should use camelCase"
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].operationId
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  operation-tags-required:
+    description: All operations must have at least one tag
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete,head,options]
+    then:
+      field: tags
+      function: truthy
+
+  # TAGS
+  tags-global-defined:
+    description: Global tags array should be defined
+    severity: info
+    given: $
+    then:
+      field: tags
+      function: truthy
+
+  tags-description-required:
+    description: Each global tag should have a description
+    severity: info
+    given: $.tags[*]
+    then:
+      field: description
+      function: truthy
+
+  # PARAMETERS
+  parameter-description-required:
+    description: All parameters must have a description
+    severity: warn
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    then:
+      field: description
+      function: truthy
+
+  parameter-schema-required:
+    description: All parameters must have a schema
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].parameters[*]
+    then:
+      field: schema
+      function: truthy
+
+  parameter-snake-case:
+    description: Query parameter names should use snake_case
+    message: "Parameter '{{value}}' should use snake_case"
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete].parameters[?(@.in=='query')].name
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-z0-9_]*$"
+
+  # REQUEST BODIES
+  request-body-json-content:
+    description: Request bodies should use application/json content type
+    severity: warn
+    given: $.paths[*][post,put,patch].requestBody.content
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 1
+
+  # RESPONSES
+  response-success-required:
+    description: Every operation must define a 2xx success response
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ['200']
+            - required: ['201']
+            - required: ['204']
+
+  response-401-defined:
+    description: Operations should define a 401 Unauthorized response
+    severity: info
+    given: $.paths[*][get,post,put,patch,delete].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+
+  response-description-required:
+    description: All responses must have a description
+    severity: error
+    given: $.paths[*][get,post,put,patch,delete].responses[*]
+    then:
+      field: description
+      function: truthy
+
+  # SCHEMAS — PROPERTY NAMING
+  schema-description-required:
+    description: Top-level component schemas should have descriptions
+    severity: warn
+    given: $.components.schemas[*]
+    then:
+      field: description
+      function: truthy
+
+  schema-property-snake-case:
+    description: Schema property names should use snake_case
+    message: "Property '{{path}}' should use snake_case"
+    severity: info
+    given: $.components.schemas[*].properties
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+
+  # SECURITY
+  security-global-defined:
+    description: Global security must be defined
+    severity: warn
+    given: $
+    then:
+      field: security
+      function: truthy
+
+  security-schemes-defined:
+    description: Security schemes must be defined in components
+    severity: error
+    given: $.components
+    then:
+      field: securitySchemes
+      function: truthy
+
+  security-bearer-auth:
+    description: Better Stack API should use Bearer authentication
+    severity: info
+    given: $.components.securitySchemes
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 1
+
+  # HTTP METHOD CONVENTIONS
+  http-get-no-body:
+    description: GET operations should not have a request body
+    severity: error
+    given: $.paths[*].get
+    then:
+      field: requestBody
+      function: falsy
+
+  http-delete-no-body:
+    description: DELETE operations should not have a request body
+    severity: warn
+    given: $.paths[*].delete
+    then:
+      field: requestBody
+      function: falsy
+
+  http-post-has-body:
+    description: POST operations should have a request body
+    severity: warn
+    given: $.paths[*].post
+    then:
+      field: requestBody
+      function: truthy
+
+  http-patch-has-body:
+    description: PATCH operations should have a request body
+    severity: warn
+    given: $.paths[*].patch
+    then:
+      field: requestBody
+      function: truthy
+
+  # GENERAL QUALITY
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings
+    message: "Description is empty at {{path}}"
+    severity: warn
+    given: $..description
+    then:
+      function: pattern
+      functionOptions:
+        match: ".+"
+
+  examples-encouraged:
+    description: Schema properties should include example values
+    severity: info
+    given: $.components.schemas[*].properties[*]
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object

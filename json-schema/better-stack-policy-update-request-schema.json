@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-policy-update-request-schema.json",
+  "title": "PolicyUpdateRequest",
+  "description": "Request body for updating an escalation policy (all fields optional).",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "New policy name.",
+      "example": "Updated On-Call Policy"
+    },
+    "repeat_count": {
+      "type": "integer",
+      "description": "New repeat count.",
+      "example": 5
+    },
+    "repeat_delay": {
+      "type": "integer",
+      "description": "New repeat delay in seconds.",
+      "example": 600
+    }
+  }
+}

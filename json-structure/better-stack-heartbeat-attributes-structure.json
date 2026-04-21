@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-heartbeat-attributes-structure.json",
+  "name": "HeartbeatAttributes",
+  "description": "Attributes of a heartbeat monitor.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the heartbeat.",
+      "example": "Daily Backup Job"
+    },
+    "url": {
+      "type": "uri",
+      "description": "The URL to ping to signal the heartbeat.",
+      "example": "https://uptime.betterstack.com/api/v1/heartbeat/abc123"
+    },
+    "period": {
+      "type": "int32",
+      "description": "Expected period between heartbeat pings in seconds.",
+      "example": 86400
+    },
+    "grace": {
+      "type": "int32",
+      "description": "Grace period in seconds before alerting.",
+      "example": 3600
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the heartbeat.",
+      "enum": [
+        "paused",
+        "pending",
+        "up",
+        "down"
+      ],
+      "example": "up"
+    },
+    "call": {
+      "type": "boolean",
+      "description": "Alert via phone call.",
+      "example": false
+    },
+    "sms": {
+      "type": "boolean",
+      "description": "Alert via SMS.",
+      "example": false
+    },
+    "email": {
+      "type": "boolean",
+      "description": "Alert via email.",
+      "example": true
+    },
+    "push": {
+      "type": "boolean",
+      "description": "Alert via push notification.",
+      "example": true
+    },
+    "created_at": {
+      "type": "datetime",
+      "description": "When the heartbeat was created.",
+      "example": "2025-06-01T00:00:00Z"
+    },
+    "updated_at": {
+      "type": "datetime",
+      "description": "When the heartbeat was last updated.",
+      "example": "2026-04-01T00:00:00Z"
+    },
+    "paused_at": {
+      "type": "datetime",
+      "nullable": true,
+      "description": "When the heartbeat was paused.",
+      "example": null
+    }
+  }
+}

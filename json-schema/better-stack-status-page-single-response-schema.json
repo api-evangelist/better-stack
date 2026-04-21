@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-status-page-single-response-schema.json",
+  "title": "StatusPageSingleResponse",
+  "description": "Single status page response.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/components/schemas/StatusPageObject"
+    }
+  }
+}

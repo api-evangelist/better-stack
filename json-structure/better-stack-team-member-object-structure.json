@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-team-member-object-structure.json",
+  "name": "TeamMemberObject",
+  "description": "A single team member resource.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier.",
+      "example": "200001"
+    },
+    "type": {
+      "type": "string",
+      "description": "Resource type.",
+      "example": "team_member"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/TeamMemberAttributes"
+    }
+  }
+}

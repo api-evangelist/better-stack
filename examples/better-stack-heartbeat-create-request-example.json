@@ -1,0 +1,9 @@
+{
+  "name": "Daily Backup Job",
+  "period": 86400,
+  "grace": 3600,
+  "email": true,
+  "sms": false,
+  "call": false,
+  "push": true
+}

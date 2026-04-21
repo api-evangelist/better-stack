@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-status-page-create-request-structure.json",
+  "name": "StatusPageCreateRequest",
+  "description": "Request body for creating a status page.",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Company name displayed on the page.",
+      "example": "Acme Corp"
+    },
+    "company_website": {
+      "type": "uri",
+      "description": "Company website URL.",
+      "example": "https://acme.com"
+    },
+    "subdomain": {
+      "type": "string",
+      "description": "Subdomain slug.",
+      "example": "acme"
+    },
+    "timezone": {
+      "type": "string",
+      "description": "Timezone for the page.",
+      "example": "UTC"
+    },
+    "theme": {
+      "type": "string",
+      "enum": [
+        "light",
+        "dark"
+      ],
+      "description": "Page theme.",
+      "example": "light"
+    }
+  },
+  "required": [
+    "company_name",
+    "subdomain"
+  ]
+}

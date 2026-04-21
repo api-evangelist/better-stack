@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-heartbeat-object-structure.json",
+  "name": "HeartbeatObject",
+  "description": "A single heartbeat resource.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier.",
+      "example": "100200"
+    },
+    "type": {
+      "type": "string",
+      "description": "Resource type.",
+      "example": "heartbeat"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/HeartbeatAttributes"
+    }
+  }
+}

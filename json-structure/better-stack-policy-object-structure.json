@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-policy-object-structure.json",
+  "name": "PolicyObject",
+  "description": "A single escalation policy resource.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier.",
+      "example": "300010"
+    },
+    "type": {
+      "type": "string",
+      "description": "Resource type.",
+      "example": "policy"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/PolicyAttributes"
+    }
+  }
+}

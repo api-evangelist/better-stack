@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-availability-response-schema.json",
+  "title": "AvailabilityResponse",
+  "description": "Availability summary metrics.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "availability": {
+          "type": "number",
+          "description": "Availability percentage.",
+          "example": 99.98
+        },
+        "downtime_duration": {
+          "type": "integer",
+          "description": "Total downtime duration in seconds.",
+          "example": 86
+        },
+        "number_of_incidents": {
+          "type": "integer",
+          "description": "Number of incidents in the period.",
+          "example": 2
+        },
+        "longest_incident_duration": {
+          "type": "integer",
+          "description": "Duration of the longest incident in seconds.",
+          "example": 61
+        },
+        "average_incident_duration": {
+          "type": "integer",
+          "description": "Average incident duration in seconds.",
+          "example": 43
+        }
+      }
+    }
+  }
+}

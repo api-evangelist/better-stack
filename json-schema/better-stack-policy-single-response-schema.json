@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-policy-single-response-schema.json",
+  "title": "PolicySingleResponse",
+  "description": "Single escalation policy response.",
+  "type": "object",
+  "properties": {
+    "data": {
+      "$ref": "#/components/schemas/PolicyObject"
+    }
+  }
+}

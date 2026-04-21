@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-structure/better-stack-heartbeat-create-request-structure.json",
+  "name": "HeartbeatCreateRequest",
+  "description": "Request body for creating a heartbeat.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name for the heartbeat.",
+      "example": "Daily Backup Job"
+    },
+    "period": {
+      "type": "int32",
+      "description": "Expected period in seconds.",
+      "example": 86400
+    },
+    "grace": {
+      "type": "int32",
+      "description": "Grace period in seconds.",
+      "example": 3600
+    },
+    "email": {
+      "type": "boolean",
+      "description": "Alert via email.",
+      "example": true
+    },
+    "sms": {
+      "type": "boolean",
+      "description": "Alert via SMS.",
+      "example": false
+    },
+    "call": {
+      "type": "boolean",
+      "description": "Alert via phone call.",
+      "example": false
+    },
+    "push": {
+      "type": "boolean",
+      "description": "Alert via push notification.",
+      "example": true
+    }
+  },
+  "required": [
+    "name",
+    "period"
+  ]
+}

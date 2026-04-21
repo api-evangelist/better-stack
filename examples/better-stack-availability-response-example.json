@@ -1,0 +1,9 @@
+{
+  "data": {
+    "availability": 99.98,
+    "downtime_duration": 86,
+    "number_of_incidents": 2,
+    "longest_incident_duration": 61,
+    "average_incident_duration": 43
+  }
+}

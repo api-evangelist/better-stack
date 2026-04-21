@@ -1,0 +1,246 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "bs": "https://betterstack.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AvailabilityResponse": "bs:AvailabilityResponse",
+    "HeartbeatAttributes": "bs:HeartbeatAttributes",
+    "HeartbeatCreateRequest": "bs:HeartbeatCreateRequest",
+    "HeartbeatListResponse": "bs:HeartbeatListResponse",
+    "HeartbeatObject": "bs:HeartbeatObject",
+    "HeartbeatSingleResponse": "bs:HeartbeatSingleResponse",
+    "HeartbeatUpdateRequest": "bs:HeartbeatUpdateRequest",
+    "IncidentAttributes": "bs:IncidentAttributes",
+    "IncidentCreateRequest": "bs:IncidentCreateRequest",
+    "IncidentListResponse": "bs:IncidentListResponse",
+    "IncidentObject": "bs:IncidentObject",
+    "IncidentSingleResponse": "bs:IncidentSingleResponse",
+    "MonitorAttributes": "bs:MonitorAttributes",
+    "MonitorCreateRequest": "bs:MonitorCreateRequest",
+    "MonitorListResponse": "bs:MonitorListResponse",
+    "MonitorObject": "bs:MonitorObject",
+    "MonitorSingleResponse": "bs:MonitorSingleResponse",
+    "MonitorUpdateRequest": "bs:MonitorUpdateRequest",
+    "Pagination": "bs:Pagination",
+    "PolicyAttributes": "bs:PolicyAttributes",
+    "PolicyCreateRequest": "bs:PolicyCreateRequest",
+    "PolicyListResponse": "bs:PolicyListResponse",
+    "PolicyObject": "bs:PolicyObject",
+    "PolicySingleResponse": "bs:PolicySingleResponse",
+    "PolicyStep": "bs:PolicyStep",
+    "PolicyUpdateRequest": "bs:PolicyUpdateRequest",
+    "ResponseTimesResponse": "bs:ResponseTimesResponse",
+    "StatusPageAttributes": "bs:StatusPageAttributes",
+    "StatusPageCreateRequest": "bs:StatusPageCreateRequest",
+    "StatusPageListResponse": "bs:StatusPageListResponse",
+    "StatusPageObject": "bs:StatusPageObject",
+    "StatusPageSingleResponse": "bs:StatusPageSingleResponse",
+    "StatusPageUpdateRequest": "bs:StatusPageUpdateRequest",
+    "TeamMemberAttributes": "bs:TeamMemberAttributes",
+    "TeamMemberInviteRequest": "bs:TeamMemberInviteRequest",
+    "TeamMemberListResponse": "bs:TeamMemberListResponse",
+    "TeamMemberObject": "bs:TeamMemberObject",
+    "TeamMemberSingleResponse": "bs:TeamMemberSingleResponse",
+    "data": {
+      "@id": "bs:data",
+      "@type": "@id"
+    },
+    "availability": {
+      "@id": "bs:availability",
+      "@type": "xsd:decimal"
+    },
+    "downtimeDuration": {
+      "@id": "bs:downtime_duration",
+      "@type": "xsd:integer"
+    },
+    "numberOfIncidents": {
+      "@id": "bs:number_of_incidents",
+      "@type": "xsd:integer"
+    },
+    "longestIncidentDuration": {
+      "@id": "bs:longest_incident_duration",
+      "@type": "xsd:integer"
+    },
+    "averageIncidentDuration": {
+      "@id": "bs:average_incident_duration",
+      "@type": "xsd:integer"
+    },
+    "name": "schema:name",
+    "url": "schema:url",
+    "period": {
+      "@id": "bs:period",
+      "@type": "xsd:integer"
+    },
+    "grace": {
+      "@id": "bs:grace",
+      "@type": "xsd:integer"
+    },
+    "status": {
+      "@id": "bs:status",
+      "@type": "xsd:string"
+    },
+    "call": {
+      "@id": "bs:call",
+      "@type": "xsd:boolean"
+    },
+    "sms": {
+      "@id": "bs:sms",
+      "@type": "xsd:boolean"
+    },
+    "email": "schema:email",
+    "push": {
+      "@id": "bs:push",
+      "@type": "xsd:boolean"
+    },
+    "createdAt": "schema:dateCreated",
+    "updatedAt": "schema:dateModified",
+    "pausedAt": {
+      "@id": "bs:paused_at",
+      "@type": "xsd:dateTime"
+    },
+    "pagination": {
+      "@id": "bs:pagination",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "bs:id",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "bs:type",
+      "@type": "xsd:string"
+    },
+    "attributes": {
+      "@id": "bs:attributes",
+      "@type": "xsd:string"
+    },
+    "httpMethod": {
+      "@id": "bs:http_method",
+      "@type": "xsd:string"
+    },
+    "cause": {
+      "@id": "bs:cause",
+      "@type": "xsd:string"
+    },
+    "startedAt": {
+      "@id": "bs:started_at",
+      "@type": "xsd:dateTime"
+    },
+    "acknowledgedAt": {
+      "@id": "bs:acknowledged_at",
+      "@type": "xsd:dateTime"
+    },
+    "resolvedAt": {
+      "@id": "bs:resolved_at",
+      "@type": "xsd:dateTime"
+    },
+    "teamName": {
+      "@id": "bs:team_name",
+      "@type": "xsd:string"
+    },
+    "regions": {
+      "@id": "bs:regions",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "pronounceableName": {
+      "@id": "bs:pronounceable_name",
+      "@type": "xsd:string"
+    },
+    "monitorType": {
+      "@id": "bs:monitor_type",
+      "@type": "xsd:string"
+    },
+    "monitorGroupId": {
+      "@id": "bs:monitor_group_id",
+      "@type": "xsd:string"
+    },
+    "policyId": {
+      "@id": "bs:policy_id",
+      "@type": "xsd:string"
+    },
+    "checkFrequency": {
+      "@id": "bs:check_frequency",
+      "@type": "xsd:integer"
+    },
+    "verifySsl": {
+      "@id": "bs:verify_ssl",
+      "@type": "xsd:boolean"
+    },
+    "sslExpiration": {
+      "@id": "bs:ssl_expiration",
+      "@type": "xsd:integer"
+    },
+    "first": {
+      "@id": "bs:first",
+      "@type": "@id"
+    },
+    "last": {
+      "@id": "bs:last",
+      "@type": "@id"
+    },
+    "prev": {
+      "@id": "bs:prev",
+      "@type": "@id"
+    },
+    "next": {
+      "@id": "bs:next",
+      "@type": "@id"
+    },
+    "repeatCount": {
+      "@id": "bs:repeat_count",
+      "@type": "xsd:integer"
+    },
+    "repeatDelay": {
+      "@id": "bs:repeat_delay",
+      "@type": "xsd:integer"
+    },
+    "incidentToken": {
+      "@id": "bs:incident_token",
+      "@type": "xsd:string"
+    },
+    "policyGroupId": {
+      "@id": "bs:policy_group_id",
+      "@type": "xsd:string"
+    },
+    "steps": {
+      "@id": "bs:steps",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "companyName": {
+      "@id": "bs:company_name",
+      "@type": "xsd:string"
+    },
+    "companyWebsite": {
+      "@id": "bs:company_website",
+      "@type": "@id"
+    },
+    "subdomain": {
+      "@id": "bs:subdomain",
+      "@type": "xsd:string"
+    },
+    "customDomain": {
+      "@id": "bs:custom_domain",
+      "@type": "xsd:string"
+    },
+    "timezone": {
+      "@id": "bs:timezone",
+      "@type": "xsd:string"
+    },
+    "theme": {
+      "@id": "bs:theme",
+      "@type": "xsd:string"
+    },
+    "aggregateState": {
+      "@id": "bs:aggregate_state",
+      "@type": "xsd:string"
+    },
+    "role": {
+      "@id": "bs:role",
+      "@type": "xsd:string"
+    }
+  }
+}

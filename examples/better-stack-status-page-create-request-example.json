@@ -1,0 +1,7 @@
+{
+  "company_name": "Acme Corp",
+  "company_website": "https://acme.com",
+  "subdomain": "acme",
+  "timezone": "UTC",
+  "theme": "light"
+}

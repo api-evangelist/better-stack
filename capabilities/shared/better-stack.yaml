@@ -1,0 +1,690 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Better Stack API
+  description: >-
+    Better Stack uptime monitoring, incident management, heartbeats, status pages,
+    escalation policies, and team management API.
+  tags:
+    - Better Stack
+    - Monitoring
+    - Incidents
+    - Uptime
+    - Status Pages
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      BETTER_STACK_API_TOKEN: BETTER_STACK_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: better-stack
+      baseUri: https://uptime.betterstack.com/api/v2
+      description: Better Stack uptime monitoring and incident management API
+      authentication:
+        type: bearer
+        token: "{{BETTER_STACK_API_TOKEN}}"
+      resources:
+        - name: monitors
+          path: /monitors
+          description: Uptime monitors for URLs, APIs, and services
+          operations:
+            - name: list-monitors
+              method: GET
+              description: List all uptime monitors
+              inputParameters:
+                - name: team_name
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by team name
+                - name: url
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by monitored URL
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-monitor
+              method: POST
+              description: Create a new uptime monitor
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  url: "{{tools.url}}"
+                  pronounceable_name: "{{tools.pronounceable_name}}"
+                  monitor_type: "{{tools.monitor_type}}"
+                  check_frequency: "{{tools.check_frequency}}"
+            - name: get-monitor
+              method: GET
+              description: Get a single monitor by ID
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Monitor ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-monitor
+              method: PATCH
+              description: Update an existing monitor
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Monitor ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  pronounceable_name: "{{tools.pronounceable_name}}"
+                  check_frequency: "{{tools.check_frequency}}"
+            - name: delete-monitor
+              method: DELETE
+              description: Delete an existing monitor
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Monitor ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-monitor-response-times
+              method: GET
+              description: Get response time metrics for a monitor
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Monitor ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-monitor-availability
+              method: GET
+              description: Get availability summary for a monitor
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Monitor ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: heartbeats
+          path: /heartbeats
+          description: Heartbeat monitors for scheduled jobs and cron tasks
+          operations:
+            - name: list-heartbeats
+              method: GET
+              description: List all heartbeat monitors
+              inputParameters:
+                - name: team_name
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by team name
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-heartbeat
+              method: POST
+              description: Create a new heartbeat monitor
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  period: "{{tools.period}}"
+                  grace: "{{tools.grace}}"
+            - name: get-heartbeat
+              method: GET
+              description: Get a single heartbeat by ID
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Heartbeat ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-heartbeat
+              method: PATCH
+              description: Update an existing heartbeat
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Heartbeat ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  grace: "{{tools.grace}}"
+            - name: delete-heartbeat
+              method: DELETE
+              description: Delete a heartbeat monitor
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Heartbeat ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-heartbeat-availability
+              method: GET
+              description: Get availability for a heartbeat
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Heartbeat ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: incidents
+          path: /incidents
+          description: Incident management and alerting
+          operations:
+            - name: list-incidents
+              method: GET
+              description: List all incidents with optional filters
+              inputParameters:
+                - name: from
+                  in: query
+                  type: string
+                  required: false
+                  description: Start date filter
+                - name: to
+                  in: query
+                  type: string
+                  required: false
+                  description: End date filter
+                - name: monitor_id
+                  in: query
+                  type: integer
+                  required: false
+                  description: Filter by monitor ID
+                - name: resolved
+                  in: query
+                  type: boolean
+                  required: false
+                  description: Filter by resolved status
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-incident
+              method: POST
+              description: Create a manual incident
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+            - name: get-incident
+              method: GET
+              description: Get a single incident by ID
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Incident ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: acknowledge-incident
+              method: POST
+              description: Acknowledge an active incident
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Incident ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: resolve-incident
+              method: POST
+              description: Resolve an active incident
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Incident ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-incident
+              method: DELETE
+              description: Delete an incident
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Incident ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: status-pages
+          path: /status-pages
+          description: Public and private status pages
+          operations:
+            - name: list-status-pages
+              method: GET
+              description: List all status pages
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-status-page
+              method: POST
+              description: Create a new status page
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  company_name: "{{tools.company_name}}"
+                  subdomain: "{{tools.subdomain}}"
+            - name: get-status-page
+              method: GET
+              description: Get a single status page
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Status page ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-status-page
+              method: PATCH
+              description: Update a status page
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Status page ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  company_name: "{{tools.company_name}}"
+            - name: delete-status-page
+              method: DELETE
+              description: Delete a status page
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Status page ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: policies
+          path: /policies
+          description: Escalation policies for on-call alerting
+          operations:
+            - name: list-escalation-policies
+              method: GET
+              description: List all escalation policies
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: create-escalation-policy
+              method: POST
+              description: Create a new escalation policy
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+                  repeat_count: "{{tools.repeat_count}}"
+            - name: get-escalation-policy
+              method: GET
+              description: Get a single escalation policy
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Policy ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-escalation-policy
+              method: PATCH
+              description: Update an escalation policy
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Policy ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  name: "{{tools.name}}"
+            - name: delete-escalation-policy
+              method: DELETE
+              description: Delete an escalation policy
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Policy ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: team-members
+          path: /team-members
+          description: Team member management and invitations
+          operations:
+            - name: list-team-members
+              method: GET
+              description: List all team members
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: invite-team-member
+              method: POST
+              description: Invite a new team member
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  email: "{{tools.email}}"
+                  role: "{{tools.role}}"
+            - name: get-team-member
+              method: GET
+              description: Get a single team member
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Team member ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-team-member
+              method: DELETE
+              description: Remove a team member
+              inputParameters:
+                - name: id
+                  in: path
+                  type: string
+                  required: true
+                  description: Team member ID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: better-stack-rest
+      resources:
+        - path: /v1/monitors
+          name: monitors
+          description: Uptime monitor management
+          operations:
+            - method: GET
+              name: list-monitors
+              description: List all monitors
+              call: "better-stack.list-monitors"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-monitor
+              description: Create a monitor
+              call: "better-stack.create-monitor"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/monitors/{id}
+          name: monitor
+          description: Single monitor operations
+          operations:
+            - method: GET
+              name: get-monitor
+              description: Get a monitor
+              call: "better-stack.get-monitor"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/incidents
+          name: incidents
+          description: Incident management
+          operations:
+            - method: GET
+              name: list-incidents
+              description: List all incidents
+              call: "better-stack.list-incidents"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: better-stack-mcp
+      transport: http
+      description: MCP server for AI-assisted Better Stack monitoring and incident management
+      tools:
+        - name: list-monitors
+          description: List all uptime monitors
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-monitors"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-monitor
+          description: Create a new uptime monitor
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "better-stack.create-monitor"
+          with:
+            url: "tools.url"
+            pronounceable_name: "tools.pronounceable_name"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-monitor
+          description: Get a monitor by ID
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.get-monitor"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-incidents
+          description: List all incidents with optional filters
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-incidents"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: acknowledge-incident
+          description: Acknowledge an active incident
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "better-stack.acknowledge-incident"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: resolve-incident
+          description: Resolve an active incident
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "better-stack.resolve-incident"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-heartbeats
+          description: List all heartbeat monitors
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-heartbeats"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-status-pages
+          description: List all status pages
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-status-pages"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-escalation-policies
+          description: List all escalation policies
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-escalation-policies"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-team-members
+          description: List all team members
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "better-stack.list-team-members"
+          outputParameters:
+            - type: object
+              mapping: "$."

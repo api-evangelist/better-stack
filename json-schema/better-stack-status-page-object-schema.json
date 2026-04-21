@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-status-page-object-schema.json",
+  "title": "StatusPageObject",
+  "description": "A single status page resource.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier.",
+      "example": "700010"
+    },
+    "type": {
+      "type": "string",
+      "description": "Resource type.",
+      "example": "status_page"
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/StatusPageAttributes"
+    }
+  }
+}

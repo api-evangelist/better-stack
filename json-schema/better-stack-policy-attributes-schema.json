@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/json-schema/better-stack-policy-attributes-schema.json",
+  "title": "PolicyAttributes",
+  "description": "Attributes of an escalation policy.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the escalation policy.",
+      "example": "Default On-Call"
+    },
+    "repeat_count": {
+      "type": "integer",
+      "description": "Number of times to repeat the escalation cycle.",
+      "example": 3
+    },
+    "repeat_delay": {
+      "type": "integer",
+      "description": "Delay in seconds between repeat cycles.",
+      "example": 300
+    },
+    "incident_token": {
+      "type": "string",
+      "description": "Unique token for the policy.",
+      "example": "abc123"
+    },
+    "policy_group_id": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of the policy group.",
+      "example": null
+    },
+    "team_name": {
+      "type": "string",
+      "description": "Team owning this policy.",
+      "example": "my-team"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Escalation steps in sequence.",
+      "items": {
+        "$ref": "#/components/schemas/PolicyStep"
+      }
+    }
+  }
+}

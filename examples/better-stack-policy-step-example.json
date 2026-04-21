@@ -1,0 +1,7 @@
+{
+  "type": "step",
+  "attributes": {
+    "step_type": "notification",
+    "wait_before": 0
+  }
+}
