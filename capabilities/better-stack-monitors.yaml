@@ -1,0 +1,329 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Better Stack API — Monitors
+  description: 'Better Stack API — Monitors. 7 operations. Lead operation: Better Stack List Monitors. Self-contained Naftiko
+    capability covering one Better Stack business surface.'
+  tags:
+  - Better Stack
+  - Monitors
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BETTER_STACK_API_KEY: BETTER_STACK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: better-stack-monitors
+    baseUri: https://uptime.betterstack.com/api/v2
+    description: Better Stack API — Monitors business capability. Self-contained, no shared references.
+    resources:
+    - name: monitors
+      path: /monitors
+      operations:
+      - name: listmonitors
+        method: GET
+        description: Better Stack List Monitors
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team_name
+          in: query
+          type: string
+          description: Filter monitors belonging to a specified team when using a global API token.
+        - name: url
+          in: query
+          type: string
+          description: Filter monitors by target URL.
+        - name: pronounceable_name
+          in: query
+          type: string
+          description: Filter monitors by pronounceable name.
+      - name: createmonitor
+        method: POST
+        description: Better Stack Create Monitor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: monitors-id
+      path: /monitors/{id}
+      operations:
+      - name: getmonitor
+        method: GET
+        description: Better Stack Get Monitor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the monitor.
+          required: true
+      - name: updatemonitor
+        method: PATCH
+        description: Better Stack Update Monitor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the monitor.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletemonitor
+        method: DELETE
+        description: Better Stack Delete Monitor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the monitor.
+          required: true
+    - name: monitors-id-availability
+      path: /monitors/{id}/availability
+      operations:
+      - name: getmonitoravailability
+        method: GET
+        description: Better Stack Get Monitor Availability
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the monitor.
+          required: true
+    - name: monitors-id-response-times
+      path: /monitors/{id}/response-times
+      operations:
+      - name: getmonitorresponsetimes
+        method: GET
+        description: Better Stack Get Monitor Response Times
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the monitor.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BETTER_STACK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: better-stack-monitors-rest
+    port: 8080
+    description: REST adapter for Better Stack API — Monitors. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/monitors
+      name: monitors
+      description: REST surface for monitors.
+      operations:
+      - method: GET
+        name: listmonitors
+        description: Better Stack List Monitors
+        call: better-stack-monitors.listmonitors
+        with:
+          team_name: rest.team_name
+          url: rest.url
+          pronounceable_name: rest.pronounceable_name
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createmonitor
+        description: Better Stack Create Monitor
+        call: better-stack-monitors.createmonitor
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/monitors/{id}
+      name: monitors-id
+      description: REST surface for monitors-id.
+      operations:
+      - method: GET
+        name: getmonitor
+        description: Better Stack Get Monitor
+        call: better-stack-monitors.getmonitor
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatemonitor
+        description: Better Stack Update Monitor
+        call: better-stack-monitors.updatemonitor
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletemonitor
+        description: Better Stack Delete Monitor
+        call: better-stack-monitors.deletemonitor
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/monitors/{id}/availability
+      name: monitors-id-availability
+      description: REST surface for monitors-id-availability.
+      operations:
+      - method: GET
+        name: getmonitoravailability
+        description: Better Stack Get Monitor Availability
+        call: better-stack-monitors.getmonitoravailability
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/monitors/{id}/response-times
+      name: monitors-id-response-times
+      description: REST surface for monitors-id-response-times.
+      operations:
+      - method: GET
+        name: getmonitorresponsetimes
+        description: Better Stack Get Monitor Response Times
+        call: better-stack-monitors.getmonitorresponsetimes
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: better-stack-monitors-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Better Stack API — Monitors. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: better-stack-list-monitors
+      description: Better Stack List Monitors
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-monitors.listmonitors
+      with:
+        team_name: tools.team_name
+        url: tools.url
+        pronounceable_name: tools.pronounceable_name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-create-monitor
+      description: Better Stack Create Monitor
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: better-stack-monitors.createmonitor
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-get-monitor
+      description: Better Stack Get Monitor
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-monitors.getmonitor
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-update-monitor
+      description: Better Stack Update Monitor
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: better-stack-monitors.updatemonitor
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-delete-monitor
+      description: Better Stack Delete Monitor
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: better-stack-monitors.deletemonitor
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-get-monitor-availability
+      description: Better Stack Get Monitor Availability
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-monitors.getmonitoravailability
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-get-monitor-response
+      description: Better Stack Get Monitor Response Times
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-monitors.getmonitorresponsetimes
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

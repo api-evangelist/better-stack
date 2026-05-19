@@ -1,0 +1,275 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Better Stack API — Heartbeats
+  description: 'Better Stack API — Heartbeats. 6 operations. Lead operation: Better Stack List Heartbeats. Self-contained
+    Naftiko capability covering one Better Stack business surface.'
+  tags:
+  - Better Stack
+  - Heartbeats
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BETTER_STACK_API_KEY: BETTER_STACK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: better-stack-heartbeats
+    baseUri: https://uptime.betterstack.com/api/v2
+    description: Better Stack API — Heartbeats business capability. Self-contained, no shared references.
+    resources:
+    - name: heartbeats
+      path: /heartbeats
+      operations:
+      - name: listheartbeats
+        method: GET
+        description: Better Stack List Heartbeats
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team_name
+          in: query
+          type: string
+          description: Filter heartbeats belonging to a specified team when using a global API token.
+      - name: createheartbeat
+        method: POST
+        description: Better Stack Create Heartbeat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: heartbeats-id
+      path: /heartbeats/{id}
+      operations:
+      - name: getheartbeat
+        method: GET
+        description: Better Stack Get Heartbeat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the heartbeat.
+          required: true
+      - name: updateheartbeat
+        method: PATCH
+        description: Better Stack Update Heartbeat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the heartbeat.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteheartbeat
+        method: DELETE
+        description: Better Stack Delete Heartbeat
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the heartbeat.
+          required: true
+    - name: heartbeats-id-availability
+      path: /heartbeats/{id}/availability
+      operations:
+      - name: getheartbeatavailability
+        method: GET
+        description: Better Stack Get Heartbeat Availability
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the heartbeat.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BETTER_STACK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: better-stack-heartbeats-rest
+    port: 8080
+    description: REST adapter for Better Stack API — Heartbeats. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/heartbeats
+      name: heartbeats
+      description: REST surface for heartbeats.
+      operations:
+      - method: GET
+        name: listheartbeats
+        description: Better Stack List Heartbeats
+        call: better-stack-heartbeats.listheartbeats
+        with:
+          team_name: rest.team_name
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createheartbeat
+        description: Better Stack Create Heartbeat
+        call: better-stack-heartbeats.createheartbeat
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/heartbeats/{id}
+      name: heartbeats-id
+      description: REST surface for heartbeats-id.
+      operations:
+      - method: GET
+        name: getheartbeat
+        description: Better Stack Get Heartbeat
+        call: better-stack-heartbeats.getheartbeat
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updateheartbeat
+        description: Better Stack Update Heartbeat
+        call: better-stack-heartbeats.updateheartbeat
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteheartbeat
+        description: Better Stack Delete Heartbeat
+        call: better-stack-heartbeats.deleteheartbeat
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/heartbeats/{id}/availability
+      name: heartbeats-id-availability
+      description: REST surface for heartbeats-id-availability.
+      operations:
+      - method: GET
+        name: getheartbeatavailability
+        description: Better Stack Get Heartbeat Availability
+        call: better-stack-heartbeats.getheartbeatavailability
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: better-stack-heartbeats-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Better Stack API — Heartbeats. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: better-stack-list-heartbeats
+      description: Better Stack List Heartbeats
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-heartbeats.listheartbeats
+      with:
+        team_name: tools.team_name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-create-heartbeat
+      description: Better Stack Create Heartbeat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: better-stack-heartbeats.createheartbeat
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-get-heartbeat
+      description: Better Stack Get Heartbeat
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-heartbeats.getheartbeat
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-update-heartbeat
+      description: Better Stack Update Heartbeat
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: better-stack-heartbeats.updateheartbeat
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-delete-heartbeat
+      description: Better Stack Delete Heartbeat
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: better-stack-heartbeats.deleteheartbeat
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-get-heartbeat-availability
+      description: Better Stack Get Heartbeat Availability
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-heartbeats.getheartbeatavailability
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,233 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Better Stack API — Status Pages
+  description: 'Better Stack API — Status Pages. 5 operations. Lead operation: Better Stack List Status Pages. Self-contained
+    Naftiko capability covering one Better Stack business surface.'
+  tags:
+  - Better Stack
+  - Status Pages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    BETTER_STACK_API_KEY: BETTER_STACK_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: better-stack-status-pages
+    baseUri: https://uptime.betterstack.com/api/v2
+    description: Better Stack API — Status Pages business capability. Self-contained, no shared references.
+    resources:
+    - name: status-pages
+      path: /status-pages
+      operations:
+      - name: liststatuspages
+        method: GET
+        description: Better Stack List Status Pages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: team_name
+          in: query
+          type: string
+          description: Filter by team name when using a global API token.
+      - name: createstatuspage
+        method: POST
+        description: Better Stack Create Status Page
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: status-pages-id
+      path: /status-pages/{id}
+      operations:
+      - name: getstatuspage
+        method: GET
+        description: Better Stack Get Status Page
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the status page.
+          required: true
+      - name: updatestatuspage
+        method: PATCH
+        description: Better Stack Update Status Page
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the status page.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletestatuspage
+        method: DELETE
+        description: Better Stack Delete Status Page
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the status page.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.BETTER_STACK_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: better-stack-status-pages-rest
+    port: 8080
+    description: REST adapter for Better Stack API — Status Pages. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/status-pages
+      name: status-pages
+      description: REST surface for status-pages.
+      operations:
+      - method: GET
+        name: liststatuspages
+        description: Better Stack List Status Pages
+        call: better-stack-status-pages.liststatuspages
+        with:
+          team_name: rest.team_name
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createstatuspage
+        description: Better Stack Create Status Page
+        call: better-stack-status-pages.createstatuspage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/status-pages/{id}
+      name: status-pages-id
+      description: REST surface for status-pages-id.
+      operations:
+      - method: GET
+        name: getstatuspage
+        description: Better Stack Get Status Page
+        call: better-stack-status-pages.getstatuspage
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatestatuspage
+        description: Better Stack Update Status Page
+        call: better-stack-status-pages.updatestatuspage
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletestatuspage
+        description: Better Stack Delete Status Page
+        call: better-stack-status-pages.deletestatuspage
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: better-stack-status-pages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Better Stack API — Status Pages. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: better-stack-list-status-pages
+      description: Better Stack List Status Pages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-status-pages.liststatuspages
+      with:
+        team_name: tools.team_name
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-create-status-page
+      description: Better Stack Create Status Page
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: better-stack-status-pages.createstatuspage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-get-status-page
+      description: Better Stack Get Status Page
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: better-stack-status-pages.getstatuspage
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-update-status-page
+      description: Better Stack Update Status Page
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: better-stack-status-pages.updatestatuspage
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: better-stack-delete-status-page
+      description: Better Stack Delete Status Page
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: better-stack-status-pages.deletestatuspage
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
