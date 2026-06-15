@@ -1,0 +1,737 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Better Stack API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Monitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter monitors belonging to a specified team when using a global API token."
+              },
+              {
+                "name": "url",
+                "value": "https://example.com",
+                "type": "query",
+                "description": "Filter monitors by target URL."
+              },
+              {
+                "name": "pronounceable_name",
+                "value": "Production API",
+                "type": "query",
+                "description": "Filter monitors by pronounceable name."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all monitors for the authenticated team."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/monitors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new uptime monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Returns a single monitor by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Deletes an existing monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Monitor Response Times",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id/response-times",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Returns response time metrics for a specific monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Monitor Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id/availability",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Returns availability summary for a specific monitor."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Heartbeats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Heartbeats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter heartbeats belonging to a specified team when using a global API token."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all heartbeat monitors."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new heartbeat monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ]
+          },
+          "docs": "Returns a single heartbeat monitor by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing heartbeat monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ]
+          },
+          "docs": "Deletes an existing heartbeat monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Heartbeat Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id/availability",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ]
+          },
+          "docs": "Returns availability summary for a specific heartbeat monitor."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Incidents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/incidents",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter incidents by team name when using a global API token."
+              },
+              {
+                "name": "from",
+                "value": "2026-01-01",
+                "type": "query",
+                "description": "Filter incidents starting from this date (YYYY-MM-DD)."
+              },
+              {
+                "name": "to",
+                "value": "2026-04-19",
+                "type": "query",
+                "description": "Filter incidents up to this date (YYYY-MM-DD)."
+              },
+              {
+                "name": "monitor_id",
+                "value": "500123",
+                "type": "query",
+                "description": "Filter incidents by monitor ID."
+              },
+              {
+                "name": "heartbeat_id",
+                "value": "100200",
+                "type": "query",
+                "description": "Filter incidents by heartbeat ID."
+              },
+              {
+                "name": "resolved",
+                "value": "false",
+                "type": "query",
+                "description": "Filter by resolved status."
+              },
+              {
+                "name": "acknowledged",
+                "value": "false",
+                "type": "query",
+                "description": "Filter by acknowledged status."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all incidents. Uses API v3."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/incidents",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new manual incident."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/incidents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "900100",
+                "type": "path",
+                "description": "The unique identifier of the incident."
+              }
+            ]
+          },
+          "docs": "Returns a single incident by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/incidents/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "900100",
+                "type": "path",
+                "description": "The unique identifier of the incident."
+              }
+            ]
+          },
+          "docs": "Deletes an existing incident."
+        },
+        {
+          "info": {
+            "name": "Better Stack Acknowledge Incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/incidents/:id/acknowledge",
+            "params": [
+              {
+                "name": "id",
+                "value": "900100",
+                "type": "path",
+                "description": "The unique identifier of the incident."
+              }
+            ]
+          },
+          "docs": "Acknowledges an active incident."
+        },
+        {
+          "info": {
+            "name": "Better Stack Resolve Incident",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/incidents/:id/resolve",
+            "params": [
+              {
+                "name": "id",
+                "value": "900100",
+                "type": "path",
+                "description": "The unique identifier of the incident."
+              }
+            ]
+          },
+          "docs": "Resolves an active incident."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Status Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Status Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter by team name when using a global API token."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all status pages."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new status page."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "700010",
+                "type": "path",
+                "description": "The unique identifier of the status page."
+              }
+            ]
+          },
+          "docs": "Returns a single status page by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "700010",
+                "type": "path",
+                "description": "The unique identifier of the status page."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing status page."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "700010",
+                "type": "path",
+                "description": "The unique identifier of the status page."
+              }
+            ]
+          },
+          "docs": "Deletes an existing status page."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Escalation Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Escalation Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/policies",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter policies by team name when using a global API token."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all escalation policies. Uses API v3."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/policies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new escalation policy."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/policies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "300010",
+                "type": "path",
+                "description": "The unique identifier of the escalation policy."
+              }
+            ]
+          },
+          "docs": "Returns a single escalation policy by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/policies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "300010",
+                "type": "path",
+                "description": "The unique identifier of the escalation policy."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing escalation policy."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/policies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "300010",
+                "type": "path",
+                "description": "The unique identifier of the escalation policy."
+              }
+            ]
+          },
+          "docs": "Deletes an existing escalation policy."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Team Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Team Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/team-members",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter by team name when using a global API token."
+              },
+              {
+                "name": "email",
+                "value": "jsmith@example.com",
+                "type": "query",
+                "description": "Filter by member email address."
+              }
+            ]
+          },
+          "docs": "Returns a list of team members and pending invitations."
+        },
+        {
+          "info": {
+            "name": "Better Stack Invite Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/team-members",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invites a new member to the team."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/team-members/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "200001",
+                "type": "path",
+                "description": "The unique identifier of the team member."
+              }
+            ]
+          },
+          "docs": "Returns a single team member by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/team-members/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "200001",
+                "type": "path",
+                "description": "The unique identifier of the team member."
+              }
+            ]
+          },
+          "docs": "Removes a team member by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
