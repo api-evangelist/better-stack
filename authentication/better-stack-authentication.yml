@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/better-stack-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Bearer token authentication. Use a global API token or a team-scoped Uptime API
+    token obtained from Better Stack Settings → API tokens.
+  sources:
+  - openapi/better-stack-openapi.yml

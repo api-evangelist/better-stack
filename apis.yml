@@ -45,6 +45,14 @@ description: >-
   resolve website and server issues quickly by providing real-time alerting, detailed diagnostics, on-call scheduling,
   and public/private status pages.
 common:
+  - type: TrustCenter
+    url: security/better-stack-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/better-stack-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/better-stack-domain-security.yml
+  - type: Authentication
+    url: authentication/better-stack-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/betterstack
   - type: Portal
