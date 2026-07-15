@@ -45,6 +45,8 @@ description: >-
   resolve website and server issues quickly by providing real-time alerting, detailed diagnostics, on-call scheduling,
   and public/private status pages.
 common:
+  - type: AgenticAccess
+    url: agentic-access/better-stack-agentic-access.yml
   - type: TrustCenter
     url: security/better-stack-trust-center.yml
   - type: VulnerabilityDisclosure
