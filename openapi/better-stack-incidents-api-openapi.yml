@@ -1,0 +1,481 @@
+openapi: 3.0.3
+info:
+  title: Better Stack Escalation Policies Incidents API
+  description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
+  version: v2
+  contact:
+    name: Better Stack Support
+    url: https://betterstack.com/docs/
+  x-generated-from: documentation
+servers:
+- url: https://uptime.betterstack.com/api/v2
+  description: Better Stack Uptime API v2
+- url: https://uptime.betterstack.com/api/v3
+  description: Better Stack Uptime API v3 (incidents, policies)
+- url: https://betterstack.com/api/v2
+  description: Better Stack Telemetry API v2
+security:
+- bearerAuth: []
+tags:
+- name: Incidents
+  description: Manage incidents and on-call alerting
+paths:
+  /incidents:
+    get:
+      operationId: listIncidents
+      summary: Better Stack List Incidents
+      description: Returns a paginated list of all incidents. Uses API v3.
+      tags:
+      - Incidents
+      parameters:
+      - name: team_name
+        in: query
+        description: Filter incidents by team name when using a global API token.
+        required: false
+        schema:
+          type: string
+        example: my-team
+      - name: from
+        in: query
+        description: Filter incidents starting from this date (YYYY-MM-DD).
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2026-01-01'
+      - name: to
+        in: query
+        description: Filter incidents up to this date (YYYY-MM-DD).
+        required: false
+        schema:
+          type: string
+          format: date
+        example: '2026-04-19'
+      - name: monitor_id
+        in: query
+        description: Filter incidents by monitor ID.
+        required: false
+        schema:
+          type: integer
+        example: 500123
+      - name: heartbeat_id
+        in: query
+        description: Filter incidents by heartbeat ID.
+        required: false
+        schema:
+          type: integer
+        example: 100200
+      - name: resolved
+        in: query
+        description: Filter by resolved status.
+        required: false
+        schema:
+          type: boolean
+        example: false
+      - name: acknowledged
+        in: query
+        description: Filter by acknowledged status.
+        required: false
+        schema:
+          type: boolean
+        example: false
+      responses:
+        '200':
+          description: Paginated list of incidents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentListResponse'
+              examples:
+                ListIncidents200Example:
+                  summary: Default listIncidents 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: '900100'
+                      type: incident
+                      attributes:
+                        name: Production API
+                        url: https://example.com
+                        http_method: GET
+                        cause: Connection timeout
+                        started_at: '2026-04-18T14:00:00Z'
+                        acknowledged_at: '2026-04-18T14:05:00Z'
+                        resolved_at: '2026-04-18T14:15:00Z'
+                        status: Resolved
+                        team_name: my-team
+                        regions:
+                        - us
+                    pagination:
+                      first: https://uptime.betterstack.com/api/v3/incidents?page=1
+                      last: https://uptime.betterstack.com/api/v3/incidents?page=1
+                      prev: null
+                      next: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createIncident
+      summary: Better Stack Create Incident
+      description: Creates a new manual incident.
+      tags:
+      - Incidents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IncidentCreateRequest'
+            examples:
+              CreateIncidentRequestExample:
+                summary: Default createIncident request
+                x-microcks-default: true
+                value:
+                  name: Database degraded
+                  email: true
+                  sms: false
+                  call: false
+                  push: true
+      responses:
+        '201':
+          description: Incident created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                CreateIncident201Example:
+                  summary: Default createIncident 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '900101'
+                      type: incident
+                      attributes:
+                        name: Database degraded
+                        status: Started
+                        started_at: '2026-04-19T10:00:00Z'
+                        acknowledged_at: null
+                        resolved_at: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /incidents/{id}:
+    get:
+      operationId: getIncident
+      summary: Better Stack Get Incident
+      description: Returns a single incident by ID.
+      tags:
+      - Incidents
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the incident.
+        schema:
+          type: string
+        example: '900100'
+      responses:
+        '200':
+          description: Incident details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                GetIncident200Example:
+                  summary: Default getIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '900100'
+                      type: incident
+                      attributes:
+                        name: Production API
+                        url: https://example.com
+                        http_method: GET
+                        cause: Connection timeout
+                        started_at: '2026-04-18T14:00:00Z'
+                        acknowledged_at: '2026-04-18T14:05:00Z'
+                        resolved_at: '2026-04-18T14:15:00Z'
+                        status: Resolved
+        '404':
+          description: Incident not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteIncident
+      summary: Better Stack Delete Incident
+      description: Deletes an existing incident.
+      tags:
+      - Incidents
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the incident.
+        schema:
+          type: string
+        example: '900100'
+      responses:
+        '204':
+          description: Incident deleted successfully.
+        '404':
+          description: Incident not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /incidents/{id}/acknowledge:
+    post:
+      operationId: acknowledgeIncident
+      summary: Better Stack Acknowledge Incident
+      description: Acknowledges an active incident.
+      tags:
+      - Incidents
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the incident.
+        schema:
+          type: string
+        example: '900100'
+      responses:
+        '200':
+          description: Incident acknowledged.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                AcknowledgeIncident200Example:
+                  summary: Default acknowledgeIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '900100'
+                      type: incident
+                      attributes:
+                        status: Started
+                        acknowledged_at: '2026-04-19T10:01:00Z'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /incidents/{id}/resolve:
+    post:
+      operationId: resolveIncident
+      summary: Better Stack Resolve Incident
+      description: Resolves an active incident.
+      tags:
+      - Incidents
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the incident.
+        schema:
+          type: string
+        example: '900100'
+      responses:
+        '200':
+          description: Incident resolved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IncidentSingleResponse'
+              examples:
+                ResolveIncident200Example:
+                  summary: Default resolveIncident 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '900100'
+                      type: incident
+                      attributes:
+                        status: Resolved
+                        resolved_at: '2026-04-19T10:05:00Z'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    IncidentListResponse:
+      title: Incident List Response
+      description: Paginated list of incidents.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IncidentObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    IncidentSingleResponse:
+      title: Incident Single Response
+      description: Single incident response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/IncidentObject'
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    IncidentObject:
+      title: Incident Object
+      description: A single incident resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: '900100'
+        type:
+          type: string
+          description: Resource type.
+          example: incident
+        attributes:
+          $ref: '#/components/schemas/IncidentAttributes'
+    IncidentCreateRequest:
+      title: Incident Create Request
+      description: Request body for creating a manual incident.
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Name or description of the incident.
+          example: Database degraded
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+    IncidentAttributes:
+      title: Incident Attributes
+      description: Attributes of an incident.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name or subject of the incident.
+          example: Production API
+        url:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the affected monitor.
+          example: https://example.com
+        http_method:
+          type: string
+          nullable: true
+          description: HTTP method of the affected check.
+          example: GET
+        cause:
+          type: string
+          nullable: true
+          description: Root cause description of the incident.
+          example: Connection timeout
+        started_at:
+          type: string
+          format: date-time
+          description: When the incident started.
+          example: '2026-04-18T14:00:00Z'
+        acknowledged_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the incident was acknowledged.
+          example: '2026-04-18T14:05:00Z'
+        resolved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the incident was resolved.
+          example: '2026-04-18T14:15:00Z'
+        status:
+          type: string
+          description: Current incident status.
+          enum:
+          - Started
+          - Resolved
+          example: Resolved
+        team_name:
+          type: string
+          description: Team that owns the incident.
+          example: my-team
+        regions:
+          type: array
+          items:
+            type: string
+          description: Regions where the incident was detected.
+          example:
+          - us
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication. Use a global API token or a team-scoped Uptime API token obtained from Better Stack Settings → API tokens.

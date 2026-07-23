@@ -1,0 +1,408 @@
+openapi: 3.0.3
+info:
+  title: Better Stack Escalation Policies API
+  description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
+  version: v2
+  contact:
+    name: Better Stack Support
+    url: https://betterstack.com/docs/
+  x-generated-from: documentation
+servers:
+- url: https://uptime.betterstack.com/api/v2
+  description: Better Stack Uptime API v2
+- url: https://uptime.betterstack.com/api/v3
+  description: Better Stack Uptime API v3 (incidents, policies)
+- url: https://betterstack.com/api/v2
+  description: Better Stack Telemetry API v2
+security:
+- bearerAuth: []
+tags:
+- name: Escalation Policies
+  description: Manage escalation policies and on-call schedules
+paths:
+  /policies:
+    get:
+      operationId: listEscalationPolicies
+      summary: Better Stack List Escalation Policies
+      description: Returns a paginated list of all escalation policies. Uses API v3.
+      tags:
+      - Escalation Policies
+      parameters:
+      - name: team_name
+        in: query
+        description: Filter policies by team name when using a global API token.
+        required: false
+        schema:
+          type: string
+        example: my-team
+      responses:
+        '200':
+          description: Paginated list of escalation policies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyListResponse'
+              examples:
+                ListEscalationPolicies200Example:
+                  summary: Default listEscalationPolicies 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: '300010'
+                      type: policy
+                      attributes:
+                        name: Default On-Call
+                        repeat_count: 3
+                        repeat_delay: 300
+                        incident_token: abc123
+                        policy_group_id: null
+                        team_name: my-team
+                        steps:
+                        - type: step
+                          attributes:
+                            step_type: notification
+                            wait_before: 0
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createEscalationPolicy
+      summary: Better Stack Create Escalation Policy
+      description: Creates a new escalation policy.
+      tags:
+      - Escalation Policies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyCreateRequest'
+            examples:
+              CreateEscalationPolicyRequestExample:
+                summary: Default createEscalationPolicy request
+                x-microcks-default: true
+                value:
+                  name: Default On-Call
+                  repeat_count: 3
+                  repeat_delay: 300
+      responses:
+        '201':
+          description: Escalation policy created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicySingleResponse'
+              examples:
+                CreateEscalationPolicy201Example:
+                  summary: Default createEscalationPolicy 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '300010'
+                      type: policy
+                      attributes:
+                        name: Default On-Call
+                        repeat_count: 3
+                        repeat_delay: 300
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /policies/{id}:
+    get:
+      operationId: getEscalationPolicy
+      summary: Better Stack Get Escalation Policy
+      description: Returns a single escalation policy by ID.
+      tags:
+      - Escalation Policies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the escalation policy.
+        schema:
+          type: string
+        example: '300010'
+      responses:
+        '200':
+          description: Escalation policy details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicySingleResponse'
+              examples:
+                GetEscalationPolicy200Example:
+                  summary: Default getEscalationPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '300010'
+                      type: policy
+                      attributes:
+                        name: Default On-Call
+                        repeat_count: 3
+                        repeat_delay: 300
+                        incident_token: abc123
+                        team_name: my-team
+        '404':
+          description: Escalation policy not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateEscalationPolicy
+      summary: Better Stack Update Escalation Policy
+      description: Updates an existing escalation policy.
+      tags:
+      - Escalation Policies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the escalation policy.
+        schema:
+          type: string
+        example: '300010'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyUpdateRequest'
+            examples:
+              UpdateEscalationPolicyRequestExample:
+                summary: Default updateEscalationPolicy request
+                x-microcks-default: true
+                value:
+                  name: Updated On-Call Policy
+                  repeat_count: 5
+      responses:
+        '200':
+          description: Escalation policy updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicySingleResponse'
+              examples:
+                UpdateEscalationPolicy200Example:
+                  summary: Default updateEscalationPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '300010'
+                      type: policy
+                      attributes:
+                        name: Updated On-Call Policy
+                        repeat_count: 5
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteEscalationPolicy
+      summary: Better Stack Delete Escalation Policy
+      description: Deletes an existing escalation policy.
+      tags:
+      - Escalation Policies
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the escalation policy.
+        schema:
+          type: string
+        example: '300010'
+      responses:
+        '204':
+          description: Escalation policy deleted successfully.
+        '404':
+          description: Escalation policy not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    PolicyAttributes:
+      title: Policy Attributes
+      description: Attributes of an escalation policy.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the escalation policy.
+          example: Default On-Call
+        repeat_count:
+          type: integer
+          description: Number of times to repeat the escalation cycle.
+          example: 3
+        repeat_delay:
+          type: integer
+          description: Delay in seconds between repeat cycles.
+          example: 300
+        incident_token:
+          type: string
+          description: Unique token for the policy.
+          example: abc123
+        policy_group_id:
+          type: string
+          nullable: true
+          description: ID of the policy group.
+          example: null
+        team_name:
+          type: string
+          description: Team owning this policy.
+          example: my-team
+        steps:
+          type: array
+          description: Escalation steps in sequence.
+          items:
+            $ref: '#/components/schemas/PolicyStep'
+    PolicyObject:
+      title: Policy Object
+      description: A single escalation policy resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: '300010'
+        type:
+          type: string
+          description: Resource type.
+          example: policy
+        attributes:
+          $ref: '#/components/schemas/PolicyAttributes'
+    PolicyListResponse:
+      title: Policy List Response
+      description: Paginated list of escalation policies.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    PolicySingleResponse:
+      title: Policy Single Response
+      description: Single escalation policy response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/PolicyObject'
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    PolicyCreateRequest:
+      title: Policy Create Request
+      description: Request body for creating an escalation policy.
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Policy name.
+          example: Default On-Call
+        repeat_count:
+          type: integer
+          description: Number of repeat cycles.
+          example: 3
+        repeat_delay:
+          type: integer
+          description: Delay between cycles in seconds.
+          example: 300
+    PolicyUpdateRequest:
+      title: Policy Update Request
+      description: Request body for updating an escalation policy (all fields optional).
+      type: object
+      properties:
+        name:
+          type: string
+          description: New policy name.
+          example: Updated On-Call Policy
+        repeat_count:
+          type: integer
+          description: New repeat count.
+          example: 5
+        repeat_delay:
+          type: integer
+          description: New repeat delay in seconds.
+          example: 600
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    PolicyStep:
+      title: Policy Step
+      description: A step in an escalation policy.
+      type: object
+      properties:
+        type:
+          type: string
+          description: Step resource type.
+          example: step
+        attributes:
+          type: object
+          properties:
+            step_type:
+              type: string
+              description: Type of notification step.
+              enum:
+              - notification
+              - wait
+              example: notification
+            wait_before:
+              type: integer
+              description: Seconds to wait before this step.
+              example: 0
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication. Use a global API token or a team-scoped Uptime API token obtained from Better Stack Settings → API tokens.

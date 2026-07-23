@@ -1,0 +1,333 @@
+openapi: 3.0.3
+info:
+  title: Better Stack Escalation Policies Team Members API
+  description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
+  version: v2
+  contact:
+    name: Better Stack Support
+    url: https://betterstack.com/docs/
+  x-generated-from: documentation
+servers:
+- url: https://uptime.betterstack.com/api/v2
+  description: Better Stack Uptime API v2
+- url: https://uptime.betterstack.com/api/v3
+  description: Better Stack Uptime API v3 (incidents, policies)
+- url: https://betterstack.com/api/v2
+  description: Better Stack Telemetry API v2
+security:
+- bearerAuth: []
+tags:
+- name: Team Members
+  description: Manage team members and invitations
+paths:
+  /team-members:
+    get:
+      operationId: listTeamMembers
+      summary: Better Stack List Team Members
+      description: Returns a list of team members and pending invitations.
+      tags:
+      - Team Members
+      parameters:
+      - name: team_name
+        in: query
+        description: Filter by team name when using a global API token.
+        required: false
+        schema:
+          type: string
+        example: my-team
+      - name: email
+        in: query
+        description: Filter by member email address.
+        required: false
+        schema:
+          type: string
+          format: email
+        example: jsmith@example.com
+      responses:
+        '200':
+          description: List of team members.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberListResponse'
+              examples:
+                ListTeamMembers200Example:
+                  summary: Default listTeamMembers 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: '200001'
+                      type: team_member
+                      attributes:
+                        email: jsmith@example.com
+                        name: Jane Smith
+                        role: admin
+                        created_at: '2025-01-10T08:00:00Z'
+                        updated_at: '2026-03-01T12:00:00Z'
+        '401':
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Global token used without specifying team_name.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: inviteTeamMember
+      summary: Better Stack Invite Team Member
+      description: Invites a new member to the team.
+      tags:
+      - Team Members
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamMemberInviteRequest'
+            examples:
+              InviteTeamMemberRequestExample:
+                summary: Default inviteTeamMember request
+                x-microcks-default: true
+                value:
+                  email: newmember@example.com
+                  role: member
+      responses:
+        '201':
+          description: Team member invited successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberSingleResponse'
+              examples:
+                InviteTeamMember201Example:
+                  summary: Default inviteTeamMember 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '200002'
+                      type: team_member
+                      attributes:
+                        email: newmember@example.com
+                        role: member
+                        created_at: '2026-04-19T10:00:00Z'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /team-members/{id}:
+    get:
+      operationId: getTeamMember
+      summary: Better Stack Get Team Member
+      description: Returns a single team member by ID.
+      tags:
+      - Team Members
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the team member.
+        schema:
+          type: string
+        example: '200001'
+      responses:
+        '200':
+          description: Team member details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMemberSingleResponse'
+              examples:
+                GetTeamMember200Example:
+                  summary: Default getTeamMember 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '200001'
+                      type: team_member
+                      attributes:
+                        email: jsmith@example.com
+                        name: Jane Smith
+                        role: admin
+                        created_at: '2025-01-10T08:00:00Z'
+                        updated_at: '2026-03-01T12:00:00Z'
+        '404':
+          description: Team member not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteTeamMember
+      summary: Better Stack Delete Team Member
+      description: Removes a team member by ID.
+      tags:
+      - Team Members
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the team member.
+        schema:
+          type: string
+        example: '200001'
+      responses:
+        '204':
+          description: Team member removed successfully.
+        '404':
+          description: Team member not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    TeamMemberInviteRequest:
+      title: Team Member Invite Request
+      description: Request body for inviting a team member.
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the person to invite.
+          example: newmember@example.com
+        role:
+          type: string
+          description: Role to assign.
+          enum:
+          - admin
+          - member
+          - viewer
+          example: member
+    TeamMemberSingleResponse:
+      title: Team Member Single Response
+      description: Single team member response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TeamMemberObject'
+    TeamMemberAttributes:
+      title: Team Member Attributes
+      description: Attributes of a team member.
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Team member's email address.
+          example: jsmith@example.com
+        name:
+          type: string
+          nullable: true
+          description: Team member's display name.
+          example: Jane Smith
+        role:
+          type: string
+          description: Team member role.
+          enum:
+          - owner
+          - admin
+          - member
+          - viewer
+          example: admin
+        created_at:
+          type: string
+          format: date-time
+          description: When the member joined or was invited.
+          example: '2025-01-10T08:00:00Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: When the record was last updated.
+          example: '2026-03-01T12:00:00Z'
+    TeamMemberObject:
+      title: Team Member Object
+      description: A single team member resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: '200001'
+        type:
+          type: string
+          description: Resource type.
+          example: team_member
+        attributes:
+          $ref: '#/components/schemas/TeamMemberAttributes'
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    TeamMemberListResponse:
+      title: Team Member List Response
+      description: List of team members.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication. Use a global API token or a team-scoped Uptime API token obtained from Better Stack Settings → API tokens.

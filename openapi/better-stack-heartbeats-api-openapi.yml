@@ -1,0 +1,532 @@
+openapi: 3.0.3
+info:
+  title: Better Stack Escalation Policies Heartbeats API
+  description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
+  version: v2
+  contact:
+    name: Better Stack Support
+    url: https://betterstack.com/docs/
+  x-generated-from: documentation
+servers:
+- url: https://uptime.betterstack.com/api/v2
+  description: Better Stack Uptime API v2
+- url: https://uptime.betterstack.com/api/v3
+  description: Better Stack Uptime API v3 (incidents, policies)
+- url: https://betterstack.com/api/v2
+  description: Better Stack Telemetry API v2
+security:
+- bearerAuth: []
+tags:
+- name: Heartbeats
+  description: Manage heartbeat monitors for scheduled jobs and cron tasks
+paths:
+  /heartbeats:
+    get:
+      operationId: listHeartbeats
+      summary: Better Stack List Heartbeats
+      description: Returns a paginated list of all heartbeat monitors.
+      tags:
+      - Heartbeats
+      parameters:
+      - name: team_name
+        in: query
+        description: Filter heartbeats belonging to a specified team when using a global API token.
+        required: false
+        schema:
+          type: string
+        example: my-team
+      responses:
+        '200':
+          description: Paginated list of heartbeats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatListResponse'
+              examples:
+                ListHeartbeats200Example:
+                  summary: Default listHeartbeats 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: '100200'
+                      type: heartbeat
+                      attributes:
+                        name: Daily Backup Job
+                        url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                        period: 86400
+                        grace: 3600
+                        status: up
+                        email: true
+                        sms: false
+                        call: false
+                        push: true
+                        created_at: '2025-06-01T00:00:00Z'
+                        updated_at: '2026-04-01T00:00:00Z'
+                    pagination:
+                      first: https://uptime.betterstack.com/api/v2/heartbeats?page=1
+                      last: https://uptime.betterstack.com/api/v2/heartbeats?page=1
+                      prev: null
+                      next: null
+        '401':
+          description: Authentication failed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createHeartbeat
+      summary: Better Stack Create Heartbeat
+      description: Creates a new heartbeat monitor.
+      tags:
+      - Heartbeats
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeartbeatCreateRequest'
+            examples:
+              CreateHeartbeatRequestExample:
+                summary: Default createHeartbeat request
+                x-microcks-default: true
+                value:
+                  name: Daily Backup Job
+                  period: 86400
+                  grace: 3600
+                  email: true
+                  sms: false
+                  call: false
+                  push: true
+      responses:
+        '201':
+          description: Heartbeat created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatSingleResponse'
+              examples:
+                CreateHeartbeat201Example:
+                  summary: Default createHeartbeat 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '100200'
+                      type: heartbeat
+                      attributes:
+                        name: Daily Backup Job
+                        url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                        period: 86400
+                        grace: 3600
+                        status: pending
+                        email: true
+                        sms: false
+                        call: false
+                        push: true
+                        created_at: '2026-04-19T10:00:00Z'
+                        updated_at: '2026-04-19T10:00:00Z'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /heartbeats/{id}:
+    get:
+      operationId: getHeartbeat
+      summary: Better Stack Get Heartbeat
+      description: Returns a single heartbeat monitor by ID.
+      tags:
+      - Heartbeats
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the heartbeat.
+        schema:
+          type: string
+        example: '100200'
+      responses:
+        '200':
+          description: Heartbeat details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatSingleResponse'
+              examples:
+                GetHeartbeat200Example:
+                  summary: Default getHeartbeat 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '100200'
+                      type: heartbeat
+                      attributes:
+                        name: Daily Backup Job
+                        url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                        period: 86400
+                        grace: 3600
+                        status: up
+                        email: true
+                        sms: false
+                        call: false
+                        push: true
+                        created_at: '2025-06-01T00:00:00Z'
+                        updated_at: '2026-04-01T00:00:00Z'
+        '404':
+          description: Heartbeat not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateHeartbeat
+      summary: Better Stack Update Heartbeat
+      description: Updates an existing heartbeat monitor.
+      tags:
+      - Heartbeats
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the heartbeat.
+        schema:
+          type: string
+        example: '100200'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeartbeatUpdateRequest'
+            examples:
+              UpdateHeartbeatRequestExample:
+                summary: Default updateHeartbeat request
+                x-microcks-default: true
+                value:
+                  name: Updated Backup Job
+                  grace: 7200
+      responses:
+        '200':
+          description: Heartbeat updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeartbeatSingleResponse'
+              examples:
+                UpdateHeartbeat200Example:
+                  summary: Default updateHeartbeat 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '100200'
+                      type: heartbeat
+                      attributes:
+                        name: Updated Backup Job
+                        url: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+                        period: 86400
+                        grace: 7200
+                        status: up
+                        email: true
+                        sms: false
+                        call: false
+                        push: true
+                        created_at: '2025-06-01T00:00:00Z'
+                        updated_at: '2026-04-19T10:00:00Z'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteHeartbeat
+      summary: Better Stack Delete Heartbeat
+      description: Deletes an existing heartbeat monitor.
+      tags:
+      - Heartbeats
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the heartbeat.
+        schema:
+          type: string
+        example: '100200'
+      responses:
+        '204':
+          description: Heartbeat deleted successfully.
+        '404':
+          description: Heartbeat not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /heartbeats/{id}/availability:
+    get:
+      operationId: getHeartbeatAvailability
+      summary: Better Stack Get Heartbeat Availability
+      description: Returns availability summary for a specific heartbeat monitor.
+      tags:
+      - Heartbeats
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the heartbeat.
+        schema:
+          type: string
+        example: '100200'
+      responses:
+        '200':
+          description: Availability summary for the heartbeat.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailabilityResponse'
+              examples:
+                GetHeartbeatAvailability200Example:
+                  summary: Default getHeartbeatAvailability 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      availability: 99.9
+                      downtime_duration: 43
+                      number_of_incidents: 1
+                      longest_incident_duration: 43
+                      average_incident_duration: 43
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    AvailabilityResponse:
+      title: Availability Response
+      description: Availability summary metrics.
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            availability:
+              type: number
+              description: Availability percentage.
+              example: 99.98
+            downtime_duration:
+              type: integer
+              description: Total downtime duration in seconds.
+              example: 86
+            number_of_incidents:
+              type: integer
+              description: Number of incidents in the period.
+              example: 2
+            longest_incident_duration:
+              type: integer
+              description: Duration of the longest incident in seconds.
+              example: 61
+            average_incident_duration:
+              type: integer
+              description: Average incident duration in seconds.
+              example: 43
+    HeartbeatCreateRequest:
+      title: Heartbeat Create Request
+      description: Request body for creating a heartbeat.
+      type: object
+      required:
+      - name
+      - period
+      properties:
+        name:
+          type: string
+          description: Name for the heartbeat.
+          example: Daily Backup Job
+        period:
+          type: integer
+          description: Expected period in seconds.
+          example: 86400
+        grace:
+          type: integer
+          description: Grace period in seconds.
+          example: 3600
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+    HeartbeatUpdateRequest:
+      title: Heartbeat Update Request
+      description: Request body for updating a heartbeat (all fields optional).
+      type: object
+      properties:
+        name:
+          type: string
+          description: New name for the heartbeat.
+          example: Updated Backup Job
+        period:
+          type: integer
+          description: New period in seconds.
+          example: 86400
+        grace:
+          type: integer
+          description: New grace period in seconds.
+          example: 7200
+    HeartbeatListResponse:
+      title: Heartbeat List Response
+      description: Paginated list of heartbeats.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeartbeatObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    HeartbeatSingleResponse:
+      title: Heartbeat Single Response
+      description: Single heartbeat response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HeartbeatObject'
+    HeartbeatAttributes:
+      title: Heartbeat Attributes
+      description: Attributes of a heartbeat monitor.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Human-readable name for the heartbeat.
+          example: Daily Backup Job
+        url:
+          type: string
+          format: uri
+          description: The URL to ping to signal the heartbeat.
+          example: https://uptime.betterstack.com/api/v1/heartbeat/abc123
+        period:
+          type: integer
+          description: Expected period between heartbeat pings in seconds.
+          example: 86400
+        grace:
+          type: integer
+          description: Grace period in seconds before alerting.
+          example: 3600
+        status:
+          type: string
+          description: Current status of the heartbeat.
+          enum:
+          - paused
+          - pending
+          - up
+          - down
+          example: up
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
+        created_at:
+          type: string
+          format: date-time
+          description: When the heartbeat was created.
+          example: '2025-06-01T00:00:00Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: When the heartbeat was last updated.
+          example: '2026-04-01T00:00:00Z'
+        paused_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the heartbeat was paused.
+          example: null
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    HeartbeatObject:
+      title: Heartbeat Object
+      description: A single heartbeat resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: '100200'
+        type:
+          type: string
+          description: Resource type.
+          example: heartbeat
+        attributes:
+          $ref: '#/components/schemas/HeartbeatAttributes'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication. Use a global API token or a team-scoped Uptime API token obtained from Better Stack Settings → API tokens.

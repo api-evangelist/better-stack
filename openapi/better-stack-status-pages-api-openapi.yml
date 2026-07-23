@@ -1,0 +1,434 @@
+openapi: 3.0.3
+info:
+  title: Better Stack Escalation Policies Status Pages API
+  description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
+  version: v2
+  contact:
+    name: Better Stack Support
+    url: https://betterstack.com/docs/
+  x-generated-from: documentation
+servers:
+- url: https://uptime.betterstack.com/api/v2
+  description: Better Stack Uptime API v2
+- url: https://uptime.betterstack.com/api/v3
+  description: Better Stack Uptime API v3 (incidents, policies)
+- url: https://betterstack.com/api/v2
+  description: Better Stack Telemetry API v2
+security:
+- bearerAuth: []
+tags:
+- name: Status Pages
+  description: Manage public and private status pages
+paths:
+  /status-pages:
+    get:
+      operationId: listStatusPages
+      summary: Better Stack List Status Pages
+      description: Returns a paginated list of all status pages.
+      tags:
+      - Status Pages
+      parameters:
+      - name: team_name
+        in: query
+        description: Filter by team name when using a global API token.
+        required: false
+        schema:
+          type: string
+        example: my-team
+      responses:
+        '200':
+          description: Paginated list of status pages.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageListResponse'
+              examples:
+                ListStatusPages200Example:
+                  summary: Default listStatusPages 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - id: '700010'
+                      type: status_page
+                      attributes:
+                        company_name: Acme Corp
+                        company_website: https://acme.com
+                        subdomain: acme
+                        custom_domain: status.acme.com
+                        timezone: UTC
+                        aggregate_state: operational
+                        theme: light
+                        created_at: '2025-03-01T00:00:00Z'
+                        updated_at: '2026-04-01T00:00:00Z'
+                    pagination:
+                      first: https://uptime.betterstack.com/api/v2/status-pages?page=1
+                      last: https://uptime.betterstack.com/api/v2/status-pages?page=1
+                      prev: null
+                      next: null
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: createStatusPage
+      summary: Better Stack Create Status Page
+      description: Creates a new status page.
+      tags:
+      - Status Pages
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusPageCreateRequest'
+            examples:
+              CreateStatusPageRequestExample:
+                summary: Default createStatusPage request
+                x-microcks-default: true
+                value:
+                  company_name: Acme Corp
+                  company_website: https://acme.com
+                  subdomain: acme
+                  timezone: UTC
+      responses:
+        '201':
+          description: Status page created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageSingleResponse'
+              examples:
+                CreateStatusPage201Example:
+                  summary: Default createStatusPage 201 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '700010'
+                      type: status_page
+                      attributes:
+                        company_name: Acme Corp
+                        company_website: https://acme.com
+                        subdomain: acme
+                        timezone: UTC
+                        aggregate_state: operational
+                        created_at: '2026-04-19T10:00:00Z'
+                        updated_at: '2026-04-19T10:00:00Z'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /status-pages/{id}:
+    get:
+      operationId: getStatusPage
+      summary: Better Stack Get Status Page
+      description: Returns a single status page by ID.
+      tags:
+      - Status Pages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the status page.
+        schema:
+          type: string
+        example: '700010'
+      responses:
+        '200':
+          description: Status page details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageSingleResponse'
+              examples:
+                GetStatusPage200Example:
+                  summary: Default getStatusPage 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '700010'
+                      type: status_page
+                      attributes:
+                        company_name: Acme Corp
+                        company_website: https://acme.com
+                        subdomain: acme
+                        custom_domain: status.acme.com
+                        timezone: UTC
+                        aggregate_state: operational
+                        theme: light
+                        created_at: '2025-03-01T00:00:00Z'
+                        updated_at: '2026-04-01T00:00:00Z'
+        '404':
+          description: Status page not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    patch:
+      operationId: updateStatusPage
+      summary: Better Stack Update Status Page
+      description: Updates an existing status page.
+      tags:
+      - Status Pages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the status page.
+        schema:
+          type: string
+        example: '700010'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatusPageUpdateRequest'
+            examples:
+              UpdateStatusPageRequestExample:
+                summary: Default updateStatusPage request
+                x-microcks-default: true
+                value:
+                  company_name: Acme Corp Updated
+                  theme: dark
+      responses:
+        '200':
+          description: Status page updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusPageSingleResponse'
+              examples:
+                UpdateStatusPage200Example:
+                  summary: Default updateStatusPage 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: '700010'
+                      type: status_page
+                      attributes:
+                        company_name: Acme Corp Updated
+                        theme: dark
+                        updated_at: '2026-04-19T10:00:00Z'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteStatusPage
+      summary: Better Stack Delete Status Page
+      description: Deletes an existing status page.
+      tags:
+      - Status Pages
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the status page.
+        schema:
+          type: string
+        example: '700010'
+      responses:
+        '204':
+          description: Status page deleted successfully.
+        '404':
+          description: Status page not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    StatusPageUpdateRequest:
+      title: Status Page Update Request
+      description: Request body for updating a status page (all fields optional).
+      type: object
+      properties:
+        company_name:
+          type: string
+          description: New company name.
+          example: Acme Corp Updated
+        custom_domain:
+          type: string
+          description: New custom domain.
+          example: status.acme.com
+        theme:
+          type: string
+          enum:
+          - light
+          - dark
+          description: New theme.
+          example: dark
+    StatusPageSingleResponse:
+      title: Status Page Single Response
+      description: Single status page response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/StatusPageObject'
+    StatusPageAttributes:
+      title: Status Page Attributes
+      description: Attributes of a status page.
+      type: object
+      properties:
+        company_name:
+          type: string
+          description: Name of the company displayed on the status page.
+          example: Acme Corp
+        company_website:
+          type: string
+          format: uri
+          description: URL of the company website.
+          example: https://acme.com
+        subdomain:
+          type: string
+          description: Subdomain for the status page (yourname.betteruptime.com).
+          example: acme
+        custom_domain:
+          type: string
+          nullable: true
+          description: Custom domain for the status page.
+          example: status.acme.com
+        timezone:
+          type: string
+          description: Timezone for the status page.
+          example: UTC
+        theme:
+          type: string
+          description: UI theme for the status page.
+          enum:
+          - light
+          - dark
+          example: light
+        aggregate_state:
+          type: string
+          description: Overall operational state across all monitored resources.
+          enum:
+          - operational
+          - degraded_performance
+          - partial_outage
+          - major_outage
+          - maintenance
+          - downtime
+          example: operational
+        created_at:
+          type: string
+          format: date-time
+          description: When the status page was created.
+          example: '2025-03-01T00:00:00Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: When the status page was last updated.
+          example: '2026-04-01T00:00:00Z'
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    StatusPageCreateRequest:
+      title: Status Page Create Request
+      description: Request body for creating a status page.
+      type: object
+      required:
+      - company_name
+      - subdomain
+      properties:
+        company_name:
+          type: string
+          description: Company name displayed on the page.
+          example: Acme Corp
+        company_website:
+          type: string
+          format: uri
+          description: Company website URL.
+          example: https://acme.com
+        subdomain:
+          type: string
+          description: Subdomain slug.
+          example: acme
+        timezone:
+          type: string
+          description: Timezone for the page.
+          example: UTC
+        theme:
+          type: string
+          enum:
+          - light
+          - dark
+          description: Page theme.
+          example: light
+    StatusPageListResponse:
+      title: Status Page List Response
+      description: Paginated list of status pages.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusPageObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    StatusPageObject:
+      title: Status Page Object
+      description: A single status page resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: '700010'
+        type:
+          type: string
+          description: Resource type.
+          example: status_page
+        attributes:
+          $ref: '#/components/schemas/StatusPageAttributes'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token authentication. Use a global API token or a team-scoped Uptime API token obtained from Better Stack Settings → API tokens.
