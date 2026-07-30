@@ -1,27 +1,90 @@
 aid: better-stack
 url: https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/apis.yml
 apis:
-  - aid: better-stack:better-stack
-    name: Better Stack API
-    tags:
-      - Monitoring
-      - Incidents
-      - Uptime
-      - Heartbeats
-      - Status Pages
-    humanURL: https://betterstack.com/docs/uptime/api/getting-started/
-    baseURL: https://uptime.betterstack.com/api/v2
-    properties:
-      - url: https://betterstack.com/docs/uptime/api/getting-started/
-        type: Documentation
-      - url: https://betterstack.com/docs/uptime/api/monitors/
-        type: APIReference
-      - url: https://raw.githubusercontent.com/api-evangelist/better-stack/refs/heads/main/openapi/better-stack-openapi.yml
-        type: OpenAPI
-    description: >-
-      The Better Stack API provides programmatic access to uptime monitoring, heartbeat monitoring, incident management,
-      status pages, escalation policies, and team management. It follows the JSON:API specification and uses Bearer
-      token authentication.
+- aid: better-stack:better-stack-escalation-policies-api
+  name: Better Stack Escalation Policies API
+  description: Manage escalation policies and on-call schedules
+  humanURL: https://betterstack.com/docs/uptime/api/getting-started/
+  baseURL: https://uptime.betterstack.com/api/v2
+  tags:
+  - Escalation Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/better-stack-escalation-policies-api-openapi.yml
+  - type: Documentation
+    url: https://betterstack.com/docs/uptime/api/getting-started/
+  - type: APIReference
+    url: https://betterstack.com/docs/uptime/api/monitors/
+- aid: better-stack:better-stack-heartbeats-api
+  name: Better Stack Heartbeats API
+  description: Manage heartbeat monitors for scheduled jobs and cron tasks
+  humanURL: https://betterstack.com/docs/uptime/api/getting-started/
+  baseURL: https://uptime.betterstack.com/api/v2
+  tags:
+  - Heartbeats
+  properties:
+  - type: OpenAPI
+    url: openapi/better-stack-heartbeats-api-openapi.yml
+  - type: Documentation
+    url: https://betterstack.com/docs/uptime/api/getting-started/
+  - type: APIReference
+    url: https://betterstack.com/docs/uptime/api/monitors/
+- aid: better-stack:better-stack-incidents-api
+  name: Better Stack Incidents API
+  description: Manage incidents and on-call alerting
+  humanURL: https://betterstack.com/docs/uptime/api/getting-started/
+  baseURL: https://uptime.betterstack.com/api/v2
+  tags:
+  - Incidents
+  properties:
+  - type: OpenAPI
+    url: openapi/better-stack-incidents-api-openapi.yml
+  - type: Documentation
+    url: https://betterstack.com/docs/uptime/api/getting-started/
+  - type: APIReference
+    url: https://betterstack.com/docs/uptime/api/monitors/
+- aid: better-stack:better-stack-monitors-api
+  name: Better Stack Monitors API
+  description: Manage uptime monitors for URLs, APIs, and services
+  humanURL: https://betterstack.com/docs/uptime/api/getting-started/
+  baseURL: https://uptime.betterstack.com/api/v2
+  tags:
+  - Monitors
+  properties:
+  - type: OpenAPI
+    url: openapi/better-stack-monitors-api-openapi.yml
+  - type: Documentation
+    url: https://betterstack.com/docs/uptime/api/getting-started/
+  - type: APIReference
+    url: https://betterstack.com/docs/uptime/api/monitors/
+- aid: better-stack:better-stack-status-pages-api
+  name: Better Stack Status Pages API
+  description: Manage public and private status pages
+  humanURL: https://betterstack.com/docs/uptime/api/getting-started/
+  baseURL: https://uptime.betterstack.com/api/v2
+  tags:
+  - Status Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/better-stack-status-pages-api-openapi.yml
+  - type: Documentation
+    url: https://betterstack.com/docs/uptime/api/getting-started/
+  - type: APIReference
+    url: https://betterstack.com/docs/uptime/api/monitors/
+- aid: better-stack:better-stack-team-members-api
+  name: Better Stack Team Members API
+  description: Manage team members and invitations
+  humanURL: https://betterstack.com/docs/uptime/api/getting-started/
+  baseURL: https://uptime.betterstack.com/api/v2
+  tags:
+  - Team Members
+  properties:
+  - type: OpenAPI
+    url: openapi/better-stack-team-members-api-openapi.yml
+  - type: Documentation
+    url: https://betterstack.com/docs/uptime/api/getting-started/
+  - type: APIReference
+    url: https://betterstack.com/docs/uptime/api/monitors/
 name: Better Stack
 tags:
   - Incidents
@@ -34,7 +97,20 @@ tags:
   - On-Call
   - Heartbeats
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/better-stack.png
 access: 3rd-Party
 created: '2025-01-08'
 modified: '2026-05-19'
@@ -45,6 +121,8 @@ description: >-
   resolve website and server issues quickly by providing real-time alerting, detailed diagnostics, on-call scheduling,
   and public/private status pages.
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/better-stack/overview
   - type: AgenticAccess
     url: agentic-access/better-stack-agentic-access.yml
   - type: TrustCenter
