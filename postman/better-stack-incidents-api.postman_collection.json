@@ -1,0 +1,757 @@
+{
+  "info": {
+    "_postman_id": "84876d4b-a03a-4187-a410-ec51f298648e",
+    "name": "Better Stack Escalation Policies Incidents API",
+    "description": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:12:06.000Z",
+    "updatedAt": "2026-07-28T01:12:06.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-84876d4b-a03a-4187-a410-ec51f298648e"
+  },
+  "item": [
+    {
+      "name": "incidents",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "acknowledge",
+              "item": [
+                {
+                  "name": "Better Stack Acknowledge Incident",
+                  "id": "6b7f26e6-f97b-4d49-88a2-badad445e52d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/incidents/:id/acknowledge",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "incidents",
+                        ":id",
+                        "acknowledge"
+                      ],
+                      "variable": [
+                        {
+                          "id": "5bc9e8a5-bbf5-442e-ac55-ec04d7488708",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier of the incident."
+                        }
+                      ]
+                    },
+                    "description": "Acknowledges an active incident."
+                  },
+                  "response": [
+                    {
+                      "id": "a8d67d64-ed90-4355-af26-14f34d5d2967",
+                      "name": "Incident acknowledged.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/incidents/:id/acknowledge",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "incidents",
+                            ":id",
+                            "acknowledge"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"http_method\": \"<string>\",\n      \"cause\": \"<string>\",\n      \"started_at\": \"<dateTime>\",\n      \"acknowledged_at\": \"<dateTime>\",\n      \"resolved_at\": \"<dateTime>\",\n      \"status\": \"Resolved\",\n      \"team_name\": \"<string>\",\n      \"regions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T01:12:07.000Z",
+                      "updatedAt": "2026-07-28T01:12:07.000Z",
+                      "uid": "35240-a8d67d64-ed90-4355-af26-14f34d5d2967"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:12:06.000Z",
+                  "updatedAt": "2026-07-28T01:12:06.000Z",
+                  "uid": "35240-6b7f26e6-f97b-4d49-88a2-badad445e52d"
+                }
+              ],
+              "id": "02effe65-4cf3-44e8-9f8a-64c5e9fbef78",
+              "createdAt": "2026-07-28T01:12:06.000Z",
+              "updatedAt": "2026-07-28T01:12:06.000Z",
+              "uid": "35240-02effe65-4cf3-44e8-9f8a-64c5e9fbef78"
+            },
+            {
+              "name": "resolve",
+              "item": [
+                {
+                  "name": "Better Stack Resolve Incident",
+                  "id": "1cba1c0d-da37-4841-abdb-b3a6c6e5b692",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/incidents/:id/resolve",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "incidents",
+                        ":id",
+                        "resolve"
+                      ],
+                      "variable": [
+                        {
+                          "id": "68539d88-bf6c-41e0-a6af-9c3f682d2839",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier of the incident."
+                        }
+                      ]
+                    },
+                    "description": "Resolves an active incident."
+                  },
+                  "response": [
+                    {
+                      "id": "a1677eca-1fe0-4133-96b4-559d01ee7b16",
+                      "name": "Incident resolved.",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/incidents/:id/resolve",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "incidents",
+                            ":id",
+                            "resolve"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"http_method\": \"<string>\",\n      \"cause\": \"<string>\",\n      \"started_at\": \"<dateTime>\",\n      \"acknowledged_at\": \"<dateTime>\",\n      \"resolved_at\": \"<dateTime>\",\n      \"status\": \"Resolved\",\n      \"team_name\": \"<string>\",\n      \"regions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                      "createdAt": "2026-07-28T01:12:07.000Z",
+                      "updatedAt": "2026-07-28T01:12:07.000Z",
+                      "uid": "35240-a1677eca-1fe0-4133-96b4-559d01ee7b16"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:12:06.000Z",
+                  "updatedAt": "2026-07-28T01:12:06.000Z",
+                  "uid": "35240-1cba1c0d-da37-4841-abdb-b3a6c6e5b692"
+                }
+              ],
+              "id": "51d8e4de-8f62-485c-aec7-caf383e78007",
+              "createdAt": "2026-07-28T01:12:06.000Z",
+              "updatedAt": "2026-07-28T01:12:06.000Z",
+              "uid": "35240-51d8e4de-8f62-485c-aec7-caf383e78007"
+            },
+            {
+              "name": "Better Stack Get Incident",
+              "id": "f613cf93-34f8-4128-a4b6-c2ac254ed7a8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/incidents/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "incidents",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "c78afa92-bae5-422b-8b82-10747bca1ead",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "description": "Returns a single incident by ID."
+              },
+              "response": [
+                {
+                  "id": "736c2f06-c3bd-4cee-a441-49c057be613a",
+                  "name": "Incident details.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/incidents/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "incidents",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"http_method\": \"<string>\",\n      \"cause\": \"<string>\",\n      \"started_at\": \"<dateTime>\",\n      \"acknowledged_at\": \"<dateTime>\",\n      \"resolved_at\": \"<dateTime>\",\n      \"status\": \"Resolved\",\n      \"team_name\": \"<string>\",\n      \"regions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:12:07.000Z",
+                  "updatedAt": "2026-07-28T01:12:07.000Z",
+                  "uid": "35240-736c2f06-c3bd-4cee-a441-49c057be613a"
+                },
+                {
+                  "id": "0ccd7461-1be5-42ec-9e97-0d0be67cd7f9",
+                  "name": "Incident not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/incidents/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "incidents",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:07.000Z",
+                  "updatedAt": "2026-07-28T01:12:07.000Z",
+                  "uid": "35240-0ccd7461-1be5-42ec-9e97-0d0be67cd7f9"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:06.000Z",
+              "updatedAt": "2026-07-28T01:12:06.000Z",
+              "uid": "35240-f613cf93-34f8-4128-a4b6-c2ac254ed7a8"
+            },
+            {
+              "name": "Better Stack Delete Incident",
+              "id": "3e5a1108-9f73-4b43-af19-8decbb990a53",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/incidents/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "incidents",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "9050fa34-7817-4933-a63d-a1e9ea1a0992",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "description": "Deletes an existing incident."
+              },
+              "response": [
+                {
+                  "id": "bd276f4b-dcb2-4e86-a963-424bb3e62cb6",
+                  "name": "Incident deleted successfully.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/incidents/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "incidents",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:12:07.000Z",
+                  "updatedAt": "2026-07-28T01:12:07.000Z",
+                  "uid": "35240-bd276f4b-dcb2-4e86-a963-424bb3e62cb6"
+                },
+                {
+                  "id": "b321e175-0c46-40c4-82fe-230a9eb1245f",
+                  "name": "Incident not found.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/incidents/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "incidents",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:07.000Z",
+                  "updatedAt": "2026-07-28T01:12:07.000Z",
+                  "uid": "35240-b321e175-0c46-40c4-82fe-230a9eb1245f"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:06.000Z",
+              "updatedAt": "2026-07-28T01:12:06.000Z",
+              "uid": "35240-3e5a1108-9f73-4b43-af19-8decbb990a53"
+            }
+          ],
+          "id": "ab42846c-6f7a-42ef-8418-3e97629d2ef5",
+          "createdAt": "2026-07-28T01:12:06.000Z",
+          "updatedAt": "2026-07-28T01:12:06.000Z",
+          "uid": "35240-ab42846c-6f7a-42ef-8418-3e97629d2ef5"
+        },
+        {
+          "name": "Better Stack List Incidents",
+          "id": "04379105-cffa-44e0-b03f-da5c327665f7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/incidents?team_name=<string>&from=<date>&to=<date>&monitor_id=<integer>&heartbeat_id=<integer>&resolved=<boolean>&acknowledged=<boolean>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "incidents"
+              ],
+              "query": [
+                {
+                  "description": "Filter incidents by team name when using a global API token.",
+                  "key": "team_name",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Filter incidents starting from this date (YYYY-MM-DD).",
+                  "key": "from",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Filter incidents up to this date (YYYY-MM-DD).",
+                  "key": "to",
+                  "value": "<date>"
+                },
+                {
+                  "description": "Filter incidents by monitor ID.",
+                  "key": "monitor_id",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Filter incidents by heartbeat ID.",
+                  "key": "heartbeat_id",
+                  "value": "<integer>"
+                },
+                {
+                  "description": "Filter by resolved status.",
+                  "key": "resolved",
+                  "value": "<boolean>"
+                },
+                {
+                  "description": "Filter by acknowledged status.",
+                  "key": "acknowledged",
+                  "value": "<boolean>"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of all incidents. Uses API v3."
+          },
+          "response": [
+            {
+              "id": "ec997ea5-05c3-4409-a3dc-740b31704318",
+              "name": "Paginated list of incidents.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/incidents?team_name=<string>&from=<date>&to=<date>&monitor_id=<integer>&heartbeat_id=<integer>&resolved=<boolean>&acknowledged=<boolean>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "incidents"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter incidents by team name when using a global API token.",
+                      "key": "team_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter incidents starting from this date (YYYY-MM-DD).",
+                      "key": "from",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter incidents up to this date (YYYY-MM-DD).",
+                      "key": "to",
+                      "value": "<date>"
+                    },
+                    {
+                      "description": "Filter incidents by monitor ID.",
+                      "key": "monitor_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter incidents by heartbeat ID.",
+                      "key": "heartbeat_id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "description": "Filter by resolved status.",
+                      "key": "resolved",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "description": "Filter by acknowledged status.",
+                      "key": "acknowledged",
+                      "value": "<boolean>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"http_method\": \"<string>\",\n        \"cause\": \"<string>\",\n        \"started_at\": \"<dateTime>\",\n        \"acknowledged_at\": \"<dateTime>\",\n        \"resolved_at\": \"<dateTime>\",\n        \"status\": \"Resolved\",\n        \"team_name\": \"<string>\",\n        \"regions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"http_method\": \"<string>\",\n        \"cause\": \"<string>\",\n        \"started_at\": \"<dateTime>\",\n        \"acknowledged_at\": \"<dateTime>\",\n        \"resolved_at\": \"<dateTime>\",\n        \"status\": \"Resolved\",\n        \"team_name\": \"<string>\",\n        \"regions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    }\n  ],\n  \"pagination\": {\n    \"first\": \"<uri>\",\n    \"last\": \"<uri>\",\n    \"prev\": \"<uri>\",\n    \"next\": \"<uri>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:12:07.000Z",
+              "updatedAt": "2026-07-28T01:12:07.000Z",
+              "uid": "35240-ec997ea5-05c3-4409-a3dc-740b31704318"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:06.000Z",
+          "updatedAt": "2026-07-28T01:12:06.000Z",
+          "uid": "35240-04379105-cffa-44e0-b03f-da5c327665f7"
+        },
+        {
+          "name": "Better Stack Create Incident",
+          "id": "14970be5-8ef7-4b90-94f2-4ea4fbd000b7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<boolean>\",\n  \"sms\": \"<boolean>\",\n  \"call\": \"<boolean>\",\n  \"push\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/incidents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "incidents"
+              ]
+            },
+            "description": "Creates a new manual incident."
+          },
+          "response": [
+            {
+              "id": "9f550b14-6362-4930-b08c-97c39c84a76d",
+              "name": "Incident created successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<boolean>\",\n  \"sms\": \"<boolean>\",\n  \"call\": \"<boolean>\",\n  \"push\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/incidents",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "incidents"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"http_method\": \"<string>\",\n      \"cause\": \"<string>\",\n      \"started_at\": \"<dateTime>\",\n      \"acknowledged_at\": \"<dateTime>\",\n      \"resolved_at\": \"<dateTime>\",\n      \"status\": \"Resolved\",\n      \"team_name\": \"<string>\",\n      \"regions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "createdAt": "2026-07-28T01:12:07.000Z",
+              "updatedAt": "2026-07-28T01:12:07.000Z",
+              "uid": "35240-9f550b14-6362-4930-b08c-97c39c84a76d"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:06.000Z",
+          "updatedAt": "2026-07-28T01:12:06.000Z",
+          "uid": "35240-14970be5-8ef7-4b90-94f2-4ea4fbd000b7"
+        }
+      ],
+      "id": "1ce7644f-aa5e-464d-9ae1-0c3acf388866",
+      "createdAt": "2026-07-28T01:12:06.000Z",
+      "updatedAt": "2026-07-28T01:12:06.000Z",
+      "uid": "35240-1ce7644f-aa5e-464d-9ae1-0c3acf388866"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://uptime.betterstack.com/api/v2"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "provider": "better-stack",
+  "sources": [
+    "better-stack-escalation-policies-api-openapi.yml",
+    "better-stack-heartbeats-api-openapi.yml",
+    "better-stack-incidents-api-openapi.yml",
+    "better-stack-monitors-api-openapi.yml",
+    "better-stack-status-pages-api-openapi.yml",
+    "better-stack-team-members-api-openapi.yml"
+  ],
+  "outputs": [
+    "better-stack-escalation-policies-api-openapi.yml",
+    "better-stack-heartbeats-api-openapi.yml",
+    "better-stack-incidents-api-openapi.yml",
+    "better-stack-monitors-api-openapi.yml",
+    "better-stack-status-pages-api-openapi.yml",
+    "better-stack-team-members-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

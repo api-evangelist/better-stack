@@ -1,0 +1,615 @@
+{
+  "info": {
+    "_postman_id": "d59cfa5d-23f0-4208-a1ff-49cf81a797d8",
+    "name": "Better Stack Escalation Policies Status Pages API",
+    "description": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:12:08.000Z",
+    "updatedAt": "2026-07-28T01:12:08.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d59cfa5d-23f0-4208-a1ff-49cf81a797d8"
+  },
+  "item": [
+    {
+      "name": "status-pages",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Better Stack Get Status Page",
+              "id": "8edb73a2-b670-448c-abd0-0a7a7c067855",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/status-pages/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a7ffea54-95c1-4a08-8f0f-441c9250df1f",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "description": "Returns a single status page by ID."
+              },
+              "response": [
+                {
+                  "id": "9070b69f-434f-4de0-8e5d-b1ca2e815fb5",
+                  "name": "Status page details.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/status-pages/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "status-pages",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"company_name\": \"<string>\",\n      \"company_website\": \"<uri>\",\n      \"subdomain\": \"<string>\",\n      \"custom_domain\": \"<string>\",\n      \"timezone\": \"<string>\",\n      \"theme\": \"light\",\n      \"aggregate_state\": \"major_outage\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:12:08.000Z",
+                  "updatedAt": "2026-07-28T01:12:08.000Z",
+                  "uid": "35240-9070b69f-434f-4de0-8e5d-b1ca2e815fb5"
+                },
+                {
+                  "id": "9c79b39a-44c2-43c9-a7f4-067fa994b11d",
+                  "name": "Status page not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/status-pages/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "status-pages",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:08.000Z",
+                  "updatedAt": "2026-07-28T01:12:08.000Z",
+                  "uid": "35240-9c79b39a-44c2-43c9-a7f4-067fa994b11d"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:08.000Z",
+              "updatedAt": "2026-07-28T01:12:08.000Z",
+              "uid": "35240-8edb73a2-b670-448c-abd0-0a7a7c067855"
+            },
+            {
+              "name": "Better Stack Update Status Page",
+              "id": "877467fa-feeb-4cd9-b7ca-657daa336d3e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"<string>\",\n  \"custom_domain\": \"<string>\",\n  \"theme\": \"light\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/status-pages/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "66888f33-31cb-44b9-8f17-222f69ffd16d",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "description": "Updates an existing status page."
+              },
+              "response": [
+                {
+                  "id": "4c52ad99-7b18-451d-9c4f-14603d6c5fd8",
+                  "name": "Status page updated successfully.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"company_name\": \"<string>\",\n  \"custom_domain\": \"<string>\",\n  \"theme\": \"light\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/status-pages/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "status-pages",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"company_name\": \"<string>\",\n      \"company_website\": \"<uri>\",\n      \"subdomain\": \"<string>\",\n      \"custom_domain\": \"<string>\",\n      \"timezone\": \"<string>\",\n      \"theme\": \"light\",\n      \"aggregate_state\": \"major_outage\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:12:08.000Z",
+                  "updatedAt": "2026-07-28T01:12:08.000Z",
+                  "uid": "35240-4c52ad99-7b18-451d-9c4f-14603d6c5fd8"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:08.000Z",
+              "updatedAt": "2026-07-28T01:12:08.000Z",
+              "uid": "35240-877467fa-feeb-4cd9-b7ca-657daa336d3e"
+            },
+            {
+              "name": "Better Stack Delete Status Page",
+              "id": "dd5291c4-b063-4381-ad7c-4055897f6d43",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/status-pages/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "3a08e2b9-054e-493d-a0eb-8bc948db7ddd",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "description": "Deletes an existing status page."
+              },
+              "response": [
+                {
+                  "id": "1e001509-838c-4029-ba37-4c0044e67d23",
+                  "name": "Status page deleted successfully.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/status-pages/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "status-pages",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:12:08.000Z",
+                  "updatedAt": "2026-07-28T01:12:08.000Z",
+                  "uid": "35240-1e001509-838c-4029-ba37-4c0044e67d23"
+                },
+                {
+                  "id": "14861ac6-2169-48c5-9a3e-50e647668111",
+                  "name": "Status page not found.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/status-pages/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "status-pages",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:08.000Z",
+                  "updatedAt": "2026-07-28T01:12:08.000Z",
+                  "uid": "35240-14861ac6-2169-48c5-9a3e-50e647668111"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:08.000Z",
+              "updatedAt": "2026-07-28T01:12:08.000Z",
+              "uid": "35240-dd5291c4-b063-4381-ad7c-4055897f6d43"
+            }
+          ],
+          "id": "73c373a0-d2b4-4753-9eac-144183b72935",
+          "createdAt": "2026-07-28T01:12:08.000Z",
+          "updatedAt": "2026-07-28T01:12:08.000Z",
+          "uid": "35240-73c373a0-d2b4-4753-9eac-144183b72935"
+        },
+        {
+          "name": "Better Stack List Status Pages",
+          "id": "2a1bbfcf-24c7-4c3c-8cb7-5df8dc9f5008",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/status-pages?team_name=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "status-pages"
+              ],
+              "query": [
+                {
+                  "description": "Filter by team name when using a global API token.",
+                  "key": "team_name",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of all status pages."
+          },
+          "response": [
+            {
+              "id": "4e416ef9-17d1-45db-b441-0f9af62b866d",
+              "name": "Paginated list of status pages.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/status-pages?team_name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "status-pages"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by team name when using a global API token.",
+                      "key": "team_name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"company_name\": \"<string>\",\n        \"company_website\": \"<uri>\",\n        \"subdomain\": \"<string>\",\n        \"custom_domain\": \"<string>\",\n        \"timezone\": \"<string>\",\n        \"theme\": \"light\",\n        \"aggregate_state\": \"partial_outage\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"company_name\": \"<string>\",\n        \"company_website\": \"<uri>\",\n        \"subdomain\": \"<string>\",\n        \"custom_domain\": \"<string>\",\n        \"timezone\": \"<string>\",\n        \"theme\": \"light\",\n        \"aggregate_state\": \"downtime\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\"\n      }\n    }\n  ],\n  \"pagination\": {\n    \"first\": \"<uri>\",\n    \"last\": \"<uri>\",\n    \"prev\": \"<uri>\",\n    \"next\": \"<uri>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:12:08.000Z",
+              "updatedAt": "2026-07-28T01:12:08.000Z",
+              "uid": "35240-4e416ef9-17d1-45db-b441-0f9af62b866d"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:08.000Z",
+          "updatedAt": "2026-07-28T01:12:08.000Z",
+          "uid": "35240-2a1bbfcf-24c7-4c3c-8cb7-5df8dc9f5008"
+        },
+        {
+          "name": "Better Stack Create Status Page",
+          "id": "142e4d5f-f642-4632-aeaa-cc6cd852bd53",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_name\": \"<string>\",\n  \"subdomain\": \"<string>\",\n  \"company_website\": \"<uri>\",\n  \"timezone\": \"<string>\",\n  \"theme\": \"light\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/status-pages",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "status-pages"
+              ]
+            },
+            "description": "Creates a new status page."
+          },
+          "response": [
+            {
+              "id": "fd1f90d6-c962-44c0-913b-c245312653e5",
+              "name": "Status page created successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"<string>\",\n  \"subdomain\": \"<string>\",\n  \"company_website\": \"<uri>\",\n  \"timezone\": \"<string>\",\n  \"theme\": \"light\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/status-pages",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "status-pages"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"company_name\": \"<string>\",\n      \"company_website\": \"<uri>\",\n      \"subdomain\": \"<string>\",\n      \"custom_domain\": \"<string>\",\n      \"timezone\": \"<string>\",\n      \"theme\": \"light\",\n      \"aggregate_state\": \"major_outage\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\"\n    }\n  }\n}",
+              "createdAt": "2026-07-28T01:12:08.000Z",
+              "updatedAt": "2026-07-28T01:12:08.000Z",
+              "uid": "35240-fd1f90d6-c962-44c0-913b-c245312653e5"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:08.000Z",
+          "updatedAt": "2026-07-28T01:12:08.000Z",
+          "uid": "35240-142e4d5f-f642-4632-aeaa-cc6cd852bd53"
+        }
+      ],
+      "id": "75434b68-cefd-4055-8f2c-b8c3f226c07a",
+      "createdAt": "2026-07-28T01:12:08.000Z",
+      "updatedAt": "2026-07-28T01:12:08.000Z",
+      "uid": "35240-75434b68-cefd-4055-8f2c-b8c3f226c07a"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://uptime.betterstack.com/api/v2"
+    }
+  ]
+}

@@ -1,0 +1,615 @@
+{
+  "info": {
+    "_postman_id": "4305170e-c5a4-41e1-8ea9-756657128191",
+    "name": "Better Stack Escalation Policies API",
+    "description": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:12:04.000Z",
+    "updatedAt": "2026-07-28T01:12:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4305170e-c5a4-41e1-8ea9-756657128191"
+  },
+  "item": [
+    {
+      "name": "policies",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Better Stack Get Escalation Policy",
+              "id": "b33d1148-09be-42d9-99d3-2ff89dd366d5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policies/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policies",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "92f4cfde-4a64-4391-b688-e837c9241b8d",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the escalation policy."
+                    }
+                  ]
+                },
+                "description": "Returns a single escalation policy by ID."
+              },
+              "response": [
+                {
+                  "id": "4ad18f24-003e-407e-9458-b19987c7435f",
+                  "name": "Escalation policy details.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policies/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policies",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"repeat_count\": \"<integer>\",\n      \"repeat_delay\": \"<integer>\",\n      \"incident_token\": \"<string>\",\n      \"policy_group_id\": \"<string>\",\n      \"team_name\": \"<string>\",\n      \"steps\": [\n        {\n          \"type\": \"<string>\",\n          \"attributes\": {\n            \"step_type\": \"wait\",\n            \"wait_before\": \"<integer>\"\n          }\n        },\n        {\n          \"type\": \"<string>\",\n          \"attributes\": {\n            \"step_type\": \"notification\",\n            \"wait_before\": \"<integer>\"\n          }\n        }\n      ]\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:12:05.000Z",
+                  "updatedAt": "2026-07-28T01:12:05.000Z",
+                  "uid": "35240-4ad18f24-003e-407e-9458-b19987c7435f"
+                },
+                {
+                  "id": "32dd52cf-4834-419a-9ac2-e4f84757a940",
+                  "name": "Escalation policy not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policies/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policies",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:05.000Z",
+                  "updatedAt": "2026-07-28T01:12:05.000Z",
+                  "uid": "35240-32dd52cf-4834-419a-9ac2-e4f84757a940"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:04.000Z",
+              "updatedAt": "2026-07-28T01:12:04.000Z",
+              "uid": "35240-b33d1148-09be-42d9-99d3-2ff89dd366d5"
+            },
+            {
+              "name": "Better Stack Update Escalation Policy",
+              "id": "6cdf6068-d478-47b7-a3f6-1c51ad4c033a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"repeat_count\": \"<integer>\",\n  \"repeat_delay\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/policies/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policies",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "bc94e92d-d9d4-4251-9dcc-1fe87c0c7f5c",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the escalation policy."
+                    }
+                  ]
+                },
+                "description": "Updates an existing escalation policy."
+              },
+              "response": [
+                {
+                  "id": "12555a67-2be8-4c11-8e14-01d52bb20812",
+                  "name": "Escalation policy updated successfully.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"repeat_count\": \"<integer>\",\n  \"repeat_delay\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/policies/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policies",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"repeat_count\": \"<integer>\",\n      \"repeat_delay\": \"<integer>\",\n      \"incident_token\": \"<string>\",\n      \"policy_group_id\": \"<string>\",\n      \"team_name\": \"<string>\",\n      \"steps\": [\n        {\n          \"type\": \"<string>\",\n          \"attributes\": {\n            \"step_type\": \"wait\",\n            \"wait_before\": \"<integer>\"\n          }\n        },\n        {\n          \"type\": \"<string>\",\n          \"attributes\": {\n            \"step_type\": \"notification\",\n            \"wait_before\": \"<integer>\"\n          }\n        }\n      ]\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:12:05.000Z",
+                  "updatedAt": "2026-07-28T01:12:05.000Z",
+                  "uid": "35240-12555a67-2be8-4c11-8e14-01d52bb20812"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:04.000Z",
+              "updatedAt": "2026-07-28T01:12:04.000Z",
+              "uid": "35240-6cdf6068-d478-47b7-a3f6-1c51ad4c033a"
+            },
+            {
+              "name": "Better Stack Delete Escalation Policy",
+              "id": "6da0c701-7763-41de-8471-bcb30fe8c5e4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policies/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policies",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "2387dcd2-bfca-49f4-a91e-865fc2d0c0e0",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the escalation policy."
+                    }
+                  ]
+                },
+                "description": "Deletes an existing escalation policy."
+              },
+              "response": [
+                {
+                  "id": "294b0c8e-84be-4350-840b-ac5ced199dad",
+                  "name": "Escalation policy deleted successfully.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policies/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policies",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:12:05.000Z",
+                  "updatedAt": "2026-07-28T01:12:05.000Z",
+                  "uid": "35240-294b0c8e-84be-4350-840b-ac5ced199dad"
+                },
+                {
+                  "id": "5b19e41e-f3d1-44fa-9343-617b5bcc72a1",
+                  "name": "Escalation policy not found.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/policies/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "policies",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:05.000Z",
+                  "updatedAt": "2026-07-28T01:12:05.000Z",
+                  "uid": "35240-5b19e41e-f3d1-44fa-9343-617b5bcc72a1"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:04.000Z",
+              "updatedAt": "2026-07-28T01:12:04.000Z",
+              "uid": "35240-6da0c701-7763-41de-8471-bcb30fe8c5e4"
+            }
+          ],
+          "id": "157c3d25-5e06-4b0c-9237-855446907166",
+          "createdAt": "2026-07-28T01:12:04.000Z",
+          "updatedAt": "2026-07-28T01:12:04.000Z",
+          "uid": "35240-157c3d25-5e06-4b0c-9237-855446907166"
+        },
+        {
+          "name": "Better Stack List Escalation Policies",
+          "id": "0a0460eb-eb29-4202-b407-53df1b15ae3f",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policies?team_name=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies"
+              ],
+              "query": [
+                {
+                  "description": "Filter policies by team name when using a global API token.",
+                  "key": "team_name",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of all escalation policies. Uses API v3."
+          },
+          "response": [
+            {
+              "id": "89025f6e-51cd-47f5-aedb-6cb42866babf",
+              "name": "Paginated list of escalation policies.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policies?team_name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policies"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter policies by team name when using a global API token.",
+                      "key": "team_name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"repeat_count\": \"<integer>\",\n        \"repeat_delay\": \"<integer>\",\n        \"incident_token\": \"<string>\",\n        \"policy_group_id\": \"<string>\",\n        \"team_name\": \"<string>\",\n        \"steps\": [\n          {\n            \"type\": \"<string>\",\n            \"attributes\": {\n              \"step_type\": \"wait\",\n              \"wait_before\": \"<integer>\"\n            }\n          },\n          {\n            \"type\": \"<string>\",\n            \"attributes\": {\n              \"step_type\": \"notification\",\n              \"wait_before\": \"<integer>\"\n            }\n          }\n        ]\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"repeat_count\": \"<integer>\",\n        \"repeat_delay\": \"<integer>\",\n        \"incident_token\": \"<string>\",\n        \"policy_group_id\": \"<string>\",\n        \"team_name\": \"<string>\",\n        \"steps\": [\n          {\n            \"type\": \"<string>\",\n            \"attributes\": {\n              \"step_type\": \"notification\",\n              \"wait_before\": \"<integer>\"\n            }\n          },\n          {\n            \"type\": \"<string>\",\n            \"attributes\": {\n              \"step_type\": \"wait\",\n              \"wait_before\": \"<integer>\"\n            }\n          }\n        ]\n      }\n    }\n  ],\n  \"pagination\": {\n    \"first\": \"<uri>\",\n    \"last\": \"<uri>\",\n    \"prev\": \"<uri>\",\n    \"next\": \"<uri>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:12:05.000Z",
+              "updatedAt": "2026-07-28T01:12:05.000Z",
+              "uid": "35240-89025f6e-51cd-47f5-aedb-6cb42866babf"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:04.000Z",
+          "updatedAt": "2026-07-28T01:12:04.000Z",
+          "uid": "35240-0a0460eb-eb29-4202-b407-53df1b15ae3f"
+        },
+        {
+          "name": "Better Stack Create Escalation Policy",
+          "id": "1d33e2c5-1e92-4b8a-83a8-a0d47bc74dd0",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"repeat_count\": \"<integer>\",\n  \"repeat_delay\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/policies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies"
+              ]
+            },
+            "description": "Creates a new escalation policy."
+          },
+          "response": [
+            {
+              "id": "fe87681a-ccd7-40ee-b107-afed905dfc80",
+              "name": "Escalation policy created successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"repeat_count\": \"<integer>\",\n  \"repeat_delay\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/policies",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policies"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"repeat_count\": \"<integer>\",\n      \"repeat_delay\": \"<integer>\",\n      \"incident_token\": \"<string>\",\n      \"policy_group_id\": \"<string>\",\n      \"team_name\": \"<string>\",\n      \"steps\": [\n        {\n          \"type\": \"<string>\",\n          \"attributes\": {\n            \"step_type\": \"wait\",\n            \"wait_before\": \"<integer>\"\n          }\n        },\n        {\n          \"type\": \"<string>\",\n          \"attributes\": {\n            \"step_type\": \"notification\",\n            \"wait_before\": \"<integer>\"\n          }\n        }\n      ]\n    }\n  }\n}",
+              "createdAt": "2026-07-28T01:12:05.000Z",
+              "updatedAt": "2026-07-28T01:12:05.000Z",
+              "uid": "35240-fe87681a-ccd7-40ee-b107-afed905dfc80"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:04.000Z",
+          "updatedAt": "2026-07-28T01:12:04.000Z",
+          "uid": "35240-1d33e2c5-1e92-4b8a-83a8-a0d47bc74dd0"
+        }
+      ],
+      "id": "6ea3222a-7b65-4db6-ac55-261e4ba500bc",
+      "createdAt": "2026-07-28T01:12:04.000Z",
+      "updatedAt": "2026-07-28T01:12:04.000Z",
+      "uid": "35240-6ea3222a-7b65-4db6-ac55-261e4ba500bc"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://uptime.betterstack.com/api/v2"
+    }
+  ]
+}

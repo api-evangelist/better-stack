@@ -1,0 +1,763 @@
+{
+  "info": {
+    "_postman_id": "36ddb6df-6242-4b55-8d4c-cbe769c6cdc9",
+    "name": "Better Stack Escalation Policies Heartbeats API",
+    "description": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:12:05.000Z",
+    "updatedAt": "2026-07-28T01:12:05.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-36ddb6df-6242-4b55-8d4c-cbe769c6cdc9"
+  },
+  "item": [
+    {
+      "name": "heartbeats",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "availability",
+              "item": [
+                {
+                  "name": "Better Stack Get Heartbeat Availability",
+                  "id": "ab4e5365-99db-4ccf-952a-57ab51cc0056",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/heartbeats/:id/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "heartbeats",
+                        ":id",
+                        "availability"
+                      ],
+                      "variable": [
+                        {
+                          "id": "8c4205b9-0d4e-4de5-b5bf-18511e5f1cb6",
+                          "key": "id",
+                          "value": "<string>",
+                          "description": "(Required) The unique identifier of the heartbeat."
+                        }
+                      ]
+                    },
+                    "description": "Returns availability summary for a specific heartbeat monitor."
+                  },
+                  "response": [
+                    {
+                      "id": "c3a314db-0df4-4194-ae99-7e5e7eb0f425",
+                      "name": "Availability summary for the heartbeat.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/heartbeats/:id/availability",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "heartbeats",
+                            ":id",
+                            "availability"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": {\n    \"availability\": \"<number>\",\n    \"downtime_duration\": \"<integer>\",\n    \"number_of_incidents\": \"<integer>\",\n    \"longest_incident_duration\": \"<integer>\",\n    \"average_incident_duration\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-07-28T01:12:06.000Z",
+                      "updatedAt": "2026-07-28T01:12:06.000Z",
+                      "uid": "35240-c3a314db-0df4-4194-ae99-7e5e7eb0f425"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T01:12:05.000Z",
+                  "updatedAt": "2026-07-28T01:12:05.000Z",
+                  "uid": "35240-ab4e5365-99db-4ccf-952a-57ab51cc0056"
+                }
+              ],
+              "id": "a1497fdb-0b56-4ef4-a09a-3281c6302f43",
+              "createdAt": "2026-07-28T01:12:05.000Z",
+              "updatedAt": "2026-07-28T01:12:05.000Z",
+              "uid": "35240-a1497fdb-0b56-4ef4-a09a-3281c6302f43"
+            },
+            {
+              "name": "Better Stack Get Heartbeat",
+              "id": "7bea3b3e-eedf-4475-852f-cf0cc48ee583",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/heartbeats/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "heartbeats",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "2fd7fe5a-26bc-4a3d-82ff-55a8305a63fb",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the heartbeat."
+                    }
+                  ]
+                },
+                "description": "Returns a single heartbeat monitor by ID."
+              },
+              "response": [
+                {
+                  "id": "3eff3e59-b197-4069-877a-16d59fe193f9",
+                  "name": "Heartbeat details.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/heartbeats/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "heartbeats",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"period\": \"<integer>\",\n      \"grace\": \"<integer>\",\n      \"status\": \"down\",\n      \"call\": \"<boolean>\",\n      \"sms\": \"<boolean>\",\n      \"email\": \"<boolean>\",\n      \"push\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"paused_at\": \"<dateTime>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:12:06.000Z",
+                  "updatedAt": "2026-07-28T01:12:06.000Z",
+                  "uid": "35240-3eff3e59-b197-4069-877a-16d59fe193f9"
+                },
+                {
+                  "id": "774c1124-132f-4d66-af95-be5f25fdda02",
+                  "name": "Heartbeat not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/heartbeats/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "heartbeats",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:06.000Z",
+                  "updatedAt": "2026-07-28T01:12:06.000Z",
+                  "uid": "35240-774c1124-132f-4d66-af95-be5f25fdda02"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:05.000Z",
+              "updatedAt": "2026-07-28T01:12:05.000Z",
+              "uid": "35240-7bea3b3e-eedf-4475-852f-cf0cc48ee583"
+            },
+            {
+              "name": "Better Stack Update Heartbeat",
+              "id": "c4bce371-4702-4fa7-9cdf-1d2ee967eb4d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"period\": \"<integer>\",\n  \"grace\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/heartbeats/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "heartbeats",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "5161b9ab-6d90-45e0-be24-9a6a8e85dbf7",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the heartbeat."
+                    }
+                  ]
+                },
+                "description": "Updates an existing heartbeat monitor."
+              },
+              "response": [
+                {
+                  "id": "2b02d8db-f1dc-452a-87fe-000424f30838",
+                  "name": "Heartbeat updated successfully.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"period\": \"<integer>\",\n  \"grace\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/heartbeats/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "heartbeats",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"period\": \"<integer>\",\n      \"grace\": \"<integer>\",\n      \"status\": \"down\",\n      \"call\": \"<boolean>\",\n      \"sms\": \"<boolean>\",\n      \"email\": \"<boolean>\",\n      \"push\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"paused_at\": \"<dateTime>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T01:12:06.000Z",
+                  "updatedAt": "2026-07-28T01:12:06.000Z",
+                  "uid": "35240-2b02d8db-f1dc-452a-87fe-000424f30838"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:05.000Z",
+              "updatedAt": "2026-07-28T01:12:05.000Z",
+              "uid": "35240-c4bce371-4702-4fa7-9cdf-1d2ee967eb4d"
+            },
+            {
+              "name": "Better Stack Delete Heartbeat",
+              "id": "7c1e8894-9758-452c-a60e-dcda742107d5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/heartbeats/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "heartbeats",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "cd3f2e53-db17-40b7-a29a-e1ec9351fdd7",
+                      "key": "id",
+                      "value": "<string>",
+                      "description": "(Required) The unique identifier of the heartbeat."
+                    }
+                  ]
+                },
+                "description": "Deletes an existing heartbeat monitor."
+              },
+              "response": [
+                {
+                  "id": "97b86b72-7311-41ec-9047-17c99dc9a496",
+                  "name": "Heartbeat deleted successfully.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/heartbeats/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "heartbeats",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T01:12:06.000Z",
+                  "updatedAt": "2026-07-28T01:12:06.000Z",
+                  "uid": "35240-97b86b72-7311-41ec-9047-17c99dc9a496"
+                },
+                {
+                  "id": "06c0221e-1563-4748-8e0e-4f8a9bdde6c7",
+                  "name": "Heartbeat not found.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/heartbeats/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "heartbeats",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T01:12:06.000Z",
+                  "updatedAt": "2026-07-28T01:12:06.000Z",
+                  "uid": "35240-06c0221e-1563-4748-8e0e-4f8a9bdde6c7"
+                }
+              ],
+              "createdAt": "2026-07-28T01:12:05.000Z",
+              "updatedAt": "2026-07-28T01:12:05.000Z",
+              "uid": "35240-7c1e8894-9758-452c-a60e-dcda742107d5"
+            }
+          ],
+          "id": "e51d0738-6f93-4611-ba33-0affdc9d8567",
+          "createdAt": "2026-07-28T01:12:05.000Z",
+          "updatedAt": "2026-07-28T01:12:05.000Z",
+          "uid": "35240-e51d0738-6f93-4611-ba33-0affdc9d8567"
+        },
+        {
+          "name": "Better Stack List Heartbeats",
+          "id": "62ee37cd-4b88-4749-8141-3c97c41ff11e",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/heartbeats?team_name=<string>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "heartbeats"
+              ],
+              "query": [
+                {
+                  "description": "Filter heartbeats belonging to a specified team when using a global API token.",
+                  "key": "team_name",
+                  "value": "<string>"
+                }
+              ]
+            },
+            "description": "Returns a paginated list of all heartbeat monitors."
+          },
+          "response": [
+            {
+              "id": "980d80a6-3e0f-4a29-b528-db533a2146cb",
+              "name": "Paginated list of heartbeats.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/heartbeats?team_name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "heartbeats"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter heartbeats belonging to a specified team when using a global API token.",
+                      "key": "team_name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"period\": \"<integer>\",\n        \"grace\": \"<integer>\",\n        \"status\": \"down\",\n        \"call\": \"<boolean>\",\n        \"sms\": \"<boolean>\",\n        \"email\": \"<boolean>\",\n        \"push\": \"<boolean>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"paused_at\": \"<dateTime>\"\n      }\n    },\n    {\n      \"id\": \"<string>\",\n      \"type\": \"<string>\",\n      \"attributes\": {\n        \"name\": \"<string>\",\n        \"url\": \"<uri>\",\n        \"period\": \"<integer>\",\n        \"grace\": \"<integer>\",\n        \"status\": \"paused\",\n        \"call\": \"<boolean>\",\n        \"sms\": \"<boolean>\",\n        \"email\": \"<boolean>\",\n        \"push\": \"<boolean>\",\n        \"created_at\": \"<dateTime>\",\n        \"updated_at\": \"<dateTime>\",\n        \"paused_at\": \"<dateTime>\"\n      }\n    }\n  ],\n  \"pagination\": {\n    \"first\": \"<uri>\",\n    \"last\": \"<uri>\",\n    \"prev\": \"<uri>\",\n    \"next\": \"<uri>\"\n  }\n}",
+              "createdAt": "2026-07-28T01:12:06.000Z",
+              "updatedAt": "2026-07-28T01:12:06.000Z",
+              "uid": "35240-980d80a6-3e0f-4a29-b528-db533a2146cb"
+            },
+            {
+              "id": "2e219e7c-957c-478d-a55e-a21faa729613",
+              "name": "Authentication failed.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/heartbeats?team_name=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "heartbeats"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter heartbeats belonging to a specified team when using a global API token.",
+                      "key": "team_name",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    },\n    {\n      \"title\": \"<string>\",\n      \"detail\": \"<string>\"\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:12:06.000Z",
+              "updatedAt": "2026-07-28T01:12:06.000Z",
+              "uid": "35240-2e219e7c-957c-478d-a55e-a21faa729613"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:05.000Z",
+          "updatedAt": "2026-07-28T01:12:05.000Z",
+          "uid": "35240-62ee37cd-4b88-4749-8141-3c97c41ff11e"
+        },
+        {
+          "name": "Better Stack Create Heartbeat",
+          "id": "454d50cd-c49b-4703-8983-175503a4dcf4",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"period\": \"<integer>\",\n  \"grace\": \"<integer>\",\n  \"email\": \"<boolean>\",\n  \"sms\": \"<boolean>\",\n  \"call\": \"<boolean>\",\n  \"push\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/heartbeats",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "heartbeats"
+              ]
+            },
+            "description": "Creates a new heartbeat monitor."
+          },
+          "response": [
+            {
+              "id": "5ac13550-f169-4c1b-b879-0c941aab2b7a",
+              "name": "Heartbeat created successfully.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"period\": \"<integer>\",\n  \"grace\": \"<integer>\",\n  \"email\": \"<boolean>\",\n  \"sms\": \"<boolean>\",\n  \"call\": \"<boolean>\",\n  \"push\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/heartbeats",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "heartbeats"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"type\": \"<string>\",\n    \"attributes\": {\n      \"name\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"period\": \"<integer>\",\n      \"grace\": \"<integer>\",\n      \"status\": \"down\",\n      \"call\": \"<boolean>\",\n      \"sms\": \"<boolean>\",\n      \"email\": \"<boolean>\",\n      \"push\": \"<boolean>\",\n      \"created_at\": \"<dateTime>\",\n      \"updated_at\": \"<dateTime>\",\n      \"paused_at\": \"<dateTime>\"\n    }\n  }\n}",
+              "createdAt": "2026-07-28T01:12:06.000Z",
+              "updatedAt": "2026-07-28T01:12:06.000Z",
+              "uid": "35240-5ac13550-f169-4c1b-b879-0c941aab2b7a"
+            }
+          ],
+          "createdAt": "2026-07-28T01:12:05.000Z",
+          "updatedAt": "2026-07-28T01:12:05.000Z",
+          "uid": "35240-454d50cd-c49b-4703-8983-175503a4dcf4"
+        }
+      ],
+      "id": "59c0b3eb-ef33-46ec-8b56-399de968d054",
+      "createdAt": "2026-07-28T01:12:05.000Z",
+      "updatedAt": "2026-07-28T01:12:05.000Z",
+      "uid": "35240-59c0b3eb-ef33-46ec-8b56-399de968d054"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://uptime.betterstack.com/api/v2"
+    }
+  ]
+}
