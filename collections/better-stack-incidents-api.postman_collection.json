@@ -1,0 +1,778 @@
+{
+  "item": [
+    {
+      "id": "65a362af-2ad3-43b4-a531-1cac1d73c063",
+      "name": "Incidents",
+      "description": {
+        "content": "Manage incidents and on-call alerting",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "06ba70d7-3b54-4640-abb6-07dc0321c1bb",
+          "name": "Better Stack List Incidents",
+          "request": {
+            "name": "Better Stack List Incidents",
+            "description": {
+              "content": "Returns a paginated list of all incidents. Uses API v3.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "team_name",
+                  "value": "<string>",
+                  "description": "Filter incidents by team name when using a global API token."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<date>",
+                  "description": "Filter incidents starting from this date (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<date>",
+                  "description": "Filter incidents up to this date (YYYY-MM-DD)."
+                },
+                {
+                  "disabled": false,
+                  "key": "monitor_id",
+                  "value": "<integer>",
+                  "description": "Filter incidents by monitor ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "heartbeat_id",
+                  "value": "<integer>",
+                  "description": "Filter incidents by heartbeat ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "resolved",
+                  "value": "<boolean>",
+                  "description": "Filter by resolved status."
+                },
+                {
+                  "disabled": false,
+                  "key": "acknowledged",
+                  "value": "<boolean>",
+                  "description": "Filter by acknowledged status."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "281c9deb-9ab2-4c25-b7b8-ebfb1829f225",
+              "name": "Paginated list of incidents.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "my-team"
+                    },
+                    {
+                      "key": "from",
+                      "value": "2026-01-01"
+                    },
+                    {
+                      "key": "to",
+                      "value": "2026-04-19"
+                    },
+                    {
+                      "key": "monitor_id",
+                      "value": "500123"
+                    },
+                    {
+                      "key": "heartbeat_id",
+                      "value": "100200"
+                    },
+                    {
+                      "key": "resolved",
+                      "value": "false"
+                    },
+                    {
+                      "key": "acknowledged",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"900100\",\n      \"type\": \"incident\",\n      \"attributes\": {\n        \"name\": \"Production API\",\n        \"url\": \"https://example.com\",\n        \"http_method\": \"GET\",\n        \"cause\": \"Connection timeout\",\n        \"started_at\": \"2026-04-18T14:00:00Z\",\n        \"acknowledged_at\": \"2026-04-18T14:05:00Z\",\n        \"resolved_at\": \"2026-04-18T14:15:00Z\",\n        \"status\": \"Resolved\",\n        \"team_name\": \"my-team\",\n        \"regions\": [\n          \"us\"\n        ]\n      }\n    }\n  ],\n  \"pagination\": {\n    \"first\": \"https://uptime.betterstack.com/api/v3/incidents?page=1\",\n    \"last\": \"https://uptime.betterstack.com/api/v3/incidents?page=1\",\n    \"prev\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "876e8edd-8f8d-40f5-8ee7-f2cab8bf7cb7",
+          "name": "Better Stack Create Incident",
+          "request": {
+            "name": "Better Stack Create Incident",
+            "description": {
+              "content": "Creates a new manual incident.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"email\": \"<boolean>\",\n  \"sms\": \"<boolean>\",\n  \"call\": \"<boolean>\",\n  \"push\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "83b11b7c-d409-4637-bd56-410aee7986e3",
+              "name": "Incident created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Database degraded\",\n  \"email\": true,\n  \"sms\": false,\n  \"call\": false,\n  \"push\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"900101\",\n    \"type\": \"incident\",\n    \"attributes\": {\n      \"name\": \"Database degraded\",\n      \"status\": \"Started\",\n      \"started_at\": \"2026-04-19T10:00:00Z\",\n      \"acknowledged_at\": null,\n      \"resolved_at\": null\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2620c285-addf-46c1-a7a6-8dcfafd01419",
+          "name": "Better Stack Get Incident",
+          "request": {
+            "name": "Better Stack Get Incident",
+            "description": {
+              "content": "Returns a single incident by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the incident."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "61b24da0-7243-4a4d-8eb1-8885f0edb379",
+              "name": "Incident details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"900100\",\n    \"type\": \"incident\",\n    \"attributes\": {\n      \"name\": \"Production API\",\n      \"url\": \"https://example.com\",\n      \"http_method\": \"GET\",\n      \"cause\": \"Connection timeout\",\n      \"started_at\": \"2026-04-18T14:00:00Z\",\n      \"acknowledged_at\": \"2026-04-18T14:05:00Z\",\n      \"resolved_at\": \"2026-04-18T14:15:00Z\",\n      \"status\": \"Resolved\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b575a75b-3bc3-42b7-bdf0-85ed253e2b50",
+              "name": "Incident not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4047e1ae-f3cb-46c7-a417-198b103a69cd",
+          "name": "Better Stack Delete Incident",
+          "request": {
+            "name": "Better Stack Delete Incident",
+            "description": {
+              "content": "Deletes an existing incident.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the incident."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ba1106d5-fa1f-441d-84a9-8d892def98ae",
+              "name": "Incident deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "67d6525d-f27e-4d7b-9621-5921d7a8f8a9",
+              "name": "Incident not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2e015aa-3f33-43aa-82b0-6bce1b79158c",
+          "name": "Better Stack Acknowledge Incident",
+          "request": {
+            "name": "Better Stack Acknowledge Incident",
+            "description": {
+              "content": "Acknowledges an active incident.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents",
+                ":id",
+                "acknowledge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the incident."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b5734ad-11bb-47fd-9c55-466a5aacd3dc",
+              "name": "Incident acknowledged.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents",
+                    ":id",
+                    "acknowledge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"900100\",\n    \"type\": \"incident\",\n    \"attributes\": {\n      \"status\": \"Started\",\n      \"acknowledged_at\": \"2026-04-19T10:01:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f692af62-2754-495a-8b60-893194b51e7f",
+          "name": "Better Stack Resolve Incident",
+          "request": {
+            "name": "Better Stack Resolve Incident",
+            "description": {
+              "content": "Resolves an active incident.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents",
+                ":id",
+                "resolve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the incident."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ba688bbb-fb76-46a9-a7d1-644925335fcc",
+              "name": "Incident resolved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents",
+                    ":id",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the incident."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"900100\",\n    \"type\": \"incident\",\n    \"attributes\": {\n      \"status\": \"Resolved\",\n      \"resolved_at\": \"2026-04-19T10:05:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://uptime.betterstack.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5783ea33-1e15-46b1-b1c1-bff66c212c1c",
+    "name": "Better Stack Escalation Policies Incidents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Better Stack Escalation Policies API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Escalation Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Escalation Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/policies",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter policies by team name when using a global API token."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all escalation policies. Uses API v3."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/policies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new escalation policy."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/policies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "300010",
+                "type": "path",
+                "description": "The unique identifier of the escalation policy."
+              }
+            ]
+          },
+          "docs": "Returns a single escalation policy by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/policies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "300010",
+                "type": "path",
+                "description": "The unique identifier of the escalation policy."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing escalation policy."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Escalation Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/policies/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "300010",
+                "type": "path",
+                "description": "The unique identifier of the escalation policy."
+              }
+            ]
+          },
+          "docs": "Deletes an existing escalation policy."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

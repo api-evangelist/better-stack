@@ -1,0 +1,639 @@
+{
+  "item": [
+    {
+      "id": "ecb7a99e-c5c5-419b-b153-41320bcb0df3",
+      "name": "Status Pages",
+      "description": {
+        "content": "Manage public and private status pages",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "685ae5b0-cc68-42d3-8d6d-cf0ca0a3a854",
+          "name": "Better Stack List Status Pages",
+          "request": {
+            "name": "Better Stack List Status Pages",
+            "description": {
+              "content": "Returns a paginated list of all status pages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-pages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "team_name",
+                  "value": "<string>",
+                  "description": "Filter by team name when using a global API token."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22d262ae-9aed-46b9-b2a8-b90e7cc5132e",
+              "name": "Paginated list of status pages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "my-team"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"700010\",\n      \"type\": \"status_page\",\n      \"attributes\": {\n        \"company_name\": \"Acme Corp\",\n        \"company_website\": \"https://acme.com\",\n        \"subdomain\": \"acme\",\n        \"custom_domain\": \"status.acme.com\",\n        \"timezone\": \"UTC\",\n        \"aggregate_state\": \"operational\",\n        \"theme\": \"light\",\n        \"created_at\": \"2025-03-01T00:00:00Z\",\n        \"updated_at\": \"2026-04-01T00:00:00Z\"\n      }\n    }\n  ],\n  \"pagination\": {\n    \"first\": \"https://uptime.betterstack.com/api/v2/status-pages?page=1\",\n    \"last\": \"https://uptime.betterstack.com/api/v2/status-pages?page=1\",\n    \"prev\": null,\n    \"next\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c8e77005-f3bb-4be5-86b4-cde9638fa437",
+          "name": "Better Stack Create Status Page",
+          "request": {
+            "name": "Better Stack Create Status Page",
+            "description": {
+              "content": "Creates a new status page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-pages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_name\": \"<string>\",\n  \"subdomain\": \"<string>\",\n  \"company_website\": \"<uri>\",\n  \"timezone\": \"<string>\",\n  \"theme\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "13681ed8-be24-45f2-bf56-bf1e38904aad",
+              "name": "Status page created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Corp\",\n  \"company_website\": \"https://acme.com\",\n  \"subdomain\": \"acme\",\n  \"timezone\": \"UTC\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"700010\",\n    \"type\": \"status_page\",\n    \"attributes\": {\n      \"company_name\": \"Acme Corp\",\n      \"company_website\": \"https://acme.com\",\n      \"subdomain\": \"acme\",\n      \"timezone\": \"UTC\",\n      \"aggregate_state\": \"operational\",\n      \"created_at\": \"2026-04-19T10:00:00Z\",\n      \"updated_at\": \"2026-04-19T10:00:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "090d6885-d3eb-4d97-b322-f035c6ad9e7c",
+          "name": "Better Stack Get Status Page",
+          "request": {
+            "name": "Better Stack Get Status Page",
+            "description": {
+              "content": "Returns a single status page by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-pages",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the status page."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37f1024f-2f4d-45ea-bbe7-a5f7b0422a22",
+              "name": "Status page details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"700010\",\n    \"type\": \"status_page\",\n    \"attributes\": {\n      \"company_name\": \"Acme Corp\",\n      \"company_website\": \"https://acme.com\",\n      \"subdomain\": \"acme\",\n      \"custom_domain\": \"status.acme.com\",\n      \"timezone\": \"UTC\",\n      \"aggregate_state\": \"operational\",\n      \"theme\": \"light\",\n      \"created_at\": \"2025-03-01T00:00:00Z\",\n      \"updated_at\": \"2026-04-01T00:00:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99247dc2-5650-420c-9bba-783e798c50a1",
+              "name": "Status page not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2285a15-721a-45e0-8665-eb4b83838786",
+          "name": "Better Stack Update Status Page",
+          "request": {
+            "name": "Better Stack Update Status Page",
+            "description": {
+              "content": "Updates an existing status page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-pages",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the status page."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_name\": \"<string>\",\n  \"custom_domain\": \"<string>\",\n  \"theme\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ddf4ba2b-1a1d-4b21-875e-4054c120765f",
+              "name": "Status page updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_name\": \"Acme Corp Updated\",\n  \"theme\": \"dark\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"700010\",\n    \"type\": \"status_page\",\n    \"attributes\": {\n      \"company_name\": \"Acme Corp Updated\",\n      \"theme\": \"dark\",\n      \"updated_at\": \"2026-04-19T10:00:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "280af82e-1f08-4528-adde-1c387e145d3d",
+          "name": "Better Stack Delete Status Page",
+          "request": {
+            "name": "Better Stack Delete Status Page",
+            "description": {
+              "content": "Deletes an existing status page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status-pages",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the status page."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6c9cee84-07d7-44e5-881b-9a5641406940",
+              "name": "Status page deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d8022a5d-6f85-4308-9a02-c438708b34b3",
+              "name": "Status page not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status-pages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the status page."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://uptime.betterstack.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b7e88c0c-5207-499a-a647-e89ddf27e867",
+    "name": "Better Stack Escalation Policies Status Pages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+      "type": "text/plain"
+    }
+  }
+}

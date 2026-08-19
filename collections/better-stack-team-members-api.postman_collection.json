@@ -1,0 +1,636 @@
+{
+  "item": [
+    {
+      "id": "2c608fd5-8fae-4f3f-9298-2c53e1b33fa1",
+      "name": "Team Members",
+      "description": {
+        "content": "Manage team members and invitations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c4cd3357-b32a-4f3c-9933-f88e1d38ac97",
+          "name": "Better Stack List Team Members",
+          "request": {
+            "name": "Better Stack List Team Members",
+            "description": {
+              "content": "Returns a list of team members and pending invitations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "team-members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "team_name",
+                  "value": "<string>",
+                  "description": "Filter by team name when using a global API token."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<email>",
+                  "description": "Filter by member email address."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e74b36d-ebb9-41e8-b3c3-5ed05a23ef17",
+              "name": "List of team members.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "my-team"
+                    },
+                    {
+                      "key": "email",
+                      "value": "jsmith@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"200001\",\n      \"type\": \"team_member\",\n      \"attributes\": {\n        \"email\": \"jsmith@example.com\",\n        \"name\": \"Jane Smith\",\n        \"role\": \"admin\",\n        \"created_at\": \"2025-01-10T08:00:00Z\",\n        \"updated_at\": \"2026-03-01T12:00:00Z\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e71cd011-9388-4df6-993b-cf05e40f3100",
+              "name": "Authentication failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "my-team"
+                    },
+                    {
+                      "key": "email",
+                      "value": "jsmith@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7cdd87f-9e30-4170-9796-7069b23f7acb",
+              "name": "Global token used without specifying team_name.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "my-team"
+                    },
+                    {
+                      "key": "email",
+                      "value": "jsmith@example.com"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9a1a6c8-d6e0-4453-9773-b1ff5b5f366b",
+          "name": "Better Stack Invite Team Member",
+          "request": {
+            "name": "Better Stack Invite Team Member",
+            "description": {
+              "content": "Invites a new member to the team.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "team-members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\",\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "564371e1-2853-4082-a8e8-f35df55b5b82",
+              "name": "Team member invited successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"newmember@example.com\",\n  \"role\": \"member\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"200002\",\n    \"type\": \"team_member\",\n    \"attributes\": {\n      \"email\": \"newmember@example.com\",\n      \"role\": \"member\",\n      \"created_at\": \"2026-04-19T10:00:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47811cc9-9f53-4fb2-9a6e-488b4f8a7352",
+          "name": "Better Stack Get Team Member",
+          "request": {
+            "name": "Better Stack Get Team Member",
+            "description": {
+              "content": "Returns a single team member by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "team-members",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the team member."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8755876d-3608-49c8-8707-e43748fe32d1",
+              "name": "Team member details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the team member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"200001\",\n    \"type\": \"team_member\",\n    \"attributes\": {\n      \"email\": \"jsmith@example.com\",\n      \"name\": \"Jane Smith\",\n      \"role\": \"admin\",\n      \"created_at\": \"2025-01-10T08:00:00Z\",\n      \"updated_at\": \"2026-03-01T12:00:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dec67d38-ecb4-46a1-a044-e161be97227b",
+              "name": "Team member not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the team member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6848420f-3f6f-4351-a674-0a4fba1e0187",
+          "name": "Better Stack Delete Team Member",
+          "request": {
+            "name": "Better Stack Delete Team Member",
+            "description": {
+              "content": "Removes a team member by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "team-members",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the team member."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9d5b1ce6-5369-4a7d-96a8-660b44e1b6a7",
+              "name": "Team member removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the team member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6c573856-eed0-4755-8296-d32534adfbda",
+              "name": "Team member not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "team-members",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the team member."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://uptime.betterstack.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3b312cb7-59fe-4587-a9ee-14f7d2ed10d9",
+    "name": "Better Stack Escalation Policies Team Members API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+      "type": "text/plain"
+    }
+  }
+}

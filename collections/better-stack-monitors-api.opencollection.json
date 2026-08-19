@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Better Stack Escalation Policies Monitors API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monitors",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Monitors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter monitors belonging to a specified team when using a global API token."
+              },
+              {
+                "name": "url",
+                "value": "https://example.com",
+                "type": "query",
+                "description": "Filter monitors by target URL."
+              },
+              {
+                "name": "pronounceable_name",
+                "value": "Production API",
+                "type": "query",
+                "description": "Filter monitors by pronounceable name."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all monitors for the authenticated team."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/monitors",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new uptime monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Returns a single monitor by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Monitor",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Deletes an existing monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Monitor Response Times",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id/response-times",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Returns response time metrics for a specific monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Monitor Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/monitors/:id/availability",
+            "params": [
+              {
+                "name": "id",
+                "value": "500123",
+                "type": "path",
+                "description": "The unique identifier of the monitor."
+              }
+            ]
+          },
+          "docs": "Returns availability summary for a specific monitor."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

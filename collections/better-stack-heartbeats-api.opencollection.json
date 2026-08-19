@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Better Stack Escalation Policies Heartbeats API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Heartbeats",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Heartbeats",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter heartbeats belonging to a specified team when using a global API token."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all heartbeat monitors."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new heartbeat monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ]
+          },
+          "docs": "Returns a single heartbeat monitor by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing heartbeat monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Heartbeat",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ]
+          },
+          "docs": "Deletes an existing heartbeat monitor."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Heartbeat Availability",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/heartbeats/:id/availability",
+            "params": [
+              {
+                "name": "id",
+                "value": "100200",
+                "type": "path",
+                "description": "The unique identifier of the heartbeat."
+              }
+            ]
+          },
+          "docs": "Returns availability summary for a specific heartbeat monitor."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

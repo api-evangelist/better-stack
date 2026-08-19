@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Better Stack Escalation Policies Team Members API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Team Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Team Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/team-members",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter by team name when using a global API token."
+              },
+              {
+                "name": "email",
+                "value": "jsmith@example.com",
+                "type": "query",
+                "description": "Filter by member email address."
+              }
+            ]
+          },
+          "docs": "Returns a list of team members and pending invitations."
+        },
+        {
+          "info": {
+            "name": "Better Stack Invite Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/team-members",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invites a new member to the team."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/team-members/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "200001",
+                "type": "path",
+                "description": "The unique identifier of the team member."
+              }
+            ]
+          },
+          "docs": "Returns a single team member by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Team Member",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/team-members/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "200001",
+                "type": "path",
+                "description": "The unique identifier of the team member."
+              }
+            ]
+          },
+          "docs": "Removes a team member by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

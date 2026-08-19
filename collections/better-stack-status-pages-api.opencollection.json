@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Better Stack Escalation Policies Status Pages API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Better Stack List Status Pages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages",
+            "params": [
+              {
+                "name": "team_name",
+                "value": "my-team",
+                "type": "query",
+                "description": "Filter by team name when using a global API token."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of all status pages."
+        },
+        {
+          "info": {
+            "name": "Better Stack Create Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new status page."
+        },
+        {
+          "info": {
+            "name": "Better Stack Get Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "700010",
+                "type": "path",
+                "description": "The unique identifier of the status page."
+              }
+            ]
+          },
+          "docs": "Returns a single status page by ID."
+        },
+        {
+          "info": {
+            "name": "Better Stack Update Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "700010",
+                "type": "path",
+                "description": "The unique identifier of the status page."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing status page."
+        },
+        {
+          "info": {
+            "name": "Better Stack Delete Status Page",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://uptime.betterstack.com/api/v2/status-pages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "700010",
+                "type": "path",
+                "description": "The unique identifier of the status page."
+              }
+            ]
+          },
+          "docs": "Deletes an existing status page."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

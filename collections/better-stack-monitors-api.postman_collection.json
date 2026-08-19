@@ -1,0 +1,1022 @@
+{
+  "item": [
+    {
+      "id": "8251d168-f941-43f4-86ac-e57a4619d854",
+      "name": "Monitors",
+      "description": {
+        "content": "Manage uptime monitors for URLs, APIs, and services",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "de2aba1e-b598-4c9d-abc2-90d2296b261f",
+          "name": "Better Stack List Monitors",
+          "request": {
+            "name": "Better Stack List Monitors",
+            "description": {
+              "content": "Returns a paginated list of all monitors for the authenticated team.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "team_name",
+                  "value": "<string>",
+                  "description": "Filter monitors belonging to a specified team when using a global API token."
+                },
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "Filter monitors by target URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "pronounceable_name",
+                  "value": "<string>",
+                  "description": "Filter monitors by pronounceable name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "da212f2c-9ad5-49ad-ad05-09fe066b48ee",
+              "name": "Paginated list of monitors.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "my-team"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "pronounceable_name",
+                      "value": "Production API"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"123456\",\n      \"type\": \"monitor\",\n      \"attributes\": {\n        \"url\": \"https://example.com\",\n        \"pronounceable_name\": \"Production API\",\n        \"monitor_type\": \"status\",\n        \"status\": \"up\",\n        \"check_frequency\": 180,\n        \"verify_ssl\": true,\n        \"call\": false,\n        \"sms\": true,\n        \"email\": true,\n        \"push\": true,\n        \"regions\": [\n          \"us\",\n          \"eu\"\n        ],\n        \"created_at\": \"2025-01-15T10:00:00Z\",\n        \"updated_at\": \"2026-04-01T08:30:00Z\"\n      }\n    }\n  ],\n  \"pagination\": {\n    \"first\": \"https://uptime.betterstack.com/api/v2/monitors?page=1\",\n    \"last\": \"https://uptime.betterstack.com/api/v2/monitors?page=5\",\n    \"prev\": null,\n    \"next\": \"https://uptime.betterstack.com/api/v2/monitors?page=2\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9770682-8bfa-4b5d-955f-c5e948bc3b00",
+              "name": "Authentication failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "team_name",
+                      "value": "my-team"
+                    },
+                    {
+                      "key": "url",
+                      "value": "https://example.com"
+                    },
+                    {
+                      "key": "pronounceable_name",
+                      "value": "Production API"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e1abae8-8ec8-4a0b-b498-60b5a8350c76",
+          "name": "Better Stack Create Monitor",
+          "request": {
+            "name": "Better Stack Create Monitor",
+            "description": {
+              "content": "Creates a new uptime monitor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<uri>\",\n  \"pronounceable_name\": \"<string>\",\n  \"monitor_type\": \"<string>\",\n  \"check_frequency\": \"<integer>\",\n  \"verify_ssl\": \"<boolean>\",\n  \"email\": \"<boolean>\",\n  \"sms\": \"<boolean>\",\n  \"call\": \"<boolean>\",\n  \"push\": \"<boolean>\",\n  \"regions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"policy_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "72ac0e9b-db47-4b9e-9bec-69d8c18630a9",
+              "name": "Monitor created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://example.com\",\n  \"pronounceable_name\": \"Production API\",\n  \"monitor_type\": \"status\",\n  \"check_frequency\": 180,\n  \"verify_ssl\": true,\n  \"email\": true,\n  \"sms\": false,\n  \"call\": false,\n  \"push\": true,\n  \"regions\": [\n    \"us\",\n    \"eu\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"500123\",\n    \"type\": \"monitor\",\n    \"attributes\": {\n      \"url\": \"https://example.com\",\n      \"pronounceable_name\": \"Production API\",\n      \"monitor_type\": \"status\",\n      \"status\": \"pending\",\n      \"check_frequency\": 180,\n      \"verify_ssl\": true,\n      \"call\": false,\n      \"sms\": false,\n      \"email\": true,\n      \"push\": true,\n      \"regions\": [\n        \"us\",\n        \"eu\"\n      ],\n      \"created_at\": \"2026-04-19T10:00:00Z\",\n      \"updated_at\": \"2026-04-19T10:00:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95cb2123-ef6f-47c1-b8e7-3ed7cfa44a74",
+              "name": "Validation error.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://example.com\",\n  \"pronounceable_name\": \"Production API\",\n  \"monitor_type\": \"status\",\n  \"check_frequency\": 180,\n  \"verify_ssl\": true,\n  \"email\": true,\n  \"sms\": false,\n  \"call\": false,\n  \"push\": true,\n  \"regions\": [\n    \"us\",\n    \"eu\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2a13662-fe4b-4cd9-839b-f4ca9860eedd",
+          "name": "Better Stack Get Monitor",
+          "request": {
+            "name": "Better Stack Get Monitor",
+            "description": {
+              "content": "Returns a single monitor by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the monitor."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "949bcef2-9cb2-42bc-9a10-cae1df2bf295",
+              "name": "Monitor details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"500123\",\n    \"type\": \"monitor\",\n    \"attributes\": {\n      \"url\": \"https://example.com\",\n      \"pronounceable_name\": \"Production API\",\n      \"monitor_type\": \"status\",\n      \"status\": \"up\",\n      \"check_frequency\": 180,\n      \"verify_ssl\": true,\n      \"call\": false,\n      \"sms\": true,\n      \"email\": true,\n      \"push\": true,\n      \"regions\": [\n        \"us\",\n        \"eu\"\n      ],\n      \"created_at\": \"2025-01-15T10:00:00Z\",\n      \"updated_at\": \"2026-04-01T08:30:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b69400e-2b60-4ec2-8467-077654be9de7",
+              "name": "Monitor not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "beafa9cb-b3f8-4f2a-95f8-9f808d865e85",
+          "name": "Better Stack Update Monitor",
+          "request": {
+            "name": "Better Stack Update Monitor",
+            "description": {
+              "content": "Updates an existing monitor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the monitor."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<uri>\",\n  \"pronounceable_name\": \"<string>\",\n  \"check_frequency\": \"<integer>\",\n  \"verify_ssl\": \"<boolean>\",\n  \"email\": \"<boolean>\",\n  \"sms\": \"<boolean>\",\n  \"call\": \"<boolean>\",\n  \"push\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bb549685-665e-44b3-834d-7a1ab311faf6",
+              "name": "Monitor updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pronounceable_name\": \"Updated API Monitor\",\n  \"check_frequency\": 300\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"id\": \"500123\",\n    \"type\": \"monitor\",\n    \"attributes\": {\n      \"url\": \"https://example.com\",\n      \"pronounceable_name\": \"Updated API Monitor\",\n      \"monitor_type\": \"status\",\n      \"status\": \"up\",\n      \"check_frequency\": 300,\n      \"verify_ssl\": true,\n      \"call\": false,\n      \"sms\": true,\n      \"email\": true,\n      \"push\": true,\n      \"regions\": [\n        \"us\",\n        \"eu\"\n      ],\n      \"created_at\": \"2025-01-15T10:00:00Z\",\n      \"updated_at\": \"2026-04-19T10:00:00Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e01ae457-385a-4c31-8ed6-f8aa40bb4542",
+              "name": "Monitor not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pronounceable_name\": \"Updated API Monitor\",\n  \"check_frequency\": 300\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3e2dcd16-d45b-41bc-a1e7-986959914ee2",
+          "name": "Better Stack Delete Monitor",
+          "request": {
+            "name": "Better Stack Delete Monitor",
+            "description": {
+              "content": "Deletes an existing monitor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the monitor."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ad326d8d-2f77-40e2-b9dd-336c29c786a3",
+              "name": "Monitor deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b79d3e97-2916-44a7-aee4-9d8d54741d87",
+              "name": "Monitor not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    },\n    {\n      \"title\": \"Unauthorized\",\n      \"detail\": \"Invalid API token\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd2e96f5-9327-4a88-802d-427378022c21",
+          "name": "Better Stack Get Monitor Response Times",
+          "request": {
+            "name": "Better Stack Get Monitor Response Times",
+            "description": {
+              "content": "Returns response time metrics for a specific monitor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitors",
+                ":id",
+                "response-times"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the monitor."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eb9249f6-29dd-4d0e-a39f-d762141f78c9",
+              "name": "Response time data for the monitor.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id",
+                    "response-times"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"at\": \"2026-04-19T10:00:00Z\",\n      \"response_time\": 142,\n      \"region\": \"us\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e6ffddd-0b0e-4cdb-8858-ffc7678c3cd1",
+          "name": "Better Stack Get Monitor Availability",
+          "request": {
+            "name": "Better Stack Get Monitor Availability",
+            "description": {
+              "content": "Returns availability summary for a specific monitor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "monitors",
+                ":id",
+                "availability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the monitor."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38e39dab-3858-4895-968a-c1b4423b89f6",
+              "name": "Availability summary for the monitor.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "monitors",
+                    ":id",
+                    "availability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the monitor."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"availability\": 99.98,\n    \"downtime_duration\": 86,\n    \"number_of_incidents\": 2,\n    \"longest_incident_duration\": 61,\n    \"average_incident_duration\": 43\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://uptime.betterstack.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e64fa09a-5b3f-4de0-928b-f0ebeb17803b",
+    "name": "Better Stack Escalation Policies Monitors API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.\n\nContact Support:\n Name: Better Stack Support",
+      "type": "text/plain"
+    }
+  }
+}
