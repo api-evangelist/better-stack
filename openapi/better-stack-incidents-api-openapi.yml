@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Better Stack Escalation Policies Incidents API
   description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
@@ -308,33 +308,33 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Pagination:
-      title: Pagination
-      description: Pagination links for list responses following JSON:API specification.
+    IncidentCreateRequest:
+      title: Incident Create Request
+      description: Request body for creating a manual incident.
       type: object
+      required:
+      - name
       properties:
-        first:
+        name:
           type: string
-          format: uri
-          description: URL of the first page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=1
-        last:
-          type: string
-          format: uri
-          description: URL of the last page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=5
-        prev:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the previous page, or null.
-          example: null
-        next:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the next page, or null.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+          description: Name or description of the incident.
+          example: Database degraded
+        email:
+          type: boolean
+          description: Alert via email.
+          example: true
+        sms:
+          type: boolean
+          description: Alert via SMS.
+          example: false
+        call:
+          type: boolean
+          description: Alert via phone call.
+          example: false
+        push:
+          type: boolean
+          description: Alert via push notification.
+          example: true
     IncidentListResponse:
       title: Incident List Response
       description: Paginated list of incidents.
@@ -372,6 +372,35 @@ components:
                 type: string
                 description: Detailed error message.
                 example: Invalid API token
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
     IncidentObject:
       title: Incident Object
       description: A single incident resource.
@@ -387,33 +416,6 @@ components:
           example: incident
         attributes:
           $ref: '#/components/schemas/IncidentAttributes'
-    IncidentCreateRequest:
-      title: Incident Create Request
-      description: Request body for creating a manual incident.
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Name or description of the incident.
-          example: Database degraded
-        email:
-          type: boolean
-          description: Alert via email.
-          example: true
-        sms:
-          type: boolean
-          description: Alert via SMS.
-          example: false
-        call:
-          type: boolean
-          description: Alert via phone call.
-          example: false
-        push:
-          type: boolean
-          description: Alert via push notification.
-          example: true
     IncidentAttributes:
       title: Incident Attributes
       description: Attributes of an incident.
@@ -424,19 +426,22 @@ components:
           description: Name or subject of the incident.
           example: Production API
         url:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uri
-          nullable: true
           description: URL of the affected monitor.
           example: https://example.com
         http_method:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: HTTP method of the affected check.
           example: GET
         cause:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Root cause description of the incident.
           example: Connection timeout
         started_at:
@@ -445,15 +450,17 @@ components:
           description: When the incident started.
           example: '2026-04-18T14:00:00Z'
         acknowledged_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: When the incident was acknowledged.
           example: '2026-04-18T14:05:00Z'
         resolved_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: When the incident was resolved.
           example: '2026-04-18T14:15:00Z'
         status:

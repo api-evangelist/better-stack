@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Better Stack Escalation Policies Monitors API
   description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
@@ -383,6 +383,124 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    MonitorListResponse:
+      title: Monitor List Response
+      description: Paginated list of monitors.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitorObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    MonitorAttributes:
+      title: Monitor Attributes
+      description: Attributes of an uptime monitor.
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: The URL being monitored.
+          example: https://example.com
+        pronounceable_name:
+          type: string
+          description: Human-readable name for the monitor.
+          example: Production API
+        monitor_type:
+          type: string
+          description: Type of monitoring check.
+          enum:
+          - status
+          - expected_status_code
+          - keyword
+          - keyword_absence
+          - ping
+          - tcp
+          - udp
+          - smtp
+          - pop
+          - imap
+          example: status
+        status:
+          type: string
+          description: Current operational status of the monitor.
+          enum:
+          - paused
+          - pending
+          - maintenance
+          - up
+          - validating
+          - down
+          example: up
+        monitor_group_id:
+          type:
+          - string
+          - 'null'
+          description: ID of the monitor group this monitor belongs to.
+          example: null
+        policy_id:
+          type:
+          - string
+          - 'null'
+          description: ID of the escalation policy for this monitor.
+          example: '300010'
+        check_frequency:
+          type: integer
+          description: How often to check the URL in seconds.
+          example: 180
+        verify_ssl:
+          type: boolean
+          description: Whether to verify SSL certificate validity.
+          example: true
+        ssl_expiration:
+          type:
+          - integer
+          - 'null'
+          description: Days before SSL expiration to start alerting.
+          example: 30
+        call:
+          type: boolean
+          description: Whether to alert via phone call.
+          example: false
+        sms:
+          type: boolean
+          description: Whether to alert via SMS.
+          example: true
+        email:
+          type: boolean
+          description: Whether to alert via email.
+          example: true
+        push:
+          type: boolean
+          description: Whether to alert via push notification.
+          example: true
+        regions:
+          type: array
+          description: Geographic regions from which to check the monitor.
+          items:
+            type: string
+          example:
+          - us
+          - eu
+        created_at:
+          type: string
+          format: date-time
+          description: When the monitor was created.
+          example: '2025-01-15T10:00:00Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: When the monitor was last updated.
+          example: '2026-04-01T08:30:00Z'
+        paused_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: When the monitor was paused, if applicable.
+          example: null
     AvailabilityResponse:
       title: Availability Response
       description: Availability summary metrics.
@@ -411,32 +529,61 @@ components:
               type: integer
               description: Average incident duration in seconds.
               example: 43
-    MonitorObject:
-      title: Monitor Object
-      description: A single monitor resource following JSON:API format.
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
       type: object
       properties:
-        id:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
           type: string
-          description: Unique identifier of the monitor.
-          example: '500123'
-        type:
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
           type: string
-          description: Resource type identifier.
-          example: monitor
-        attributes:
-          $ref: '#/components/schemas/MonitorAttributes'
-    MonitorListResponse:
-      title: Monitor List Response
-      description: Paginated list of monitors.
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    MonitorSingleResponse:
+      title: Monitor Single Response
+      description: Single monitor response.
       type: object
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/MonitorObject'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
+          $ref: '#/components/schemas/MonitorObject'
     MonitorCreateRequest:
       title: Monitor Create Request
       description: Request body for creating a new monitor.
@@ -497,29 +644,11 @@ components:
           - us
           - eu
         policy_id:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Escalation policy ID.
           example: '300010'
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of error details.
-          items:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Human-readable error title.
-                example: Unauthorized
-              detail:
-                type: string
-                description: Detailed error message.
-                example: Invalid API token
     MonitorUpdateRequest:
       title: Monitor Update Request
       description: Request body for updating an existing monitor (all fields optional).
@@ -558,33 +687,6 @@ components:
           type: boolean
           description: Alert via push notification.
           example: true
-    Pagination:
-      title: Pagination
-      description: Pagination links for list responses following JSON:API specification.
-      type: object
-      properties:
-        first:
-          type: string
-          format: uri
-          description: URL of the first page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=1
-        last:
-          type: string
-          format: uri
-          description: URL of the last page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=5
-        prev:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the previous page, or null.
-          example: null
-        next:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the next page, or null.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=2
     ResponseTimesResponse:
       title: Response Times Response
       description: Response time metrics for a monitor.
@@ -609,116 +711,21 @@ components:
                 type: string
                 description: Region where the check was performed.
                 example: us
-    MonitorAttributes:
-      title: Monitor Attributes
-      description: Attributes of an uptime monitor.
+    MonitorObject:
+      title: Monitor Object
+      description: A single monitor resource following JSON:API format.
       type: object
       properties:
-        url:
+        id:
           type: string
-          format: uri
-          description: The URL being monitored.
-          example: https://example.com
-        pronounceable_name:
+          description: Unique identifier of the monitor.
+          example: '500123'
+        type:
           type: string
-          description: Human-readable name for the monitor.
-          example: Production API
-        monitor_type:
-          type: string
-          description: Type of monitoring check.
-          enum:
-          - status
-          - expected_status_code
-          - keyword
-          - keyword_absence
-          - ping
-          - tcp
-          - udp
-          - smtp
-          - pop
-          - imap
-          example: status
-        status:
-          type: string
-          description: Current operational status of the monitor.
-          enum:
-          - paused
-          - pending
-          - maintenance
-          - up
-          - validating
-          - down
-          example: up
-        monitor_group_id:
-          type: string
-          nullable: true
-          description: ID of the monitor group this monitor belongs to.
-          example: null
-        policy_id:
-          type: string
-          nullable: true
-          description: ID of the escalation policy for this monitor.
-          example: '300010'
-        check_frequency:
-          type: integer
-          description: How often to check the URL in seconds.
-          example: 180
-        verify_ssl:
-          type: boolean
-          description: Whether to verify SSL certificate validity.
-          example: true
-        ssl_expiration:
-          type: integer
-          nullable: true
-          description: Days before SSL expiration to start alerting.
-          example: 30
-        call:
-          type: boolean
-          description: Whether to alert via phone call.
-          example: false
-        sms:
-          type: boolean
-          description: Whether to alert via SMS.
-          example: true
-        email:
-          type: boolean
-          description: Whether to alert via email.
-          example: true
-        push:
-          type: boolean
-          description: Whether to alert via push notification.
-          example: true
-        regions:
-          type: array
-          description: Geographic regions from which to check the monitor.
-          items:
-            type: string
-          example:
-          - us
-          - eu
-        created_at:
-          type: string
-          format: date-time
-          description: When the monitor was created.
-          example: '2025-01-15T10:00:00Z'
-        updated_at:
-          type: string
-          format: date-time
-          description: When the monitor was last updated.
-          example: '2026-04-01T08:30:00Z'
-        paused_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: When the monitor was paused, if applicable.
-          example: null
-    MonitorSingleResponse:
-      title: Monitor Single Response
-      description: Single monitor response.
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/MonitorObject'
+          description: Resource type identifier.
+          example: monitor
+        attributes:
+          $ref: '#/components/schemas/MonitorAttributes'
   securitySchemes:
     bearerAuth:
       type: http

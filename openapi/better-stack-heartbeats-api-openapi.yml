@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Better Stack Escalation Policies Heartbeats API
   description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
@@ -302,6 +302,13 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    HeartbeatSingleResponse:
+      title: Heartbeat Single Response
+      description: Single heartbeat response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/HeartbeatObject'
     AvailabilityResponse:
       title: Availability Response
       description: Availability summary metrics.
@@ -330,6 +337,71 @@ components:
               type: integer
               description: Average incident duration in seconds.
               example: 43
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    HeartbeatUpdateRequest:
+      title: Heartbeat Update Request
+      description: Request body for updating a heartbeat (all fields optional).
+      type: object
+      properties:
+        name:
+          type: string
+          description: New name for the heartbeat.
+          example: Updated Backup Job
+        period:
+          type: integer
+          description: New period in seconds.
+          example: 86400
+        grace:
+          type: integer
+          description: New grace period in seconds.
+          example: 7200
     HeartbeatCreateRequest:
       title: Heartbeat Create Request
       description: Request body for creating a heartbeat.
@@ -366,23 +438,21 @@ components:
           type: boolean
           description: Alert via push notification.
           example: true
-    HeartbeatUpdateRequest:
-      title: Heartbeat Update Request
-      description: Request body for updating a heartbeat (all fields optional).
+    HeartbeatObject:
+      title: Heartbeat Object
+      description: A single heartbeat resource.
       type: object
       properties:
-        name:
+        id:
           type: string
-          description: New name for the heartbeat.
-          example: Updated Backup Job
-        period:
-          type: integer
-          description: New period in seconds.
-          example: 86400
-        grace:
-          type: integer
-          description: New grace period in seconds.
-          example: 7200
+          description: Unique identifier.
+          example: '100200'
+        type:
+          type: string
+          description: Resource type.
+          example: heartbeat
+        attributes:
+          $ref: '#/components/schemas/HeartbeatAttributes'
     HeartbeatListResponse:
       title: Heartbeat List Response
       description: Paginated list of heartbeats.
@@ -394,32 +464,6 @@ components:
             $ref: '#/components/schemas/HeartbeatObject'
         pagination:
           $ref: '#/components/schemas/Pagination'
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of error details.
-          items:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Human-readable error title.
-                example: Unauthorized
-              detail:
-                type: string
-                description: Detailed error message.
-                example: Invalid API token
-    HeartbeatSingleResponse:
-      title: Heartbeat Single Response
-      description: Single heartbeat response.
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/HeartbeatObject'
     HeartbeatAttributes:
       title: Heartbeat Attributes
       description: Attributes of a heartbeat monitor.
@@ -478,53 +522,12 @@ components:
           description: When the heartbeat was last updated.
           example: '2026-04-01T00:00:00Z'
         paused_at:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: When the heartbeat was paused.
           example: null
-    Pagination:
-      title: Pagination
-      description: Pagination links for list responses following JSON:API specification.
-      type: object
-      properties:
-        first:
-          type: string
-          format: uri
-          description: URL of the first page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=1
-        last:
-          type: string
-          format: uri
-          description: URL of the last page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=5
-        prev:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the previous page, or null.
-          example: null
-        next:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the next page, or null.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=2
-    HeartbeatObject:
-      title: Heartbeat Object
-      description: A single heartbeat resource.
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-          example: '100200'
-        type:
-          type: string
-          description: Resource type.
-          example: heartbeat
-        attributes:
-          $ref: '#/components/schemas/HeartbeatAttributes'
   securitySchemes:
     bearerAuth:
       type: http

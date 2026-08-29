@@ -19,6 +19,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "better-stack-escalation-policies-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "better-stack-heartbeats-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "better-stack-incidents-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "better-stack-monitors-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "better-stack-status-pages-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "better-stack-team-members-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

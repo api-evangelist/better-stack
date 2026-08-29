@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Better Stack Escalation Policies API
   description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
@@ -228,67 +228,25 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    PolicyAttributes:
-      title: Policy Attributes
-      description: Attributes of an escalation policy.
+    PolicyCreateRequest:
+      title: Policy Create Request
+      description: Request body for creating an escalation policy.
       type: object
+      required:
+      - name
       properties:
         name:
           type: string
-          description: Name of the escalation policy.
+          description: Policy name.
           example: Default On-Call
         repeat_count:
           type: integer
-          description: Number of times to repeat the escalation cycle.
+          description: Number of repeat cycles.
           example: 3
         repeat_delay:
           type: integer
-          description: Delay in seconds between repeat cycles.
+          description: Delay between cycles in seconds.
           example: 300
-        incident_token:
-          type: string
-          description: Unique token for the policy.
-          example: abc123
-        policy_group_id:
-          type: string
-          nullable: true
-          description: ID of the policy group.
-          example: null
-        team_name:
-          type: string
-          description: Team owning this policy.
-          example: my-team
-        steps:
-          type: array
-          description: Escalation steps in sequence.
-          items:
-            $ref: '#/components/schemas/PolicyStep'
-    PolicyObject:
-      title: Policy Object
-      description: A single escalation policy resource.
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-          example: '300010'
-        type:
-          type: string
-          description: Resource type.
-          example: policy
-        attributes:
-          $ref: '#/components/schemas/PolicyAttributes'
-    PolicyListResponse:
-      title: Policy List Response
-      description: Paginated list of escalation policies.
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyObject'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
     PolicySingleResponse:
       title: Policy Single Response
       description: Single escalation policy response.
@@ -315,42 +273,6 @@ components:
                 type: string
                 description: Detailed error message.
                 example: Invalid API token
-    PolicyCreateRequest:
-      title: Policy Create Request
-      description: Request body for creating an escalation policy.
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Policy name.
-          example: Default On-Call
-        repeat_count:
-          type: integer
-          description: Number of repeat cycles.
-          example: 3
-        repeat_delay:
-          type: integer
-          description: Delay between cycles in seconds.
-          example: 300
-    PolicyUpdateRequest:
-      title: Policy Update Request
-      description: Request body for updating an escalation policy (all fields optional).
-      type: object
-      properties:
-        name:
-          type: string
-          description: New policy name.
-          example: Updated On-Call Policy
-        repeat_count:
-          type: integer
-          description: New repeat count.
-          example: 5
-        repeat_delay:
-          type: integer
-          description: New repeat delay in seconds.
-          example: 600
     Pagination:
       title: Pagination
       description: Pagination links for list responses following JSON:API specification.
@@ -367,15 +289,17 @@ components:
           description: URL of the last page.
           example: https://uptime.betterstack.com/api/v2/monitors?page=5
         prev:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uri
-          nullable: true
           description: URL of the previous page, or null.
           example: null
         next:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uri
-          nullable: true
           description: URL of the next page, or null.
           example: https://uptime.betterstack.com/api/v2/monitors?page=2
     PolicyStep:
@@ -401,6 +325,85 @@ components:
               type: integer
               description: Seconds to wait before this step.
               example: 0
+    PolicyAttributes:
+      title: Policy Attributes
+      description: Attributes of an escalation policy.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the escalation policy.
+          example: Default On-Call
+        repeat_count:
+          type: integer
+          description: Number of times to repeat the escalation cycle.
+          example: 3
+        repeat_delay:
+          type: integer
+          description: Delay in seconds between repeat cycles.
+          example: 300
+        incident_token:
+          type: string
+          description: Unique token for the policy.
+          example: abc123
+        policy_group_id:
+          type:
+          - string
+          - 'null'
+          description: ID of the policy group.
+          example: null
+        team_name:
+          type: string
+          description: Team owning this policy.
+          example: my-team
+        steps:
+          type: array
+          description: Escalation steps in sequence.
+          items:
+            $ref: '#/components/schemas/PolicyStep'
+    PolicyListResponse:
+      title: Policy List Response
+      description: Paginated list of escalation policies.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+    PolicyObject:
+      title: Policy Object
+      description: A single escalation policy resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: '300010'
+        type:
+          type: string
+          description: Resource type.
+          example: policy
+        attributes:
+          $ref: '#/components/schemas/PolicyAttributes'
+    PolicyUpdateRequest:
+      title: Policy Update Request
+      description: Request body for updating an escalation policy (all fields optional).
+      type: object
+      properties:
+        name:
+          type: string
+          description: New policy name.
+          example: Updated On-Call Policy
+        repeat_count:
+          type: integer
+          description: New repeat count.
+          example: 5
+        repeat_delay:
+          type: integer
+          description: New repeat delay in seconds.
+          example: 600
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Better Stack Escalation Policies Team Members API
   description: Better Stack is a comprehensive infrastructure monitoring and observability platform combining uptime monitoring, log management, incident management, and status pages. The API covers both the Uptime (on-call, monitors, heartbeats, status pages) and Telemetry (logs, metrics, sources, dashboards, alerts) product areas.
@@ -193,6 +193,76 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    TeamMemberSingleResponse:
+      title: Team Member Single Response
+      description: Single team member response.
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/TeamMemberObject'
+    ErrorResponse:
+      title: Error Response
+      description: Standard error response.
+      type: object
+      properties:
+        errors:
+          type: array
+          description: List of error details.
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                description: Human-readable error title.
+                example: Unauthorized
+              detail:
+                type: string
+                description: Detailed error message.
+                example: Invalid API token
+    Pagination:
+      title: Pagination
+      description: Pagination links for list responses following JSON:API specification.
+      type: object
+      properties:
+        first:
+          type: string
+          format: uri
+          description: URL of the first page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=1
+        last:
+          type: string
+          format: uri
+          description: URL of the last page.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=5
+        prev:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the previous page, or null.
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the next page, or null.
+          example: https://uptime.betterstack.com/api/v2/monitors?page=2
+    TeamMemberObject:
+      title: Team Member Object
+      description: A single team member resource.
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier.
+          example: '200001'
+        type:
+          type: string
+          description: Resource type.
+          example: team_member
+        attributes:
+          $ref: '#/components/schemas/TeamMemberAttributes'
     TeamMemberInviteRequest:
       title: Team Member Invite Request
       description: Request body for inviting a team member.
@@ -213,13 +283,17 @@ components:
           - member
           - viewer
           example: member
-    TeamMemberSingleResponse:
-      title: Team Member Single Response
-      description: Single team member response.
+    TeamMemberListResponse:
+      title: Team Member List Response
+      description: List of team members.
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/TeamMemberObject'
+          type: array
+          items:
+            $ref: '#/components/schemas/TeamMemberObject'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
     TeamMemberAttributes:
       title: Team Member Attributes
       description: Attributes of a team member.
@@ -231,8 +305,9 @@ components:
           description: Team member's email address.
           example: jsmith@example.com
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Team member's display name.
           example: Jane Smith
         role:
@@ -254,78 +329,6 @@ components:
           format: date-time
           description: When the record was last updated.
           example: '2026-03-01T12:00:00Z'
-    TeamMemberObject:
-      title: Team Member Object
-      description: A single team member resource.
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier.
-          example: '200001'
-        type:
-          type: string
-          description: Resource type.
-          example: team_member
-        attributes:
-          $ref: '#/components/schemas/TeamMemberAttributes'
-    ErrorResponse:
-      title: Error Response
-      description: Standard error response.
-      type: object
-      properties:
-        errors:
-          type: array
-          description: List of error details.
-          items:
-            type: object
-            properties:
-              title:
-                type: string
-                description: Human-readable error title.
-                example: Unauthorized
-              detail:
-                type: string
-                description: Detailed error message.
-                example: Invalid API token
-    TeamMemberListResponse:
-      title: Team Member List Response
-      description: List of team members.
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/TeamMemberObject'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-    Pagination:
-      title: Pagination
-      description: Pagination links for list responses following JSON:API specification.
-      type: object
-      properties:
-        first:
-          type: string
-          format: uri
-          description: URL of the first page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=1
-        last:
-          type: string
-          format: uri
-          description: URL of the last page.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=5
-        prev:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the previous page, or null.
-          example: null
-        next:
-          type: string
-          format: uri
-          nullable: true
-          description: URL of the next page, or null.
-          example: https://uptime.betterstack.com/api/v2/monitors?page=2
   securitySchemes:
     bearerAuth:
       type: http
